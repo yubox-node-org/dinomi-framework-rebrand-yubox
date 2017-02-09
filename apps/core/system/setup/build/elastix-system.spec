@@ -2,14 +2,15 @@
 
 Summary: Elastix Module System
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 8
+Version: 4.0.0
+Release: 11
 License: GPL
 Group:   Applications/System
+#Source0: %{modname}_%{version}-2.tgz
 Source0: %{modname}_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Prereq: elastix-framework >= 2.5.0-16
+Prereq: elastix-framework >= 4.0.0-14
 Prereq: elastix-fax >= 2.2.0-4
 Prereq: php-soap
 Prereq: dahdi
@@ -189,7 +190,7 @@ fi
 - CHANGED: Added Ukrainian translations.
   SVN Rev[7781]
 
-* Tue Nov 22 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-8
+* Tue Nov 22 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-11
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest
   SVN history. Changed release in specfile.
 
@@ -214,7 +215,7 @@ fi
   of a failed command that caused a command failure.
   SVN Rev[7758]
 
-* Fri Sep 02 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-7
+* Fri Sep 02 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-10
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest
   SVN history. Changed version and release in specfile.
 
@@ -224,13 +225,13 @@ fi
 - FIXED: Dashboard: container compatibility - allow sampling of macvlan ifaces.
   SVN Rev[7737]
 
-* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-6
+* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-9
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest
-  SVN history. Changed Release in specfile.
+  SVN history. Changed version and release in specfile.
 
-* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-5
+* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-8
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest
-  SVN history. Changed Release in specfile.
+  SVN history. Changed version and release in specfile.
 
 * Mon Jul 11 2016 Alex Villacis Lasso <a_villacis@palosanto.com>
 - CHANGED: Userlist: make use of new methods getUserProfile and saveUserProfile
@@ -255,10 +256,18 @@ fi
 - ADDED: add Turkish translations for Currency and Shutdown modules.
   SVN Rev[7623]
 
+* Wed May 25 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-7
+- CHANGED: system - Build/elastix-system.spec: update specfile with latest
+  SVN history. Changed version and release in specfile.
+
 * Fri Apr 22 2016 Alex Villacis Lasso <a_villacis@palosanto.com>
 - FIXED: check whether /etc/localtime is a symlink and use it as an additional
   way to find out the current timezone.
   SVN Rev[7605]
+
+* Wed Apr 13 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-6
+- CHANGED: system - Build/elastix-system.spec: update specfile with latest
+  SVN history. Changed version and release in specfile.
 
 * Fri Apr  8 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Packages: force Elastix registration before allowing any package
@@ -273,7 +282,7 @@ fi
   milliseconds) instead of UNIX timestamps.
   SVN Rev[7518]
 
-* Thu Mar 10 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-4
+* Thu Mar 10 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-5
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest
   SVN history. Changed version and release in specfile.
 
@@ -285,13 +294,17 @@ fi
   a2billing_db component restore.
   SVN Rev[7512]
 
-* Thu Feb 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-3
+* Mon Jan 18 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest
   SVN history. Changed version and release in specfile.
 
 * Fri Nov 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Dashboard: switch to JustGage for Hard Disk applet.
   SVN Rev[7361]
+
+* Wed Nov 11 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-3
+- CHANGED: system - Build/elastix-system.spec: update specfile with latest
+  SVN history. Changed version and release in specfile.
 
 * Mon Nov  9 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Backup/Restore: remove height:800px CSS rule for FTP backup panel.
@@ -353,6 +366,10 @@ fi
 - CHANGED: Dashboard: more tweaks to applet appearance by Edgar Landivar.
   SVN Rev[7275]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: system - Build/elastix-system.spec: update specfile with latest
+  SVN history. Changed version and release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: system: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7245]
@@ -361,6 +378,8 @@ fi
 - CHANGED: Dashboard: remove theme guard in templates. Now font icons are
   available in all themes.
   SVN Rev[7221]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Dashboard: use $.get instead of $.post for several AJAX queries with
   no side effects.
   SVN Rev[7213]
@@ -369,30 +388,48 @@ fi
 - FIXED: netconfig: allow network devices not of the form ethN in validation.
   Part of fix for Elastix bug #2376.
   SVN Rev[7211]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Dashboard: switch to JustGage for System Resources applet.
   SVN Rev[7210]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Dashboard: cleanup and proper JSON encoding for Performance Graphic.
   SVN Rev[7209]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Dashboard: switch to jQuery Plot for Performance Graphic plot.
   SVN Rev[7208]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Dashboard: part 2 of changes for tenant theme integration. Use icons
   and spinners from tenant (Bootstrap) theme if available.
   SVN Rev[7207]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Backup/Restore, Packages, Repositories: part 1 of changes for tenant
   theme integration. This requires updated elastix-framework support.
   SVN Rev[7206]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Backup/Restore: (trivial) tweak translations
   SVN Rev[7204]
 
-* Tue Oct 13 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+* Mon Oct 19 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: netconfig: allow network devices not of the form ethN. Part of fix for
   Elastix bug #2376.
   SVN Rev[7197]
-- FIXED: Network Parameters: allow network devices not of the form ethN. Part of
-  fix for Elastix bug #2376.
+
+* Mon Oct 19 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- FIXED: Network Parameters: allow network devices not of the form ethN. Part
+  of fix for Elastix bug #2376.
   SVN Rev[7196]
+
+* Tue Oct 13 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - ADDED: Dashboard: add Russian translation provided by user Russian.
   SVN Rev[7181]
+
+* Tue Oct 13 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - ADDED: Applet Admin: add Russian translation provided by user Russian.
   SVN Rev[7180]
 
@@ -409,6 +446,10 @@ fi
   concatenated with a newer update and would proceed to remove all active
   applets.
   SVN Rev[7159]
+
+* Fri Sep 25 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: system - Build/elastix-system.spec: update specfile with latest
+  SVN history. Changed version and release in specfile.
 
 * Thu Apr 09 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-2
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest

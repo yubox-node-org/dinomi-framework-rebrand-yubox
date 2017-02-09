@@ -2,7 +2,7 @@
 
 Summary: Elastix Security
 Name:    elastix-%{modname}
-Version: 2.5.0
+Version: 4.0.0
 Release: 4
 License: GPL
 Group:   Applications/System
@@ -13,6 +13,8 @@ BuildArch: noarch
 Prereq: elastix-framework >= 2.3.0-5
 Prereq: freePBX >= 2.8.1-2
 Prereq: iptables
+# On CentOS 7 only, iptables does *not* install any service files
+Prereq: iptables-services
 Requires: elastix-system
 Requires: php-mcrypt
 Requires: elastix-portknock
@@ -147,7 +149,7 @@ fi
   since the iptables package no longer provides a service file.
   SVN Rev[7778]
 
-* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-4
+* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
 - CHANGED: security - Build/elastix-security.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -162,7 +164,7 @@ fi
   verification, so remove administrator check.
   SVN Rev[7727]
 
-* Fri Apr 22 2016 Alex Villacis Lasso <a_villacis@palosanto.com>
+* Fri Apr 22 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: security: check whether /etc/localtime is a symlink and use it as
   an additional way to find out the current timezone.
   SVN Rev[7604]
@@ -172,10 +174,10 @@ fi
   on display of internationalized module names.
   SVN Rev[7595]
 
-* Thu Feb 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-3
+* Wed Nov 11 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-3
 - CHANGED: security - Build/elastix-security.spec: update specfile with latest
   SVN history. Bump Version and Release in specfile.
-  SVN Rev[7489]
+  SVN Rev[7353]
 
 * Fri Nov  6 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: security: replace hand-coded translation loading with
@@ -187,9 +189,17 @@ fi
   that provide system commands.
   SVN Rev[7277]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: security - Build/elastix-security.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: security: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7244]
+
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: security - Build/elastix-security.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Fri Sep 25 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-2
 - CHANGED: security - Build/elastix-security.spec: update specfile with latest

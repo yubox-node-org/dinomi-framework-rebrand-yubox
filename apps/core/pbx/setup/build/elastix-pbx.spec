@@ -2,14 +2,14 @@
 
 Summary: Elastix Module PBX
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 9
+Version: 4.0.0
+Release: 8
 License: GPL
 Group:   Applications/System
 Source0: %{modname}_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Prereq: elastix-framework >= 2.5.0-16
+Prereq: elastix-framework >= 4.0.0-14
 Prereq: elastix-my_extension >= 2.0.4-5
 Prereq: elastix-system >= 2.3.0-10
 Prereq: vsftpd
@@ -304,13 +304,18 @@ fi
 - CHANGED: Added Ukrainian translations.
   SVN Rev[7792]
 
-* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-9
+* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-8
 - CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
 * Fri Aug 19 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
   (trivial) Fix commit number.
   SVN Rev[7730]
+
+* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-7
+- CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
+  SVN history. Bump Release in specfile.
+  SVN Rev[7712]
 
 * Sat Aug 13 2016 Alex Villacis Lasso <a_villacis@palosanto.com>
 - CHANGED: Monitoring,Voicemail: declare custom privileges reportany,
@@ -327,7 +332,7 @@ fi
   framework but will be automatically picked up by the rewritten module.
   SVN Rev[7688]
 
-* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-7
+* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-6
 - CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
   SVN history. Bump Release in specfile.
   SVN Rev[7677]
@@ -425,6 +430,10 @@ fi
 - CHANGED: added Russian translations by user Russian.
   SVN Rev[7593]
 
+* Wed Apr 13 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-5
+- CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Sat Feb 25 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: (WIP) tweak macro-hangupcall to check if CDR(recordingfile) is set,
   and if so, test if file exists, either under ${ASTSPOOLDIR}/monitor/ or under
@@ -433,19 +442,23 @@ fi
   incorrect unsetting of CDR(recordingfile). NEEDS MORE WORK.
   SVN Rev[7490]
 
-* Thu Feb 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-6
-- CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
-
 * Mon Feb 22 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Extension Batch: recording parameters are always/never, not
   enabled/disabled.
   SVN Rev[7488]
 
+* Thu Feb 04 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
+- CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Mon Jan 25 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - ADDED: pbx - install httpd mod_proxy_wstunnel configuration to expose SIP
   websocket URL through the HTTPS space.
   SVN Rev[7429]
+
+* Wed Nov 11 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-3
+- CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Tue Nov 10 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: PBX Admin: fix two unpaired div tags in embedded admin template. Patch
@@ -485,13 +498,21 @@ fi
   provide system commands.
   SVN Rev[7276]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: pbx: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7242]
 
-* Wed Oct 21 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
+* Thu Oct 22 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Asterisk CLI: fix incorrect nested table, force monospace for output.
   SVN Rev[7224]
+
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: pbx - Build/elastix-pbx.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Sat Sep 26 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
 - FIXED: Monitoring: ensure plus sign in recording filename is encoded

@@ -2,18 +2,17 @@
 
 Summary: Elastix Addons
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 6
+Version: 4.0.0
+Release: 5
 License: GPL
 Group:   Applications/System
 Source0: %{modname}_%{version}-%{release}.tgz
 #Source0: %{modname}_%{version}-7.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Prereq: elastix-framework >= 2.5.0-11
+Prereq: elastix-framework >= 2.5.0-2
 Prereq: chkconfig, php-soap
 Requires: yum
-
 # commands: /usr/bin/uname
 Requires: coreutils
 
@@ -35,8 +34,6 @@ mv modules/ $RPM_BUILD_ROOT/var/www/html/
 
 # Additional (module-specific) files that can be handled by RPM
 mkdir -p $RPM_BUILD_ROOT/opt/elastix/
-chmod 644 setup/elastix-moduleconf/*
-chmod 755 setup/elastix-moduleconf/elxupdaterd
 mv setup/elastix-moduleconf $RPM_BUILD_ROOT/opt/elastix/elastix-updater
 mkdir -p $RPM_BUILD_ROOT/etc/init.d/
 mv $RPM_BUILD_ROOT/opt/elastix/elastix-updater/elastix-updaterd $RPM_BUILD_ROOT/etc/init.d/
@@ -143,9 +140,9 @@ fi
 - CHANGED: Added Russian, Ukrainian translations.
   SVN Rev[7785]
 
-* Mon Jun 20 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-6
+* Mon Jun 20 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-5
 - CHANGED: Addons - Build/elastix-addons.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
+  SVN history. Bump Version and Release in specfile.
 
 * Mon Jun 20 2016 Alex Villacis Lasso <a_villacis@palosanto.com>
 - FIXED: Addons: work around change in location of primary_db in CentOS 7
@@ -157,20 +154,30 @@ fi
   additional way to find out the current timezone.
   SVN Rev[7600]
 
-* Tue Mar 08 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-5
+* Tue Mar 08 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
 - CHANGED: Addons - Build/elastix-addons.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
+  SVN history. Bump Version and Release in specfile.
 
 * Mon Mar  7 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Addons: fix differences in yum shell output that break addon
   installation in CentOS 7. Should fix Elastix bug #2471.
   SVN Rev[7509]
 
-* Wed Mar 02 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-4
+* Thu Feb 04 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-3
 - CHANGED: Addons - Build/elastix-addons.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
+  SVN history. Bump Version and Release in specfile.
+  SVN Rev[7461]
 
-* Tue Oct 27 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+* Thu Feb 04 2016 Luis Abarca <labarca@palosanto.com>
+- CHANGED: addons - comercial-addons.repo: Modified a version of repo for
+  compatibility with Elx 4.
+  SVN Rev[7460]
+
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: Addons - Build/elastix-addons.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
+* Tue Oct 27 2015 Alex VillacĂ­s Lasso <a_villacis@palosanto.com>
 - CHANGED: Addons: explicitly spell out previously hidden package requirements
   that provide system commands.
   SVN Rev[7259]
@@ -179,19 +186,25 @@ fi
 - CHANGED: Addons: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7232]
 
-* Wed Oct 14 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Addons: route through registration module instead of register.php.
   This requires new framework support.
   SVN Rev[7191]
+
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: Addons - Build/elastix-addons.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Mon Jun 29 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-3
 - CHANGED: Addons - Build/elastix-addons.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 - ADDED: Addons - commercial-addons.repo: New repo Iperfex has been added to the addons repo.
+  SVN Rev[6850]
 
 * Fri Feb 13 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-2
 - CHANGED: Addons - Build/elastix-addons.spec: update specfile with latest
   SVN history. Bump Version and Release in specfile.
+  SVN Rev[6847]
 
 * Wed Jan 21 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
 - CHANGED: In addition to the architecture check, the PostgreSQL repo must be

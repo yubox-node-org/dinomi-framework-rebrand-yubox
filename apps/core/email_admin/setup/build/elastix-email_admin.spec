@@ -2,7 +2,7 @@
 
 Summary: Elastix Module Email
 Name:    elastix-%{modname}
-Version: 2.5.0
+Version: 4.0.0
 Release: 6
 License: GPL
 Group:   Applications/System
@@ -10,7 +10,7 @@ Source0: %{modname}_%{version}-%{release}.tgz
 #Source0: %{modname}_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Prereq: elastix-framework >= 2.5.0-16
+Prereq: elastix-framework >= 4.0.0-14
 Prereq: RoundCubeMail
 Prereq: php-imap
 Prereq: postfix, spamassassin, cyrus-imapd
@@ -210,9 +210,9 @@ fi
 - CHANGED: Added Ukrainian, Russian translations.
   SVN Rev[7787]
 
-* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-6
+* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-6
 - CHANGED: Email_admin - Build/elastix-email_admin.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
+  SVN history. Bump Version and Release in specfile.
 
 * Thu Aug 18 2016 Alex Villacis Lasso <a_villacis@palosanto.com>
 - CHANGED: Email Accounts: unconditionally allow mailbox reconstruction. It does
@@ -231,7 +231,7 @@ fi
   Also fix date and day interval update for changed datepicker.
   SVN Rev[7721]
 
-* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-5
+* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-5
 - CHANGED: Vacations: remove dead code, mark some methods as private.
   SVN Rev[7719]
 - CHANGED: Vacations,Antispam: move two methods from paloSantoAntispam that are
@@ -276,7 +276,7 @@ fi
   an additional way to find out the current timezone.
   SVN Rev[7601]
 
-* Thu Feb 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-4
+* Mon Jan 18 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
 - CHANGED: Email_admin - Build/elastix-email_admin.spec: update specfile with latest
   SVN history. Bump Version and Release in specfile.
 
@@ -297,6 +297,10 @@ fi
 - CHANGED: Remote SMTP: display SMTP base error along with high level error on
   failure to check SMTP information.
   SVN Rev[7401]
+
+* Wed Nov 11 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-3
+- CHANGED: Email_admin - Build/elastix-email_admin.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Mon Nov  9 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Vacations: implement substitution of {END_DATE} in Subject line. Add
@@ -336,13 +340,22 @@ fi
 - FIXED: Vacations: cyrus-sasl-plain is required for Vacations.
   SVN Rev[7285]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: Email_admin - Build/elastix-email_admin.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Email_admin: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7235]
 
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: Email_admin - Build/elastix-email_admin.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Sep 25 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-3
 - CHANGED: Email_admin - Build/elastix-email_admin.spec: update specfile with latest
   SVN history. Bump Version and Release in specfile.
+  SVN Rev[7156]
 
 * Sun Mar 29 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
 - CHANGED: Remote SMTP - jQuery-1.11.2 migration: fix incorrect use of attribute

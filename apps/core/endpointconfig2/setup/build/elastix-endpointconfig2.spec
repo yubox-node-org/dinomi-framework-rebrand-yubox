@@ -2,8 +2,8 @@
 
 Summary: Elastix Module Distributed Dial Plan
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 6
+Version: 4.0.0
+Release: 4
 License: GPL
 Group:   Applications/System
 Source0: %{modname}_%{version}-%{release}.tgz
@@ -215,7 +215,7 @@ fi
   unassigned account reporting. Fixes Elastix bug #2584.
   SVN Rev[7749]
 
-* Mon Sep 05 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-6
+* Mon Sep 05 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
 - CHANGED: endpointconfig2 - Build/elastix-endpointconfig2.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -224,7 +224,7 @@ fi
   required parent menus in menu.xml.
   SVN Rev[7743]
 
-* Wed May 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-5
+* Wed May 25 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-3
 - CHANGED: endpointconfig2 - Build/elastix-endpointconfig2.spec: update specfile with latest
   SVN history. Bump Version and Release in specfile.
 
@@ -238,13 +238,22 @@ fi
   Russian.
   SVN Rev[7592]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: endpointconfig2 - Build/elastix-endpointconfig2.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Endpoint Configurator: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7236]
 
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: endpointconfig2 - Build/elastix-endpointconfig2.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Sep 25 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-4
 - CHANGED: endpointconfig2 - Build/elastix-endpointconfig2.spec: update specfile with latest
   SVN history. Bump Version and Release in specfile.
+  SVN Rev[7156]
 
 * Fri Sep 25 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
 - CHANGED: Endpoint Configurator: introduce new Fanvil model D900.

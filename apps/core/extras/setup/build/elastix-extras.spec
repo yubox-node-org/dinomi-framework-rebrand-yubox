@@ -2,8 +2,8 @@
 
 Summary: Elastix Extras
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 1
+Version: 4.0.0
+Release: 3
 License: GPL
 Group:   Applications/System
 Source0: %{modname}_%{version}-%{release}.tgz
@@ -64,6 +64,10 @@ fi
 - CHANGED: Added Ukrainian, Russian translations.
   SVN Rev[7789]
 
+* Wed Nov 11 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-3
+- CHANGED: extras - Build/elastix-extras.spec: update specfile with latest
+  SVN history. Bumped version and release in specfile.
+
 * Fri Nov  6 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Extras: replace "Manufacturer" with "Developer" everywhere.
   SVN Rev[7336]
@@ -73,9 +77,17 @@ fi
   load_language_module().
   SVN Rev[7303]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: extras - Build/elastix-extras.spec: update specfile with latest
+  SVN history. Bumped version and release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: extras: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7237]
+
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: extras - Build/elastix-extras.spec: update specfile with latest
+  SVN history. Bumped version and release in specfile.
 
 * Tue Nov 11 2014 Luis Abarca <labarca@palosanto.com> 2.5.0-1
 - CHANGED: extras - Build/elastix-extras.spec: update specfile with latest
@@ -84,10 +96,12 @@ fi
 * Mon May 26 2014 Bruno Macias <bmacias@palosanto.com> 2.4.0-5
 - DELETED: extras - framed menu, vtigerCRM was deleted. Now VtigerCRM is a
   Addons.
+  SVN Rev[6632]
 
 * Wed Apr 09 2014 Luis Abarca <labarca@palosanto.com> 2.4.0-4
 - CHANGED: extras - Build/elastix-extras.spec: update specfile with latest
   SVN history. Bumped release in specfile.
+  SVN Rev[6580]
 
 * Mon Apr 07 2014 Luis Abarca <labarca@palosanto.com>
 - REMOVED: extras - elastix-extras.spec: Due to SVN commit 5723, the static

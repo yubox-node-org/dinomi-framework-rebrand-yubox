@@ -2,15 +2,15 @@
 
 Summary: Elastix Module Reports
 Name:    elastix-reports
-Version: 2.5.0
-Release: 8
+Version: 4.0.0
+Release: 6
 License: GPL
 Group:   Applications/System
 Source0: %{modname}_%{version}-%{release}.tgz
 #Source0: %{modname}_%{version}-7.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Prereq: elastix-framework >= 2.5.0-16
+Prereq: elastix-framework >= 4.0.0-14
 Prereq: asterisk
 Requires: php-jpgraph
 
@@ -97,9 +97,9 @@ fi
 - CHANGED: Added Ukrainian translations.
   SVN Rev[7793]
 
-* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-8
+* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-6
 - CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
-  SVN history. Bump release in specfile.
+  SVN history. Bump version and release in specfile.
 
 * Fri Aug 19 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Missed Calls: declare custom privilege viewany on module. Part of the
@@ -110,9 +110,9 @@ fi
 - CHANGED: (trivial) Missed Calls: replace tabs with spaces
   SVN Rev[7725]
 
-* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-7
+* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-5
 - CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
-  SVN history. Bump release in specfile.
+  SVN history. Bump version and release in specfile.
   SVN Rev[7712]
 
 * Sat Aug 13 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
@@ -121,9 +121,10 @@ fi
   of the fix for Elastix bug #1100.
   SVN Rev[7700]
 
-* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-6
+* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
 - CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
-  SVN history. Bump release in specfile.
+  SVN history. Bump version and release in specfile.
+  SVN Rev[7677]
 
 * Sun Jul 10 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: CDR Report: add and use compatibility function hasModulePrivilege()
@@ -137,9 +138,9 @@ fi
 - CHANGED: added Russian translations by user Russian.
   SVN Rev[7594]
 
-* Mon Feb 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-5
+* Wed Apr 13 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-3
 - CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
-  SVN history. Bump release in specfile.
+  SVN history. Bump version and release in specfile.
 
 * Tue Nov  3 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Summary by Extension: switch all uses of $arrLang to _tr() and
@@ -161,17 +162,26 @@ fi
   hand-coded translation loading with load_language_module().
   SVN Rev[7319]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
+  SVN history. Bump version and release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: reports: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7243]
 
-* Tue Oct 20 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: CDR Report: (trivial) sync with tenant rework.
   SVN Rev[7201]
+
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
+  SVN history. Bump version and release in specfile.
 
 * Fri Sep 25 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-4
 - CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
   SVN history. Bump release in specfile.
+  SVN Rev[7156]
 
 * Mon Mar  2 2015 Alex Villacis Lasso <a_villacis@palosanto.com>
 - CHANGED: elastix-reports does not directly require php-tcpdf. Instead it is
@@ -181,6 +191,7 @@ fi
 * Mon Mar 02 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-3
 - CHANGED: reports - Build/elastix-reports.spec: update specfile with latest
   SVN history. Bump release in specfile.
+  SVN Rev[6884]
 
 * Fri Feb 27 2015 Armando Chuto <armando@palosanto.com>
 - ADDED: framework/report added tcpdf library

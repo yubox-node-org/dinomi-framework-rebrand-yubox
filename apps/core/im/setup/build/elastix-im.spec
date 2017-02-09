@@ -2,8 +2,8 @@
 
 Summary: Elastix IM
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 1
+Version: 4.0.0
+Release: 2
 License: GPL
 Group:   Applications/System
 #Source0: %{modname}_%{version}-%{release}.tgz
@@ -67,17 +67,27 @@ fi
 - CHANGED: OF wrapper: switch all uses of $arrLang to _tr().
   SVN Rev[7309]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: im - Build/elastix-im.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: im: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7239]
 
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: im - Build/elastix-im.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Tue Nov 11 2014 Luis Abarca <labarca@palosanto.com> 2.5.0-1
 - CHANGED: im - Build/elastix-im.spec: update specfile with latest
   SVN history. Bump Version and Release in specfile.
+  SVN Rev[6773]
 
 * Mon May 27 2013 Luis Abarca <labarca@palosanto.com> 2.4.0-2
 - CHANGED: im - Build/elastix-im.spec: update specfile with latest
   SVN history. Bump Release in specfile.
+  SVN Rev[5013]
 
 * Thu May 23 2013 Alex Villacis Lasso <a_villacis@palosanto.com>
 - FIXED: im: hardcode IP and port for openfire redirect instead of picking them

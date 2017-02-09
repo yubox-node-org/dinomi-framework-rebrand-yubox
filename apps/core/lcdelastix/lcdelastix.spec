@@ -1,7 +1,7 @@
 Summary: LCDproc client for Elastix status display
 Name: lcdelastix
-Version: 1.4.1
-Release: 1
+Version: 4.0.0
+Release: 3
 License: GPL
 Group: Applications/System
 Source0: lcdelastix-%{version}.tar.bz2
@@ -60,7 +60,7 @@ fi
 /opt/lcdelastix/*
 
 %changelog
-* Thu Jun 23 2016 Alex Villacis Lasso <a_villacis@palosanto.com> 1.4.1-1
+* Thu Jun 23 2016 Alex Villacis Lasso <a_villacis@palosanto.com> 4.0.0-3
 - Bump version for release
 - FIXED: lcdelastix: add Requires: usbutils for lsusb.
   SVN Rev[7635]
@@ -78,9 +78,15 @@ fi
   an additional way to find out the current timezone.
   SVN Rev[7603]
 
+* Tue Oct 27 2015 Alex Villacis Lasso <a_villacis@palosanto.com> 4.0.0-2
+- Bump version for release.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: lcdelastix: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7240]
+
+* Tue Sep 29 2015 Alex Villacis Lasso <a_villacis@palosanto.com> 4.0.0-1
+- Bump version for release.
 
 * Wed Aug 28 2013 Alex Villacis Lasso <a_villacis@palosanto.com> 1.4.1-0
 - Bump version for release.

@@ -2,7 +2,7 @@
 
 Summary: Elastix Module Fax
 Name:    elastix-%{modname}
-Version: 2.5.0
+Version: 4.0.0
 Release: 3
 License: GPL
 Group:   Applications/System
@@ -202,7 +202,7 @@ fi
   an additional way to find out the current timezone.
   SVN Rev[7602]
 
-* Thu Feb 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-3
+* Wed Apr 13 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-3
 - CHANGED: Fax - Build/elastix-fax.spec: Update specfile with latest SVN
   history. Changed Version and Release in specfile.
 
@@ -223,13 +223,22 @@ fi
   hand-coded translation loading with load_language_module().
   SVN Rev[7304]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: Fax - Build/elastix-fax.spec: Update specfile with latest SVN
+  history. Changed Version and Release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Fax: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7238]
 
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: Fax - Build/elastix-fax.spec: Update specfile with latest SVN
+  history. Changed Version and Release in specfile.
+
 * Mon Mar 02 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-2
 - CHANGED: Fax - Build/elastix-fax.spec: Update specfile with latest SVN
   history. Changed Version and Release in specfile.
+  SVN Rev[6888]
 
 * Mon Feb 23 2015 Armando Chuto <armando@palosanto.com>
 - CHANGED: /apps/core/fax/setup/hylafax/bin changed route of PHPMailer library

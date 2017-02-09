@@ -2,8 +2,8 @@
 
 Summary: Elastix Module Agenda
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 3
+Version: 4.0.0
+Release: 4
 License: GPL
 Group:   Applications/System
 Source0: %{modname}_%{version}-%{release}.tgz
@@ -128,6 +128,10 @@ fi
   user danardf. Fixes Elastix bug #2592.
   SVN Rev[7748]
 
+* Wed Apr 13 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-4
+- CHANGED: Agenda - Build/elastix-agenda.spec: update specfile with latest
+  SVN history. Bump version and release in specfile.
+
 * Thu Dec 31 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Address Book: extend registration status report for list of all
   internal contacts. Tweak so that only one external command is required per
@@ -138,6 +142,10 @@ fi
 - CHANGED: Address Book: report on registration status of internal contact if
   using SIP or IAX2 technology.
   SVN Rev[7410]
+
+* Wed Nov 11 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-3
+- CHANGED: Agenda - Build/elastix-agenda.spec: update specfile with latest
+  SVN history. Bump version and release in specfile.
 
 * Fri Nov  6 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Calendar: use 204 No Content instead of 205 Reset Content when saving
@@ -153,7 +161,6 @@ fi
   hand-coded translation loading with load_language_module().
   SVN Rev[7290]
 
-* Fri Oct 30 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Calendar: when invoked as a contact list helper for graphic_report,
   the event_id input tag is absent, but the js code assumed it was present. The
   REST rewrite now displays an error in this case. Fixed by checking for the
@@ -163,6 +170,10 @@ fi
 * Thu Oct 29 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Calendar: tweaks for tenant theme support by Edgar Landivar.
   SVN Rev[7272]
+
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: Agenda - Build/elastix-agenda.spec: update specfile with latest
+  SVN history. Bump version and release in specfile.
 
 * Tue Oct 27 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Calendar: use /proc file instead of running hostname command.
@@ -176,14 +187,21 @@ fi
   SVN Rev[7233]
 
 * Mon Oct 19 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
-- Added: Calendar: add Russian translation by user Russian.
+  Added: Calendar: add Russian translation by user Russian.
   SVN Rev[7195]
+
+* Mon Oct 19 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - ADDED: Address Book: add Russian translation by user Russian.
   SVN Rev[7194]
+
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: Agenda - Build/elastix-agenda.spec: update specfile with latest
+  SVN history. Bump version and release in specfile.
 
 * Thu Apr 09 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-3
 - CHANGED: Agenda - Build/elastix-agenda.spec: update specfile with latest
   SVN history. Bump version and release in specfile.
+  SVN Rev[6972]
 
 * Thu Apr 02 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Calendar: fix regexp that separates friendly name from email address.

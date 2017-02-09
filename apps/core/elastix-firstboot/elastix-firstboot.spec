@@ -1,6 +1,6 @@
 Summary: Elastix First Boot Setup
 Name:    elastix-firstboot
-Version: 2.5.0
+Version: 4.0.0
 Release: 3
 License: GPL
 Group:   Applications/System
@@ -12,6 +12,9 @@ Requires: sed, grep
 Requires: coreutils
 Conflicts: elastix-mysqldbdata
 Requires(post): chkconfig, /bin/cp
+
+# commands: /bin/chvt
+Requires: kbd
 
 Requires: /usr/sbin/saslpasswd2
 
@@ -132,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/elastix-admin-passwords
 
 %changelog
-* Thu Jan 14 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-3
+* Thu Jan 14 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-3
 - CHANGED: firstboot - Build/elastix-firstboot.spec:  update specfile with latest
   SVN history. Bumped Version and Release in specfile.
 
@@ -142,29 +145,28 @@ rm -rf $RPM_BUILD_ROOT
   adminpasswd.
   SVN Rev[7415]
 
-* Mon Dec 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com> 
+* Mon Dec 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: chvt is required for VT switching for password request on Elastix 4.
   SVN Rev[7405]
-
-* Mon Dec 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: elastix-admin-passwords: saslpasswd2 is required for
   elastix-admin-passwords.
   SVN Rev[7404]
 
-* Wed Oct 28 2015 Luis Abarca <labarca@palosanto.com> 
-- ADDED: branch/2.5.0 - setup/build/4: Due to Elastix 2.5 in Centos 7 share
-  rpms with Elastix 2.5 we decide to keep inside the branch 2.5 in a separate
-  folder only the changes exclusively made for Elastix 4.
-  SVN Rev[7262]
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: firstboot - Build/elastix-firstboot.spec:  update specfile with latest
+  SVN history. Bumped Version and Release in specfile.
 
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: firstboot: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7234]
 
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: firstboot - Build/elastix-firstboot.spec:  update specfile with latest
+  SVN history. Bumped Version and Release in specfile.
+
 * Fri Feb 13 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-2
 - CHANGED: firstboot - Build/elastix-firstboot.spec:  update specfile with latest
   SVN history. Bumped Version and Release in specfile.
-  SVN Rev[6851]
 
 * Fri Feb 13 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
   Framework: create systemd service file for elastix-firstboot

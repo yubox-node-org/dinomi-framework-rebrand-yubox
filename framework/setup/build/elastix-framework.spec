@@ -1,8 +1,8 @@
 Summary: Elastix is a Web based software to administrate a PBX based in open source programs
 Name: elastix-framework
 Vendor: Palosanto Solutions S.A.
-Version: 2.5.0
-Release: 20
+Version: 4.0.0
+Release: 18
 License: GPL
 Group: Applications/System
 #Source: elastix-framework_%{version}-%{release}.tgz
@@ -18,7 +18,7 @@ Prereq: elastix-firstboot >= 2.3.0-4
 Prereq: /sbin/pidof
 Obsoletes: elastix-additionals
 Provides: elastix-additionals
-Conflicts: elastix-system <= 2.5.0-5
+Conflicts: elastix-system <= 4.0.0-8
 Conflicts: elastix-callcenter <= 2.0.0-16
 Conflicts: elastix-pbx <= 2.2.0-16
 Conflicts: elastix-fax <= 2.2.0-5
@@ -225,7 +225,7 @@ rm -f /usr/share/elastix/sudoers
 
 # ** Change content of CentOS-Base.repo ** #
 if [ -e /etc/yum.repos.d/CentOS-Base.repo ] ; then
-    /usr/bin/elastix-add-yum-exclude /etc/yum.repos.d/CentOS-Base.repo 'redhat-logos' 'php53*'
+    /usr/bin/elastix-add-yum-exclude /etc/yum.repos.d/CentOS-Base.repo 'redhat-logos' 'php53*' 'kernel*'
 fi
 
 # Patch httpd.conf so that User and Group directives in elastix.conf take effect
@@ -414,7 +414,7 @@ rm -rf $RPM_BUILD_ROOT
   Russian strings on main language files.
   SVN Rev[7777]
 
-* Wed Nov 23 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-20
+* Wed Nov 23 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-18
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -423,7 +423,7 @@ rm -rf $RPM_BUILD_ROOT
   and /var/www/html/var/cache being owned by root instead of asterisk.
   SVN Rev[7768]
 
-* Thu Nov 17 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-19
+* Thu Nov 17 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-17
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -460,7 +460,7 @@ rm -rf $RPM_BUILD_ROOT
   force right-alignment of dismissal button.
   SVN Rev[7745]
 
-* Fri Sep 02 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-18
+* Fri Sep 02 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-16
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -476,7 +476,7 @@ rm -rf $RPM_BUILD_ROOT
   sample value in sampler.php.
   SVN Rev[7739]
 
-* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-17
+* Mon Aug 22 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-15
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -490,7 +490,7 @@ rm -rf $RPM_BUILD_ROOT
 - FIXED: Userlist: improve template correctness on user modification popup.
   SVN Rev[7720]
 
-* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-16
+* Tue Aug 16 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-14
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -522,7 +522,7 @@ rm -rf $RPM_BUILD_ROOT
   SVN Rev[7698]
 - CHANGED: Framework: code cleanup in paloSantoInstaller.class.php.
   SVN Rev[7697]
-- CHANGED: Framework: use SQL parameters in paloMenu::createMenu and paloMenu::
+- CHANGE: Framework: use SQL parameters in paloMenu::createMenu and paloMenu::
   updateItemMenu. Introduce stricter checks on parameter consistency and
   existence of parent menu.
   SVN Rev[7696]
@@ -550,7 +550,7 @@ rm -rf $RPM_BUILD_ROOT
   ago. A later commit will replace it with the rewritten plugin-aware module.
   SVN Rev[7689]
 
-* Mon Aug 08 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-15
+* Mon Aug 08 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-13
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -577,7 +577,7 @@ rm -rf $RPM_BUILD_ROOT
   regardless of the logged-in user. For now available only on Tenant theme.
   SVN Rev[7680]
 
-* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-14
+* Fri Jul 15 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-12
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   SVN history. Bump Release in specfile.
 
@@ -629,6 +629,10 @@ rm -rf $RPM_BUILD_ROOT
   not only the ones in English and Spanish.
   SVN Rev[7590]
 
+* Wed Apr 13 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-11
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Fri Apr  8 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: force registration popup to appear on first logged-in
   display if system is not registered.
@@ -640,18 +644,18 @@ rm -rf $RPM_BUILD_ROOT
   uploads.
   SVN Rev[7519]
 
-* Fri Mar 11 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-13
+* Fri Mar 11 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-10
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
+  SVN history. Bump Version and Release in specfile.
 
 * Thu Mar 10 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: work around PHP 5.1.x bug in PDO that internally truncates
   integer values to 32 bits even on x86_64. Further fix for Elastix bug #2477.
   SVN Rev[7516]
 
-* Thu Mar 10 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-12
+* Thu Mar 10 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-9
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
+  SVN history. Bump Version and Release in specfile.
 
 * Mon Mar  7 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: prevent string-to-int conversion on database write if
@@ -671,31 +675,40 @@ rm -rf $RPM_BUILD_ROOT
   is made to preserve key aspects of L&F, particularly the mini-menu feature.
   SVN Rev[7504]
 
-* Tue Feb 25 2016 Luis Abarca <labarca@palosanto.com> 2.5.0-11
-- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
-  SVN history. Bump Release in specfile.
-  SVN Rev[7489]
-
 * Fri Feb 12 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: use correct method set_error to report problems on user
   extension report.
   SVN Rev[7476]
 
-* Wed Feb 10 2016 Luis Abarca <labarca@palosanto.com>
+* Wed Feb 10 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-8
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 - CHANGED: branches/2.5.0 - _menu.tpl: Corrected icons in the notification
   header of Tenant theme.
   SVN Rev[7472]
 
-* Fri Feb 05 2016 Luis Abarca <labarca@palosanto.com>
+* Fri Feb 05 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-7
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+  SVN Rev[7463]
 - CHANGED: branches/2.5.0 - styles.css-_menu.tpl: Corrected positions in
   framework about sticky note and hide some icons of functionalities currently
   in development.
   SVN Rev[7462]
 
+* Thu Feb 04 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-6
+- CHANGED: framework - Build/elastix-fram+ework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+  SVN Rev[7459]
+
 * Mon Feb  1 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: added new _elastixutils action to expose telephony user
   and password. Intended to be used with Elastix Webphone.
   SVN Rev[7456]
+
+* Mon Jan 18 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-5
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Thu Jan  7 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: block kernel updates. The CentOS 7 kernel ABI is changing
@@ -712,6 +725,10 @@ rm -rf $RPM_BUILD_ROOT
   SVN Rev[7395]
 - FIXED: Framework: reverse LIMIT filter on SQL because of SQLITE errors.
   SVN Rev[7394]
+
+* Mon Dec 07 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-4
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Mon Nov 30 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: relax icon file validation in paloSantoGrid class. The
@@ -763,6 +780,11 @@ rm -rf $RPM_BUILD_ROOT
   where the selected item would cause the overflow menu to overflow itself after
   being re-added to the main menu.
   SVN Rev[7355]
+
+* Wed Nov 11 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-3
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+  SVN Rev[7353]
 
 * Wed Nov 10 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: introduce methods paloACL::getUserProfileProperty() and
@@ -849,6 +871,10 @@ rm -rf $RPM_BUILD_ROOT
 - CHANGED: Framework: elastix-framework-themes-extras requires elastix-framework
   SVN Rev[7264]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
+
 * Tue Oct 27 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: explicitly spell out previously hidden package
   requirements that provide system commands.
@@ -858,24 +884,38 @@ rm -rf $RPM_BUILD_ROOT
 - CHANGED: Framework: attempt 1 to split off all themes except tenant and
   blackmin into a separate package.
   SVN Rev[7256]
+
+* Mon Oct 26 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - DELETED: menusAdminElx: apparently not used anywhere.
   SVN Rev[7255]
+
+* Mon Oct 26 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: allow ELASTIX_ROOT to specify location of base Elastix
   for command-line tools.
   SVN Rev[7254]
+
+* Mon Oct 26 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - DELETED: elastix-menutranslate: apparently not used anywhere.
   SVN Rev[7253]
+
+* Mon Oct 26 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: elastix-menumerge, elastix-menuremove: use elastix_dsn instead of
   hardcoding sqlite DSN.
   SVN Rev[7252]
+
+* Mon Oct 26 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Group Permission: use elastix_dsn.menu instead of hardcoding DSN.
   SVN Rev[7251]
+
+* Mon Oct 26 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: use elastix_dsn.acl instead of hardcoding sqlite DSN.
   SVN Rev[7250]
-- CHANGED: Framework: use elastix_dsn.acl instead of hardcoding sqlite DSN. Code
-  cleanup of bookmark add/remove code. Ensure AJAX response for bookmark request
-  is of type application/json. Update error message on bookmark list full. Add
-  Spanish translations for messages.
+
+* Mon Oct 26 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: Framework: use elastix_dsn.acl instead of hardcoding sqlite DSN.
+  Code cleanup of bookmark add/remove code. Ensure AJAX response for bookmark
+  request is of type application/json. Update error message on bookmark list
+  full. Add Spanish translations for messages.
   SVN Rev[7249]
 
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
@@ -883,13 +923,22 @@ rm -rf $RPM_BUILD_ROOT
   SVN Rev[7231]
 
 * Thu Oct 22 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+  SVN Rev[7230]
+
+* Thu Oct 22 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: use Bootstrap grid system properly on tenant theme, fixes
   overlapping link bar on low resolution screens.
   SVN Rev[7229]
+
+* Thu Oct 22 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: add several tool links for tenant theme.
   SVN Rev[7228]
+
+* Thu Oct 22 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: tweak button style in blackmin theme.
   SVN Rev[7227]
+
+* Thu Oct 22 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: fix table grid rounded borders on tenant theme on Firefox.
   Migrate table grid style on tenant to use elastix-standard-table class.
   SVN Rev[7225]
@@ -897,42 +946,77 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: tweak list table to prevent incorrect positioning.
   SVN Rev[7223]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: use font icons in blackmin theme.
   SVN Rev[7222]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: whitelist entypo font icons. If a control specifies a
   font icon, it is checked against the font-awesome whitelist, followed by the
   entypo whitelist.
   SVN Rev[7220]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: remove theme guard in paloSantoGrid, allowing the font
   icon to be used on any theme that knows about it.
   SVN Rev[7219]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+  SVN Rev[7218]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: Framework: move font icons from tenant theme to libs/font-icons so
+  all themes can use them. Update paloSantoNavigation to add links to fonts
+  under font-icons.
+  SVN Rev[7217]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: move font icons from tenant theme to libs/font-icons so
   all themes can use them. Update paloSantoNavigation to add links to fonts
   under font-icons.
   SVN Rev[7216]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: code cleanup in paloSantoNavigation.
   SVN Rev[7215]
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - DELETED: Framework: (trivial) remove backup css file in tenant theme.
   SVN Rev[7214]
-- CHANGED: Framework: (trivial) fix background-image paths on tenant css styles.
+
+* Wed Oct 21 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: Framework: (trivial) fix background-image paths on tenant css
+  styles.
   SVN Rev[7212]
 
 * Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: (trivial) tweak button class in blackmin theme to make it
   more similar to an input button.
   SVN Rev[7205]
-- FIXED: Framework: use module name instead of id for shortcuts in tenant theme.
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- FIXED: Framework: use module name instead of id for shortcuts in tenant
+  theme.
   SVN Rev[7203]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: allow modules to specify a icon class for the tenant
   theme. Currently this will show no icon on other themes.
   SVN Rev[7202]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: update link control in paloSantoGrid for tenant theme so
   that it displays the font icon, while preserving backward compatibility with
-  other themes and custom icons. Opportunistically map known framework icons
-  to font icons in addAction method.
+  other themes and custom icons. Opportunistically map known framework icons to
+  font icons in addAction method.
   SVN Rev[7200]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: rework of tenant theme by Edgar Landivar.
   SVN Rev[7199]
+
+* Tue Oct 20 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - DELETED: Framework: remove fonts.old folder in tenant theme.
   SVN Rev[7198]
 
@@ -944,38 +1028,62 @@ rm -rf $RPM_BUILD_ROOT
 - DELETED: Framework: remove register.php helper. Update Conflicts: for
   elastix-addons to match.
   SVN Rev[7192]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: add register_link as a standard CSS class for all themes.
   SVN Rev[7190]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: use plain $.get instead of request() for three dialogs.
   SVN Rev[7189]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: route all registration actions through explicit
   registration module instead of register.php.
   SVN Rev[7188]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: move Content-Type assignments to cover registration error
   cases.
   SVN Rev[7187]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: use jQuery instead of onclick for registration link.
   SVN Rev[7186]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: move one javascript function to registration module. Fix
   the rest of the base.js calls to use registration module explicitly.
   SVN Rev[7185]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: Framework: add Content-Type: application/json to all registration
   responses.
   SVN Rev[7184]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: the _elastixutils module is no longer "special". Instead
   a list is defined in the framework configuration for modules to be provided
-  without ACL authorization. This enables functionality to be migrated away from
-  register.php and removes the _elastixutils special case.
+  without ACL authorization. This enables functionality to be migrated away
+  from register.php and removes the _elastixutils special case.
+  SVN Rev[7183]
+
+* Wed Oct 14 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: Framework: the _elastixutils module is no longer "special". Instead
+  a list is defined in the framework configuration for modules to be provided
+  without ACL authorization. This enables functionality to be migrated away
+  from register.php and removes the _elastixutils special case.
   SVN Rev[7182]
 
 * Tue Oct 13 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Updated Russian translation (2). Provided by user Russian.
   SVN Rev[7179]
 
-* Thu Oct  8 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+* Thu Oct 08 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Updated Russian translation. Provided by user Russian.
   SVN Rev[7176]
-* Tue Oct  6 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+
+* Tue Oct 06 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: code cleanup in paloSantoACL class:
   - all cases of string concatenation for SQL replaced with SQL parameters
   - factored common read patterns into helper functions
@@ -983,21 +1091,39 @@ rm -rf $RPM_BUILD_ROOT
   - added missing cascade deletion in user and resource deletion.
   SVN Rev[7173]
 
-* Mon Oct  5 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+* Mon Oct 05 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: use backticks for column names that are reserved keywords
   in MySQL.
   SVN Rev[7172]
+
+* Mon Oct 05 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: isolate sqlite3-specific operations in menu list.
   SVN Rev[7171]
-- CHANGED: Framework (trivial): add error message reporting for failure to filter
-  menulist.
+
+* Mon Oct 05 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: Framework (trivial): add error message reporting for failure to
+  filter menulist
   SVN Rev[7170]
+
+* Mon Oct 05 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: tweaks to make framework (mostly) relocatable - REST
   SVN Rev[7169]
+
+* Mon Oct 05 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: tweaks to make framework (mostly) relocatable - Help.
   SVN Rev[7168]
+
+* Mon Oct 05 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: Framework: tweaks to make framework (mostly) relocatable - GUI.
+  SVN Rev[7167]
+
+* Mon Oct 05 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Framework: tweaks to make framework (mostly) relocatable - GUI.
   SVN Rev[7166]
+
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  SVN history. Bump Version and Release in specfile.
 
 * Fri Sep 25 2015 Luis Abarca <labarca@palosanto.com> 2.5.0-10
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest

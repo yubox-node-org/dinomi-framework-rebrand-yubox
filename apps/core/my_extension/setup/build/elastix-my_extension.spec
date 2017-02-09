@@ -2,8 +2,8 @@
 
 Summary: Elastix My Extension
 Name:    elastix-%{modname}
-Version: 2.5.0
-Release: 1
+Version: 4.0.0
+Release: 2
 License: GPL
 Group:   Applications/System
 Source0: %{modname}_%{version}-%{release}.tgz
@@ -100,17 +100,27 @@ fi
   that the DND and Call Forward states are properly signaled in Asterisk.
   SVN Rev[7753]
 
+* Tue Oct 27 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-2
+- CHANGED: my_extension - Build/elastix-my_extension.spec: update specfile with latest
+  SVN history. Bump Release in specfile.
+
 * Fri Oct 23 2015 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: my_extension: massive s/www.elastix.org/www.elastix.com/g
   SVN Rev[7241]
 
+* Tue Sep 29 2015 Luis Abarca <labarca@palosanto.com> 4.0.0-1
+- CHANGED: my_extension - Build/elastix-my_extension.spec: update specfile with latest
+  SVN history. Bump Release in specfile.
+
 * Tue Nov 11 2014 Luis Abarca <labarca@palosanto.com> 2.5.0-1
 - CHANGED: my_extension - Build/elastix-my_extension.spec: update specfile with latest
   SVN history. Bump Release in specfile.
+  SVN Rev[6773]
 
 * Wed Apr 09 2014 Luis Abarca <labarca@palosanto.com> 2.4.0-6
 - CHANGED: my_extension - Build/elastix-my_extension.spec: update specfile with latest
   SVN history. Bump Release in specfile.
+  SVN Rev[6580]
 
 * Mon Jan 27 2014 Luis Abarca <labarca@palosanto.com>
 - CHANGED: framework,my_extension - index.html,paloSantoValidar.class.php: A
