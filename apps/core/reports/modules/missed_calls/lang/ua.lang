@@ -1,0 +1,60 @@
+<?php
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
+  Codificación: UTF-8
+  +----------------------------------------------------------------------+
+  | Elastix version 0.5                                                  |
+  | http://www.elastix.com                                               |
+  +----------------------------------------------------------------------+
+  | Copyright (c) 2006 Palosanto Solutions S. A.                         |
+  +----------------------------------------------------------------------+
+  | Cdla. Nueva Kennedy Calle E 222 y 9na. Este                          |
+  | Telfs. 2283-268, 2294-440, 2284-356                                  |
+  | Guayaquil - Ecuador                                                  |
+  | http://www.palosanto.com                                             |
+  +----------------------------------------------------------------------+
+  | The contents of this file are subject to the General Public License  |
+  | (GPL) Version 2 (the "License"); you may not use this file except in |
+  | compliance with the License. You may obtain a copy of the License at |
+  | http://www.opensource.org/licenses/gpl-license.php                   |
+  |                                                                      |
+  | Software distributed under the License is distributed on an "AS IS"  |
+  | basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See  |
+  | the License for the specific language governing rights and           |
+  | limitations under the License.                                       |
+  +----------------------------------------------------------------------+
+  | The Original Code is: Elastix Open Source.                           |
+  | The Initial Developer of the Original Code is PaloSanto Solutions    |
+  +----------------------------------------------------------------------+
+  $Id: ua.lang,v 1.7 2016/10/16 19:02:42 LeNET support@lenet.com.ua Exp $ */
+global $arrLangModule;
+$arrLangModule = array(
+    "Missed Calls" => "Пропущені Виклики",
+    "Date" => "Дата",
+    "Source" => "Від кого",
+    "Start Date" => "Початкова Дата",
+    "End Date" => "Кінцева Дата",
+    "Destination" => "Кому",
+    "Number of attempts" => "Число спроб",
+    "year (s) " => "рік",
+    "month (s) " => "місяців",
+    "day (s) " => "днів",
+    "hour (s) " => "годин",
+    "minute (s) " => "хвилин",
+    "second (s) " => "секунд",
+    "Status" => "Статус",
+    "NO ANSWER" => "НЕМАЄ ВІДПОВІДІ",
+    "NO ANSWER - VOICEMAIL" => "НЕМАЄ ВІДПОВІДІ І ГОЛОСОВОЇ ПОШТИ",
+    "UNKNOWN" => "НЕВІДОМИЙ",
+    "ANSWERED" => "ПИЙНЯТИІ",
+    "The following fields contain errors" => "Наступні поля містять помилки",
+    "Show Filter" => "Показати Фільтр",
+    "Hide Filter" => "Приховати Фільтр",
+    "Filter applied " => "Поточний фільтр: ",
+    "Page" => "Сторінка",
+    "records" => "записів",
+    "of" => "з",
+    "No records match the filter criteria" => "Немає записів, що відповідають критеріям фільтру",
+    "Time since last call" => "Пройшло часу з останнього виклику",
+    "Download" => "Зкачати",
+);
+?>

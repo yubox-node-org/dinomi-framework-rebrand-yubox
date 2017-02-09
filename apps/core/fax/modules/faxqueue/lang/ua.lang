@@ -1,0 +1,55 @@
+<?php
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
+  CodificaciГіn: UTF-8
+  +----------------------------------------------------------------------+
+  | Elastix version 0.5                                                  |
+  | http://www.elastix.com                                               |
+  +----------------------------------------------------------------------+
+  | Copyright (c) 2006 Palosanto Solutions S. A.                         |
+  +----------------------------------------------------------------------+
+  | Cdla. Nueva Kennedy Calle E 222 y 9na. Este                          |
+  | Telfs. 2283-268, 2294-440, 2284-356                                  |
+  | Guayaquil - Ecuador                                                  |
+  | http://www.palosanto.com                                             |
+  +----------------------------------------------------------------------+
+  | The contents of this file are subject to the General Public License  |
+  | (GPL) Version 2 (the "License"); you may not use this file except in |
+  | compliance with the License. You may obtain a copy of the License at |
+  | http://www.opensource.org/licenses/gpl-license.php                   |
+  |                                                                      |
+  | Software distributed under the License is distributed on an "AS IS"  |
+  | basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See  |
+  | the License for the specific language governing rights and           |
+  | limitations under the License.                                       |
+  +----------------------------------------------------------------------+
+  | The Original Code is: Elastix Open Source.                           |
+  | The Initial Developer of the Original Code is PaloSanto Solutions    |
+  +----------------------------------------------------------------------+
+  $Id: ua.lang,v 1.1 2016/10/16 13:35:36 LeNET support@lenet.com.ua Exp $
+*/
+global $arrLangModule;
+$arrLangModule = array(
+'Fax Queue' => 'Черга Факсів',
+'Job ID' => 'ID Завдання',
+'Priority' => 'Пріоритет',
+'Destination' => 'Адресат',
+'Pages' =>  'Сторінок',
+'Retries' => 'Повтор',
+'Status' => 'Статус',
+'Sent %d pages of %d' => 'Відправлено %d сторінок з %d',
+'Try %d of %d' => 'Спроба %d з %d',
+'Busy signal detected' => 'Сигнал виявлений',
+'No carrier detected' => 'Носій не виявлено',
+'No answer from remote' => 'Немає відповіді від видаленого',
+'Could not read request file' => 'Не вдалося прочитати файл запиту',
+'Blocked by another job' => 'Блоковано іншим завданням',
+'Delayed by prior call' => 'Затримка за попереднім викликом',
+'Are you sure to cancel selected jobs?' => 'Ви упевнені що хочете відмінити вибрані завдання?',
+'Cancel job' => 'Відміна завдання',
+'Failed to cancel job' => 'Не вдалося відмінити завдання',
+// Note: truncation on faxstat output
+'Blocked by concurrent cal' => 'Блоковано конкуруючим викликом',
+"No local dialtone" => "Не вдалося набрати номер",
+"No records match the filter criteria" => "Немає записів, що відповідають критеріям фільтру",
+);
+?>

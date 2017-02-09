@@ -1,0 +1,103 @@
+<?php
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
+  Codificación: UTF-8
+  +----------------------------------------------------------------------+
+  | Elastix version 0.5                                                  |
+  | http://www.elastix.org                                               |
+  +----------------------------------------------------------------------+
+  | Copyright (c) 2006 Palosanto Solutions S. A.                         |
+  +----------------------------------------------------------------------+
+  | Cdla. Nueva Kennedy Calle E 222 y 9na. Este                          |
+  | Telfs. 2283-268, 2294-440, 2284-356                                  |
+  | Guayaquil - Ecuador                                                  |
+  | http://www.palosanto.com                                             |
+  +----------------------------------------------------------------------+
+  | The contents of this file are subject to the General Public License  |
+  | (GPL) Version 2 (the "License"); you may not use this file except in |
+  | compliance with the License. You may obtain a copy of the License at |
+  | http://www.opensource.org/licenses/gpl-license.php                   |
+  |                                                                      |
+  | Software distributed under the License is distributed on an "AS IS"  |
+  | basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See  |
+  | the License for the specific language governing rights and           |
+  | limitations under the License.                                       |
+  +----------------------------------------------------------------------+
+  | The Original Code is: Elastix Open Source.                           |
+  | The Initial Developer of the Original Code is PaloSanto Solutions    |
+  +----------------------------------------------------------------------+
+  $Id: es.lang,v 1.7 2007/09/05 00:36:42 alex Exp $ */
+global $arrLangModule;
+$arrLangModule = array(
+    "Error when connecting to database" => "Error when connecting to database",
+    "Message" => "Message",
+    "You should register the <a href='?menu=general_information'>General Information</a>." => "You should register the <a href='?menu=general_information'>General Information</a>.",
+    "Error trying to delete peer" => "Error trying to delete peer",
+    "Error trying to reject peer" => "Error trying to reject peer",
+    "Error trying to accept peer" => "Error trying to accept peer",
+    "Error trying to connect peer" => "Error trying to connect peer",
+    "Error trying to disconnect peer" => "Error trying to disconnect peer",
+    "Failed to count peers" => "Failed to count peers",
+    "Remote Servers" => "Remote Servers",
+    "Remote Server" => "Remote Server",
+    "Connection Status" => "Connection Status",
+    "Actions" => "Actions",
+    "Failed to fetch peers" => "Failed to fetch peers",
+    "New Connection Request" => "New Connection Request",
+    "New Request" => "New Request",
+    "Accept" => "Accept",
+    "Reject" => "Reject",
+    "Connect" => "Connect",
+    "Disconnect" => "Disconnect",
+    "Update DUNDI" => "Update DUNDI",
+    "Back" => "Back",
+    "Host" => "Host",
+    "Comment" => "Comment",
+    "Company" => "Company",
+    "View Remote Server" => "View Remote Server",
+    "Request" => "Request",
+    "Host Remote" => "Host Remote",
+    "Secret" => "Secret",
+    "Connection Request" => "Connection Request",
+    "Extra information" => "Extra information",
+    "Alert" => "Alert",
+    "Remote request failed" => "Remote request failed",
+    "Currently there is a connection request" => "Currently there is a connection request",
+    "Secret incorrect" => "Secret incorrect",
+    "Remote entry point not found. Check that remote system has addon installed." => "Remote entry point not found. Check that remote system has addon installed.",
+    "Invalid response body" => "Invalid response body",
+    "Invalid peerid array" => "Invalid peerid array",
+    "Peer not found" => "Peer not found",
+    "Unknown" => "Unknown",
+    "Request Connection has been Deleted" => "Request Connection has been Deleted",
+    "Request Connection has been Rejected" => "Request Connection has been Rejected",
+    "Waiting Response..." => "Waiting Response...",
+    "Request Connection has been Accepted" => "Request Connection has been Accepted",
+    "Connecting..." => "Connecting...",
+    "Disconnected" => "Disconnected",
+    "Remote Server is requesting Connection..." => "Remote Server is requesting Connection...",
+    "Requesting Connection to Remote Server..." => "Requesting Connection to Remote Server...",
+    "Connected" => "Connected",
+    "Request to this host has already been sent" => "Request to this host has already been sent",
+    "Peer not found by ID" => "Peer not found by ID",
+    "Peer not in REQUESTING state" => "Peer not in REQUESTING state",
+    "Failed to write public key" => "Failed to write public key",
+    "Certificate file not found" => "Certificate file not found",
+    "accepted connection" => "accepted connection",
+    "General information not filled out" => "General information not filled out",
+    "Peer not ACCEPTED or DISCONNECTED" => "Peer not ACCEPTED or DISCONNECTED",
+    "Peer not CONNECTED" => "Peer not CONNECTED",
+    "Peer not CONNECTED remotely" => "Peer not CONNECTED remotely",
+    "Failed to write DUNDI configuration" => "Failed to write DUNDI configuration",
+    "Error when connecting to Asterisk Manager" => "Error when connecting to Asterisk Manager",
+
+    "Requesting connection" => "Requesting connection",
+    "waiting response" => "waiting response",
+    "request accepted" => "request accepted",
+    "disconnected" => "disconnected",
+    "request delete" => "request deleted",
+    "request reject" => "request rejected",
+    "connected" => "connected",
+    "connection deleted" => "connection deleted",
+    "connection rejected" => "connection rejected",
+);
+?>

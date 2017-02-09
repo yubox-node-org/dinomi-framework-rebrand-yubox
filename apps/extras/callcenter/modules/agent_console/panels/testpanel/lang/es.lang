@@ -1,0 +1,9 @@
+<?php
+global $arrLangModule;
+
+$arrLangModule = array(
+'Test Title'=>'Título de prueba',
+'Test Content'=>'Contenido de prueba',
+'Test Button'=>'Botón de prueba',
+);
+?>

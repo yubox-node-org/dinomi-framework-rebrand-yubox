@@ -1,0 +1,105 @@
+<?php
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
+  Codificación: UTF-8
+  +----------------------------------------------------------------------+
+  | Elastix version 0.5                                                  |
+  | http://www.elastix.org                                               |
+  +----------------------------------------------------------------------+
+  | Copyright (c) 2006 Palosanto Solutions S. A.                         |
+  +----------------------------------------------------------------------+
+  | Cdla. Nueva Kennedy Calle E 222 y 9na. Este                          |
+  | Telfs. 2283-268, 2294-440, 2284-356                                  |
+  | Guayaquil - Ecuador                                                  |
+  | http://www.palosanto.com                                             |
+  +----------------------------------------------------------------------+
+  | The contents of this file are subject to the General Public License  |
+  | (GPL) Version 2 (the "License"); you may not use this file except in |
+  | compliance with the License. You may obtain a copy of the License at |
+  | http://www.opensource.org/licenses/gpl-license.php                   |
+  |                                                                      |
+  | Software distributed under the License is distributed on an "AS IS"  |
+  | basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See  |
+  | the License for the specific language governing rights and           |
+  | limitations under the License.                                       |
+  +----------------------------------------------------------------------+
+  | The Original Code is: Elastix Open Source.                           |
+  | The Initial Developer of the Original Code is PaloSanto Solutions    |
+  +----------------------------------------------------------------------+
+  $Id: es.lang,v 1.7 2007/09/05 00:36:42 alex Exp $ */
+global $arrLangModule;
+$arrLangModule = array(
+    "Message" => "Mensaje",
+    "Error trying to delete peer" => "Error tratando de eliminar el peer",
+    "Remote Servers" => "Servidores Remotos",
+    "Remote Server" => "Servidor Remoto",
+    "Connection Status" => "Estado de Conexión",
+    "Actions" => "Acciones",
+    "New Connection Request" => "Nueva Solicitud de Conexión",
+    "New Request" => "Nueva Conexión",
+    "Accept" => "Aceptar",
+    "Reject" => "Rechazar",
+    "Connect" => "Conectar",
+    "Disconnect" => "Desconectar",
+    "Back" => "Atrás",
+    "Host" => "Servidor Remoto",
+    "Comment" => "Comentario",
+    "Company" => "Compañía",
+    "View Remote Server" => "Ver Servidor Remoto",
+    "Request" => "Petición",
+    "Host Remote" => "Servidor Remoto",
+    "Secret" => "Clave Secreta del Host Remoto",
+    "Connection Request" => "Petición de Conexión",
+    "Alert" => "Alerta",
+    "Currently there is a connection request" => "Actualmente existe una petición de connexión",
+    "Secret incorrect" => "Clave secreta incorrecta. Por favor vuelva a hacer la petición al servidor de destino",
+    "Unknown" => "Desconocido",
+    "Request Connection has been Deleted" => "La solicitud de conexión ha sido eliminada",
+    "Request Connection has been Rejected" => "La solicitud de conexión ha sido rechazada",
+    "Waiting Response..." => "Esperando Respuesta...",
+    "Request Connection has been Accepted" => "La solicitud de conexión ha sido aceptada",
+    "Connecting..." => "Conectando...",
+    "Disconnected" => "Desconectado",
+    "Remote Server is requesting Connection..." => "Servidor remoto está solicitando conexión",
+    "Requesting Connection to Remote Server..." => "Solicitado conexión a servidor remoto...",
+    "Connected" => "Conectado",
+    "Certificate file not found" => "Archivo de certificado no encontrado",
+    "accepted connection" => "conexión aceptada",
+    "Requesting connection" => "Petición de conexión",
+    "waiting response" => "Esperando respuesta",
+    "request accepted" => "petición aceptada",
+    "disconnected" => "desconectado",
+    "request delete" => "petición eliminada",
+    "request reject" => "petición rechazada",
+    "connected" => "conectado",
+    "connection deleted" => "conexión eliminada",
+    "connection rejected" => "conexión rechazada",
+
+    "Error when connecting to database" => "Error de conexión a la base de datos",
+    "You should register the <a href='?menu=general_information'>General Information</a>." =>
+        "Usted debe registrar la <a href='?menu=general_information'>Información de la Compañía</a>.",
+    "Error trying to reject peer" => "Error tratando de rechazar el peer",
+    "Error trying to accept peer" => "Error tratando de aceptar el peer",
+    "Error trying to connect peer" => "Error tratando de conectar al peer",
+    "Error trying to disconnect peer" => "Error tratando de desconectar al peer",
+    "Failed to count peers" => "No se puede contar peers",
+    "Failed to fetch peers" => "No se puede leer peers",
+    "Update DUNDI" => "Recargar DUNDI",
+    "Extra information" => "Información adicional",
+    "Remote request failed" => "Falló la petición remota",
+    "Remote entry point not found. Check that remote system has addon installed." =>
+        "No se encuentra punto de petición remoto. Revise que el sistema remoto tenga el addon instalado.",
+    "Invalid response body" => "Cuerpo de respuesta no válido",
+    "Invalid peerid array" => "Lista de IDs de peers no válida",
+    "Peer not found" => "No se encuentra peer",
+    "Request to this host has already been sent" => "Ya se ha enviado petición a este host",
+    "Peer not found by ID" => "No se encuentra peer por ID",
+    "Peer not in REQUESTING state" => "Peer no está en estado REQUESTING",
+    "Failed to write public key" => "No se puede escribir clave pública",
+    "General information not filled out" => "No se ha llenado la Información de la Compañía",
+    "Peer not ACCEPTED or DISCONNECTED" => "Peer no está en estado ACCEPTED o DISCONNECTED",
+    "Peer not CONNECTED" => "Peer no está en estado CONNECTED",
+    "Peer not CONNECTED remotely" => "Peer no está en estado remoto CONNECTED",
+    "Failed to write DUNDI configuration" => "No se puede escribir configuración DUNDI",
+    "Error when connecting to Asterisk Manager" => "Error al conectarse al Asterisk Manager",
+);
+?>

@@ -1,0 +1,61 @@
+<?php
+/* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
+  CodificaciГіn: UTF-8
+  +----------------------------------------------------------------------+
+  | Elastix version 1.0                                                  |
+  | http://www.elastix.com                                               |
+  +----------------------------------------------------------------------+
+  | Copyright (c) 2006 Palosanto Solutions S. A.                         |
+  +----------------------------------------------------------------------+
+  | Cdla. Nueva Kennedy Calle E 222 y 9na. Este                          |
+  | Telfs. 2283-268, 2294-440, 2284-356                                  |
+  | Guayaquil - Ecuador                                                  |
+  | http://www.palosanto.com                                             |
+  +----------------------------------------------------------------------+
+  | The contents of this file are subject to the General Public License  |
+  | (GPL) Version 2 (the "License"); you may not use this file except in |
+  | compliance with the License. You may obtain a copy of the License at |
+  | http://www.opensource.org/licenses/gpl-license.php                   |
+  |                                                                      |
+  | Software distributed under the License is distributed on an "AS IS"  |
+  | basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See  |
+  | the License for the specific language governing rights and           |
+  | limitations under the License.                                       |
+  +----------------------------------------------------------------------+
+  | The Original Code is: Elastix Open Source.                           |
+  | The Initial Developer of the Original Code is PaloSanto Solutions    |
+  |                                                                      |
+  | Translate by: Bruno Macias                                           |
+  | Email: bmacias@palosanto.com                                         |
+  +----------------------------------------------------------------------+
+  $Id: ua.lang,v 1.7 2016/10/16 14:30:00 LeNET support@lenet.com.ua Exp $ */
+global $arrLangModule;
+$arrLangModule=array(
+"Fax Viewer" => "Перегляд Факсів",
+"Search" => "Пошук",
+"Company Name" => "Назва Компанії",
+"Company Fax" => "Факс Компанії",
+"Fax Date" => "Дата",
+"File" => "Файл",
+"Fax Destiny" => "Призначення",
+"No Data Found" => "Дані Не Знайдені",
+"Are you sure you wish to delete fax (es)?" => "Ви упевнені, що хочете видалити факс (ы)?",
+"Unable to eliminate pdf file from the path." => "Неможливо усунути PDF- файл.",
+"Unable to eliminate pdf file from the database." => "Неможливо усунути PDF- файл з бази даних.",
+"Type Fax" => "Тип Факсу",
+"All" => "Все",
+"in" => "вхідні",
+"out" => "вихідні",
+"ERROR" => "ПОМИЛКА",
+"Type" => "Тип",
+'done' => 'Готово',
+'failed' => 'Не вдалося',
+'killed' => 'Відміна',
+'timedout' => 'Час Витік',
+"Status" => "Статус",
+"Show Filter" => "Показати Фільтр",
+"Hide Filter" => "Приховати Фільтр",
+"Page" => "Сторінка",
+"of" => "з",
+);
+?>
