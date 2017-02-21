@@ -1,32 +1,34 @@
 #!/bin/sh
 
 # Check for existence of /etc/init.d/wanrouter
-if [ ! -e /etc/init.d/wanrouter ] ; then
-        if [ -e /usr/sbin/wanrouter ] ; then
-                ln -s /usr/sbin/wanrouter /etc/init.d/wanrouter
-		service asterisk stop > /dev/null 2>&1
-		service dahdi stop > /dev/null 2>&1
-		service wanrouter stop > /dev/null 2>&1
-		service wanrouter start > /dev/null 2>&1
-		service dahdi start > /dev/null 2>&1
-		service asterisk start > /dev/null 2>&1
-        fi
+rpm -qa asterisk
+if [ $? = 1 ]; then
+	if [ ! -e /etc/init.d/wanrouter ] ; then
+	        if [ -e /usr/sbin/wanrouter ] ; then
+	                ln -s /usr/sbin/wanrouter /etc/init.d/wanrouter
+			service asterisk stop > /dev/null 2>&1
+			service dahdi stop > /dev/null 2>&1
+			service wanrouter stop > /dev/null 2>&1
+			service wanrouter start > /dev/null 2>&1
+			service dahdi start > /dev/null 2>&1
+			service asterisk start > /dev/null 2>&1
+	        fi
+	fi
 fi
 
 MSJ_NO_IP_DHCP="If you could not get a DHCP IP address please type setup and select \"Network configuration\" to set up a static IP."
 INTFCNET=`ls -A /sys/class/net/`
 
 echo ""
-echo "Welcome to Elastix "
+echo "Welcome to Dinomi "
 echo "----------------------------------------------------"
 echo ""
-#echo "For access to the Elastix web GUI use this URL"
-echo "Elastix is a product meant to be configured through a web browser."
+echo "Dinomi is a product meant to be configured through a web browser."
 echo "Any changes made from within the command line may corrupt the system"
 echo "configuration and produce unexpected behavior; in addition, changes"
 echo "made to system files through here may be lost when doing an update."
 echo ""
-echo "To access your Elastix System, using a separate workstation (PC/MAC/Linux)"
+echo "To access your Dinomi System, using a separate workstation (PC/MAC/Linux)"
 echo "Open the Internet Browser using the following URL:"
 
 cont=0

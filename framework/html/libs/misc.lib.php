@@ -629,7 +629,7 @@ function writeLOG($logFILE, $log)
     else
         echo "The file $logFILE couldn't be opened";
 }
-
+/*
 function verifyTemplate_vm_email()
 {
    $ip = $_SERVER['SERVER_ADDR'];
@@ -660,7 +660,7 @@ function verifyTemplate_vm_email()
          file_put_contents($file, $file_string_new);
    }
 }
-
+*/
 function getMenuColorByMenu($pdbACL, $uid)
 {
     /* Desde el commit SVN #3231 hecho por (quien ya sabemos), se ha estado

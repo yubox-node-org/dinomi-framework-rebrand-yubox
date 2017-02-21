@@ -94,7 +94,7 @@ function handleJSON_dialogPasswordElastix($smarty, $local_templates_dir, $module
     ));
     $jsonObject = new PaloSantoJSON();
     $jsonObject->set_message(array(
-        'title' =>  _tr('Change Elastix Password'),
+        'title' =>  _tr('Change Dinomi Password'),
         'html'  =>  $smarty->fetch("$local_templates_dir/_change_password.tpl"),
     ));
     return $jsonObject->createJSON();

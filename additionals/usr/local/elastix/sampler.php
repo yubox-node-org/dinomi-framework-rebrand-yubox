@@ -36,37 +36,41 @@ function nformat($x) { return number_format($x, 2, '.', ''); }
 
 $oSampler = new paloSampler();
 
-// NUMERO DE LLAMADAS SIMULTANEAS
-$simCalls = 0;
-$comando = "/usr/sbin/asterisk -r -x \"core show channels\"";
-exec($comando, $arrSalida, $varSalida);
+$comandverif = "/usr/bin/rpm -qa asterisk";
+exec($comandverif,$output,$retval);
+if ($retval != "0") {
+  // NUMERO DE LLAMADAS SIMULTANEAS
+  $simCalls = 0;
+  $comando = "/usr/sbin/asterisk -r -x \"core show channels\"";
+  exec($comando, $arrSalida, $varSalida);
 
-$counter_channels_dahdi = 0;
-$counter_channels_sip = 0;
-$counter_channels_iax = 0;
-$counter_channels_h323 = 0;
-$counter_channels_local = 0;
+  $counter_channels_dahdi = 0;
+  $counter_channels_sip = 0;
+  $counter_channels_iax = 0;
+  $counter_channels_h323 = 0;
+  $counter_channels_local = 0;
 
-foreach($arrSalida as $linea) {
-    if(preg_match("#^DAHDI/#i", $linea)) {
-        $counter_channels_dahdi++;
-    } else if(preg_match("/SIP/i", $linea)) {
-        $counter_channels_sip++;
-    } else if(preg_match("/IAX2/i", $linea)) {
-        $counter_channels_iax++;
-    } else if(preg_match("/h323/i", $linea)) {
-        $counter_channels_h323++;
-    } else if(preg_match("/Local/i", $linea)) {
-        $counter_channels_local++;
-    } else if(preg_match("/^([[:digit:]]+)[[:space:]]+active calls?/", $linea, $arrReg)) {
-        $simCalls = $arrReg[1];
-    }
+  foreach($arrSalida as $linea) {
+      if(preg_match("#^DAHDI/#i", $linea)) {
+          $counter_channels_dahdi++;
+      } else if(preg_match("/SIP/i", $linea)) {
+          $counter_channels_sip++;
+      } else if(preg_match("/IAX2/i", $linea)) {
+          $counter_channels_iax++;
+      } else if(preg_match("/h323/i", $linea)) {
+          $counter_channels_h323++;
+      } else if(preg_match("/Local/i", $linea)) {
+          $counter_channels_local++;
+      } else if(preg_match("/^([[:digit:]]+)[[:space:]]+active calls?/", $linea, $arrReg)) {
+          $simCalls = $arrReg[1];
+      }
+  }
+
+  $counter_channels_total = $counter_channels_dahdi + $counter_channels_sip + $counter_channels_iax + $counter_channels_h323 + $counter_channels_local;
+
+  $timestamp = time();
+  $oSampler->insertSample(1, $timestamp, $simCalls);
 }
-
-$counter_channels_total = $counter_channels_dahdi + $counter_channels_sip + $counter_channels_iax + $counter_channels_h323 + $counter_channels_local;
-
-$timestamp = time();
-$oSampler->insertSample(1, $timestamp, $simCalls);
 
 $arrSysInfo = obtener_info_de_sistema();
 
@@ -80,30 +84,31 @@ $memUsage = nformat(($arrSysInfo['MemTotal'] - $arrSysInfo['MemFree'] - $arrSysI
 $timestamp = time();
 $oSampler->insertSample(3, $timestamp, $memUsage);
 
-// Total Channels Usage
-$timestamp = time();
-$oSampler->insertSample(4, $timestamp, $counter_channels_total);
+if ($retval != "0") {
+  // Total Channels Usage
+  $timestamp = time();
+  $oSampler->insertSample(4, $timestamp, $counter_channels_total);
 
-// DAHDI Channels Usage
-$timestamp = time();
-$oSampler->insertSample(5, $timestamp, $counter_channels_dahdi);
+  // DAHDI Channels Usage
+  $timestamp = time();
+  $oSampler->insertSample(5, $timestamp, $counter_channels_dahdi);
 
-// SIP Channels Usage
-$timestamp = time();
-$oSampler->insertSample(6, $timestamp, $counter_channels_sip);
+  // SIP Channels Usage
+  $timestamp = time();
+  $oSampler->insertSample(6, $timestamp, $counter_channels_sip);
 
-// IAX Channels Usage
-$timestamp = time();
-$oSampler->insertSample(7, $timestamp, $counter_channels_iax);
+  // IAX Channels Usage
+  $timestamp = time();
+  $oSampler->insertSample(7, $timestamp, $counter_channels_iax);
 
-// H323 Channels Usage
-$timestamp = time();
-$oSampler->insertSample(8, $timestamp, $counter_channels_h323);
+  // H323 Channels Usage
+  $timestamp = time();
+  $oSampler->insertSample(8, $timestamp, $counter_channels_h323);
 
-// Local Channels Usage
-$timestamp = time();
-$oSampler->insertSample(9, $timestamp, $counter_channels_local);
-
+  // Local Channels Usage
+  $timestamp = time();
+  $oSampler->insertSample(9, $timestamp, $counter_channels_local);
+}
 // Delete old data
 $timestampLimiteBorrarData = $timestamp - 26 * (60 * 60);
 $oSampler->deleteDataBeforeThisTimestamp($timestampLimiteBorrarData);

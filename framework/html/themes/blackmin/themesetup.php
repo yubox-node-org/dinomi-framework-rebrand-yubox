@@ -35,7 +35,7 @@ function themeSetup(&$smarty, $selectedMenu, $pdbACL, $pACL, $idUser)
         "HELP"                      =>  _tr('HELP'),
 */
         "USER_LOGIN"                =>  $_SESSION['elastix_user'],
-        "CHANGE_PASSWORD"           =>  _tr("Change Elastix Password"),
+        "CHANGE_PASSWORD"           =>  _tr("Change Dinomi Password"),
         "MODULES_SEARCH"            =>  _tr("Search modules"),
 /*
         "ADD_BOOKMARK"              =>  _tr("Add Bookmark"),

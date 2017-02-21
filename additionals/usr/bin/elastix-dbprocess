@@ -367,12 +367,12 @@ function executeSQL($data, $path_folder, $sql_export, $dbName, $action, $passwor
 
     unlink($fullpath);
     if ($data["engine"] == "sqlite3") {
-        if (!chown($datafile, "asterisk")) {
-            fputs(STDERR, "ERR: failed to change owner on $datafile to asterisk.\n");
+        if (!chown($datafile, "apache")) {
+            fputs(STDERR, "ERR: failed to change owner on $datafile to apache.\n");
             return FALSE;
         }
-        if (!chgrp($datafile, "asterisk")) {
-            fputs(STDERR, "ERR: failed to change group on $datafile to asterisk.\n");
+        if (!chgrp($datafile, "apache")) {
+            fputs(STDERR, "ERR: failed to change group on $datafile to apache.\n");
             return FALSE;
         }
     }

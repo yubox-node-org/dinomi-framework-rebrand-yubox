@@ -120,7 +120,7 @@ if (isset($_SESSION['elastix_user']) &&
         die("FATAL: unable to filter module list for user: ".$pMenu->errMsg);
     }
 
-    verifyTemplate_vm_email(); // para cambiar el template del email ue se envia al recibir un voicemail
+    //verifyTemplate_vm_email(); // para cambiar el template del email ue se envia al recibir un voicemail
 
     //traducir el menu al idioma correspondiente
     foreach($arrMenuFiltered as $idMenu=>$arrMenuItem) {

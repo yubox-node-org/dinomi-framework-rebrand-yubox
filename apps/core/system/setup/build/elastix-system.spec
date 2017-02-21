@@ -3,7 +3,7 @@
 Summary: Elastix Module System
 Name:    elastix-%{modname}
 Version: 4.0.0
-Release: 11
+Release: 12
 License: GPL
 Group:   Applications/System
 #Source0: %{modname}_%{version}-2.tgz
@@ -11,9 +11,8 @@ Source0: %{modname}_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
 Prereq: elastix-framework >= 4.0.0-14
-Prereq: elastix-fax >= 2.2.0-4
+#Prereq: elastix-fax >= 2.2.0-4
 Prereq: php-soap
-Prereq: dahdi
 Conflicts: elastix-agenda < 2.2.0-1
 Conflicts: elastix-pbx <= 2.4.0-15
 Requires: dhcp
@@ -180,6 +179,10 @@ fi
 %config(noreplace) /etc/dahdi/genconf_parameters
 
 %changelog
+* Tue Feb 14 2017 Luis Abarca <labarca@palosanto.com> 4.0.0-12
+- CHANGED: system - Build/elastix-system.spec: update specfile with latest
+  SVN history. Changed release in specfile.
+
 * Thu Nov 24 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Fixed some Russian translations on Dashboard applets.
   SVN Rev[7784]

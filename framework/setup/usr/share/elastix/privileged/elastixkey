@@ -38,6 +38,6 @@ while (!feof(STDIN)) {
 }
 fclose($h);
 chmod('/etc/elastix.key', 0600);
-chown('/etc/elastix.key', 'asterisk');
-chgrp('/etc/elastix.key', 'asterisk');
+chown('/etc/elastix.key', 'apache');
+chgrp('/etc/elastix.key', 'apache');
 ?>

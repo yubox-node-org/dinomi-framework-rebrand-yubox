@@ -40,7 +40,8 @@ class paloConfig
     var $archivo = "";
     var $separador="=";
     var $separador_regexp="";
-    var $usuario_proceso = "asterisk";
+    //var $usuario_proceso = "asterisk";
+    var $usuario_proceso = "apache";
     var $usuario_sistema = "root";
     var $grupo_sistema ="root";
 

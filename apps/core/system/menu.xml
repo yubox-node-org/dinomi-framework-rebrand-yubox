@@ -67,11 +67,13 @@
             <group id="1" name="administrator" desc="total access"></group>
         </permissions>
     </menuitem>
+    <!--
     <menuitem menuid="hardware_detector"    desc="Hardware Detector"  parent="system"      module="yes" link="" order="7">
         <permissions>
             <group id="1" name="administrator" desc="total access"></group>
         </permissions>
     </menuitem>
+    -->
     <menuitem menuid="updates"              desc="Updates"            parent="system"      module="no"  link="" order="8">
         <permissions>
             <group id="1" name="administrator" desc="total access"></group>

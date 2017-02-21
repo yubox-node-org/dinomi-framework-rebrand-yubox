@@ -92,8 +92,8 @@ root	ALL=(ALL) 	ALL
 ## Allows members of the users group to shutdown this system
 # %users  localhost=/sbin/shutdown -h now
 
-asterisk ALL = NOPASSWD: /sbin/shutdown
-asterisk ALL = NOPASSWD: /sbin/service
-asterisk ALL = NOPASSWD: /sbin/chkconfig
+apache ALL = NOPASSWD: /sbin/shutdown
+apache ALL = NOPASSWD: /sbin/service
+apache ALL = NOPASSWD: /sbin/chkconfig
 
-asterisk ALL = NOPASSWD: /usr/sbin/elastix-helper
+apache ALL = NOPASSWD: /usr/sbin/elastix-helper

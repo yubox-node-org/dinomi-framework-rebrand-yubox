@@ -45,12 +45,14 @@ if(file_exists("/etc/elastix.conf")){
     }
     if($rewrite_file){
         file_put_contents("/etc/elastix.conf",implode("",$content));
-	chown("/etc/elastix.conf","asterisk");
-	chgrp("/etc/elastix.conf","asterisk");
+	chown("/etc/elastix.conf","apache");
+	chgrp("/etc/elastix.conf","apache");
     }
 }
 
 if($dosearch){
+  exec("rpm -qa asterisk",$output,$retval);
+  if ($retval != "0") {
     $ami_file = "manager.conf";
     $secret = "";
     $files_searched = array();
@@ -79,8 +81,9 @@ TEMP;
     echo "Writing the key amiadminpwd in /etc/elastix.conf\n";
     fwrite($fhandler,"amiadminpwd=$secret\n"); 
     fclose($fhandler);
-    chown("/etc/elastix.conf","asterisk");
-    chgrp("/etc/elastix.conf","asterisk");
+    chown("/etc/elastix.conf","apache");
+    chgrp("/etc/elastix.conf","apache");
+  }
 }
 checkAmportalFile($secret,$doReload);
 if($doReload)

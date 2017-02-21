@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-  <title>Elastix</title>
+  <title>Dinomi</title>
   <link rel="stylesheet" href="themes/{$THEMENAME}/styles.css" />
   <link rel="stylesheet" href="themes/{$THEMENAME}/help.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="libs/js/sticky_note/sticky_note.css" />
@@ -18,7 +18,7 @@
 <div id="elx-blackmin-topnav-toolbar">
     <ul class="elx-blackmin-topnav">
         <li class="elx-blackmin-menu">
-<img align="absmiddle" src="themes/{$THEMENAME}/images/elastix_logo_mini.png" height="36" alt="elastix" longdesc="http://www.elastix.com" />
+<img align="absmiddle" src="themes/{$THEMENAME}/images/elastix_logo_mini.png" height="36" alt="elastix" longdesc="http://www.dinomi.com" />
 {$MENU}
         </li>
         <li id="elx-blackmin-module-title">
@@ -44,9 +44,9 @@
             <img height="20" align="absmiddle" src="themes/{$THEMENAME}/images/information.png" alt="user" />
             <div>
                 <ul>
-                    <li><a href="#" class="register_link">{$Registered}</a></li>
+                    <!--<li><a href="#" class="register_link">{$Registered}</a></li>-->
                     <li><a href="#" id="viewDetailsRPMs">{$VersionDetails}</a></li>
-                    <li><a href="http://www.elastix.com" target="_blank">Elastix Website</a></li>
+                    <li><a href="http://www.dinomi.com" target="_blank">Dinomi Website</a></li>
                     <li><a href="#" id="dialogaboutelastix">{$ABOUT_ELASTIX2}</a></li>
                 </ul>
             </div>
@@ -114,7 +114,7 @@
 
 {* Pie de página con copyright de Elastix *}
 <div id="elx-blackmin-footerbox">
-    <a href="http://www.elastix.com" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.
+            Copyright by <a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.
 </div>
 
 {if $ELASTIX_PANELS}

@@ -2,7 +2,7 @@ Summary: Elastix is a Web based software to administrate a PBX based in open sou
 Name: elastix-framework
 Vendor: Palosanto Solutions S.A.
 Version: 4.0.0
-Release: 18
+Release: 19
 License: GPL
 Group: Applications/System
 #Source: elastix-framework_%{version}-%{release}.tgz
@@ -81,7 +81,7 @@ mkdir -p $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/var/www/db
 mkdir -p $RPM_BUILD_ROOT/var/www/html
 mkdir -p $RPM_BUILD_ROOT/var/www/backup
-mkdir -p $RPM_BUILD_ROOT/var/lib/php/session-asterisk
+#mkdir -p $RPM_BUILD_ROOT/var/lib/php/session-asterisk
 
 # ** /usr path ** #
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin
@@ -134,6 +134,8 @@ mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/yum.repos.d/elastix.repo    
 
 # ** sudoers config ** #
 mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/sudoers                          $RPM_BUILD_ROOT/usr/share/elastix/
+
+mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/rc.local                         $RPM_BUILD_ROOT/usr/share/elastix/
 
 # ** /usr/local/ files ** #
 mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/local/elastix/sampler.php        $RPM_BUILD_ROOT/usr/local/elastix/
@@ -192,16 +194,16 @@ if [ $1 -eq 2 ]; then
 fi
 
 # if not exist add the asterisk group
-grep -c "^asterisk:" %{_sysconfdir}/group &> /dev/null
-if [ $? = 1 ]; then
-    echo "   0:adding group asterisk..."
-    /usr/sbin/groupadd -r -f asterisk
-else
-    echo "   0:group asterisk already present"
-fi
+#grep -c "^asterisk:" %{_sysconfdir}/group &> /dev/null
+#if [ $? = 1 ]; then
+#    echo "   0:adding group asterisk..."
+#    /usr/sbin/groupadd -r -f asterisk
+#else
+#    echo "   0:group asterisk already present"
+#fi
 
 # Modifico usuario asterisk para que tenga "/bin/bash" como shell
-/usr/sbin/usermod -c "Asterisk VoIP PBX" -g asterisk -s /bin/bash -d /var/lib/asterisk asterisk
+#/usr/sbin/usermod -c "Asterisk VoIP PBX" -g asterisk -s /bin/bash -d /var/lib/asterisk asterisk
 
 # TODO: TAREA DE POST-INSTALACIÓN
 #useradd -d /var/ftp -M -s /sbin/nologin ftpuser
@@ -223,6 +225,10 @@ chkconfig --del gpm   &> /dev/null
 cat   /usr/share/elastix/sudoers > /etc/sudoers
 rm -f /usr/share/elastix/sudoers
 
+cat /usr/share/elastix/rc.local > /etc/rc.d/rc.local
+rm -f /usr/share/elastix/rc.local
+chmod 755 /etc/rc.d/rc.local
+
 # ** Change content of CentOS-Base.repo ** #
 if [ -e /etc/yum.repos.d/CentOS-Base.repo ] ; then
     /usr/bin/elastix-add-yum-exclude /etc/yum.repos.d/CentOS-Base.repo 'redhat-logos' 'php53*' 'kernel*'
@@ -233,7 +239,7 @@ sed --in-place "s,User\sapache,#User apache,g" /etc/httpd/conf/httpd.conf
 sed --in-place "s,Group\sapache,#Group apache,g" /etc/httpd/conf/httpd.conf
 
 # Patch php.conf to remove the assignment to session.save_path in CentOS 7
-sed --in-place "s,php_value session.save_path,#php_value session.save_path,g" /etc/httpd/conf.d/php.conf
+#sed --in-place "s,php_value session.save_path,#php_value session.save_path,g" /etc/httpd/conf.d/php.conf
 
 # ** Uso de elastix-dbprocess ** #
 pathModule="/usr/share/elastix/module_installer/%{name}-%{version}-%{release}"
@@ -287,38 +293,38 @@ fi
 rm -rf /var/www/html/var/templates_c/*
 
 # Patch elastix.ini to work around %config(noreplace) in previous versions
-sed --in-place "s,/tmp,/var/lib/php/session-asterisk,g" /etc/php.d/elastix.ini
-if [ $1 -eq 1 ]; then #install
-    /sbin/service httpd status > /dev/null 2>&1
-    if [ "$?" == "0" ]; then
-        echo "Restarting apache..."
-        /sbin/service httpd restart > /dev/null 2>&1
-    fi
-elif [ $1 -eq 2 ]; then #update
-    /sbin/service httpd status > /dev/null 2>&1
-    if [ "$?" == "0" ]; then
-        # Para versiones menores a 2.4.0-11 se debe reiniciar el apache debido a cambios en elastix.ini
-        # respecto a los archivos de sessiones, por ello tambien hay que reubicarlos
-        compareVersion "$preversion" "2.4.0-11"
-        if [ "$?" == "9" ]; then
-             # Patch elastix.ini, relocate session files to the new path.
-            echo "Session files in the old directory. Starting relocation process..."
-            for file_sess in `ls /tmp/sess_*`
-            do
-              file_name=`basename $file_sess`
-              if [ -f /var/lib/php/session-asterisk/$file_name ]; then
-                rm -rf /var/lib/php/session-asterisk/$file_name
-              fi
-
-              echo "Copying file /tmp/$file_name to /var/lib/php/session-asterisk/$file_name."
-              cp -p /tmp/$file_name /var/lib/php/session-asterisk/
-            done
-
-            echo "Restarting apache..."
-            /sbin/service httpd restart > /dev/null 2>&1
-        fi
-    fi
-fi
+#sed --in-place "s,/tmp,/var/lib/php/session-asterisk,g" /etc/php.d/elastix.ini
+#if [ $1 -eq 1 ]; then #install
+#    /sbin/service httpd status > /dev/null 2>&1
+#    if [ "$?" == "0" ]; then
+#        echo "Restarting apache..."
+#        /sbin/service httpd restart > /dev/null 2>&1
+#    fi
+#elif [ $1 -eq 2 ]; then #update
+#    /sbin/service httpd status > /dev/null 2>&1
+#    if [ "$?" == "0" ]; then
+#        # Para versiones menores a 2.4.0-11 se debe reiniciar el apache debido a cambios en elastix.ini
+#        # respecto a los archivos de sessiones, por ello tambien hay que reubicarlos
+#        compareVersion "$preversion" "2.4.0-11"
+#        if [ "$?" == "9" ]; then
+#             # Patch elastix.ini, relocate session files to the new path.
+#            echo "Session files in the old directory. Starting relocation process..."
+#            for file_sess in `ls /tmp/sess_*`
+#            do
+#              file_name=`basename $file_sess`
+#              if [ -f /var/lib/php/session-asterisk/$file_name ]; then
+#                rm -rf /var/lib/php/session-asterisk/$file_name
+#              fi
+#
+#              echo "Copying file /tmp/$file_name to /var/lib/php/session-asterisk/$file_name."
+#              cp -p /tmp/$file_name /var/lib/php/session-asterisk/
+#            done
+#
+#            echo "Restarting apache..."
+#            /sbin/service httpd restart > /dev/null 2>&1
+#        fi
+#    fi
+#fi
 
 # Merge current menu.xml for userlist custom privileges
 elastix-menumerge $pathModule/menu.xml
@@ -329,7 +335,7 @@ chmod 644 /etc/logrotate.d/elastixEmailStats.logrotate
 
 %preun
 # Reverse the patching of php.conf
-sed --in-place "s,#php_value session.save_path,php_value session.save_path,g" /etc/httpd/conf.d/php.conf
+#sed --in-place "s,#php_value session.save_path,php_value session.save_path,g" /etc/httpd/conf.d/php.conf
 
 # Reverse the patching of httpd.conf
 sed --in-place "s,#User\sapache,User apache,g" /etc/httpd/conf/httpd.conf
@@ -345,7 +351,8 @@ rm -rf $RPM_BUILD_ROOT
 
 # basic contains some reasonable sane basic tiles
 %files
-%defattr(-, asterisk, asterisk)
+#%defattr(-, asterisk, asterisk)
+%defattr(-, apache, apache)
 /var/www/db
 /var/www/backup
 /var/log/elastix
@@ -392,9 +399,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/init.d/generic-cloexec
 %defattr(755, root, root)
 /usr/share/elastix/privileged/*
-%defattr(770, root, asterisk, 770)
-/var/lib/php/session-asterisk
-%defattr(-, asterisk, asterisk)
+#%defattr(770, root, asterisk, 770)
+#/var/lib/php/session-asterisk
+#%defattr(-, asterisk, asterisk)
+%defattr(-, apache, apache)
 /var/www/html/var/cache
 /var/www/html/var/templates_c
 
