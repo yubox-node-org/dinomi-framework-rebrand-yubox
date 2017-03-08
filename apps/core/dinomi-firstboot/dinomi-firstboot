@@ -16,7 +16,7 @@
 # Currently this is dead code
 elastix_activate_firewall(){
 	salida=1
-	dialog --colors --title "\Z1 Attention" --backtitle "Elastix Firewall Settings" --ok-label "Continue" --msgbox "Default Firewall Rules will be activated on the system upon finishing the installation.\n\nIf you want to review or modify the applied rules, you can do so\nin the web GUI by navigating to:\n\nSecurity > Firewall" 12 70
+	dialog --colors --title "\Z1 Attention" --backtitle "Dinomi Firewall Settings" --ok-label "Continue" --msgbox "Default Firewall Rules will be activated on the system upon finishing the installation.\n\nIf you want to review or modify the applied rules, you can do so\nin the web GUI by navigating to:\n\nSecurity > Firewall" 12 70
 	if [ -f "/usr/share/elastix/privileged/fwconfig" ]; then
 		/usr/bin/elastix-helper fwconfig --load 2>&1
 		tmp=$?
@@ -38,15 +38,15 @@ elastix_activate_firewall(){
 start() {
 	ret=0
 
-	/usr/bin/elastix-admin-passwords --init
+	/usr/bin/dinomi-admin-passwords --init
 	ret=$?
 
-    [ $ret -eq 0 -a -d /var/lock/subsys ] && touch /var/lock/subsys/elastix-firstboot
+    [ $ret -eq 0 -a -d /var/lock/subsys ] && touch /var/lock/subsys/dinomi-firstboot
 	return $ret
 }
 
 stop(){
-	[ -f "/var/lock/subsys/elastix-firstboot" ] && rm -f /var/lock/subsys/elastix-firstboot
+	[ -f "/var/lock/subsys/dinomi-firstboot" ] && rm -f /var/lock/subsys/dinomi-firstboot
 	return 0
 }
 

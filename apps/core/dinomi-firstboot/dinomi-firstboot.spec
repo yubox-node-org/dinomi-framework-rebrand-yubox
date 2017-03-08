@@ -1,7 +1,7 @@
-Summary: Elastix First Boot Setup
-Name:    elastix-firstboot
-Version: 4.0.0
-Release: 3
+Summary: Dinomi First Boot Setup
+Name:    dinomi-firstboot
+Version: 1.0.0
+Release: 1
 License: GPL
 Group:   Applications/System
 Source0: %{name}-%{version}.tar.bz2
@@ -37,14 +37,14 @@ mkdir -p $RPM_BUILD_ROOT/var/spool/elastix-mysqldbscripts/
 mkdir -p $RPM_BUILD_ROOT/usr/share/elastix-firstboot/
 mkdir -p $RPM_BUILD_ROOT/usr/bin/
 mkdir -p $RPM_BUILD_ROOT/usr/sbin/
-cp elastix-firstboot $RPM_BUILD_ROOT/etc/init.d/
-cp change-passwords elastix-admin-passwords $RPM_BUILD_ROOT/usr/bin/
+cp dinomi-firstboot $RPM_BUILD_ROOT/etc/init.d/
+cp change-passwords dinomi-admin-passwords $RPM_BUILD_ROOT/usr/bin/
 mv compat-dbscripts/ $RPM_BUILD_ROOT/usr/share/elastix-firstboot/
 
 %post
 
 if [ -d /etc/systemd ] ; then
-    cat > /usr/lib/systemd/system/elastix-firstboot.service <<'ELASTIXFIRSTBOOT'
+    cat > /usr/lib/systemd/system/dinomi-firstboot.service <<'DINOMIFIRSTBOOT'
 [Unit]
 Description=elastix-firstboot.service
 After=getty@tty2.service
@@ -53,7 +53,7 @@ Before=asterisk.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c "chvt 2 && /usr/bin/elastix-admin-passwords --init && chvt 1"
+ExecStart=/bin/bash -c "chvt 2 && /usr/bin/dinomi-admin-passwords --init && chvt 1"
 ExecStartPre=/usr/bin/echo -e \033%G
 ExecReload=/bin/kill -HUP $MAINPID
 RemainAfterExit=no
@@ -67,12 +67,12 @@ TTYVHangup=yes
 
 [Install]
 WantedBy=default.target
-ELASTIXFIRSTBOOT
-    systemctl enable elastix-firstboot.service
+DINOMIFIRSTBOOT
+    systemctl enable dinomi-firstboot.service
 else
-    chkconfig --del elastix-firstboot
-    chkconfig --add elastix-firstboot
-    chkconfig --level 2345 elastix-firstboot on
+    chkconfig --del dinomi-firstboot
+    chkconfig --add dinomi-firstboot
+    chkconfig --level 2345 dinomi-firstboot on
 fi
 
 # The following scripts are placed in the spool directory if the corresponding
@@ -132,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/elastix-firstboot/compat-dbscripts/01-asteriskcdrdb.sql
 /usr/share/elastix-firstboot/compat-dbscripts/02-asteriskuser-password.sql
 /usr/bin/change-passwords
-/usr/bin/elastix-admin-passwords
+/usr/bin/dinomi-admin-passwords
 
 %changelog
 * Thu Jan 14 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-3

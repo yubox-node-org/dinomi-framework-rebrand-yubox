@@ -1,17 +1,16 @@
 %define modname system
 
-Summary: Elastix Module System
-Name:    elastix-%{modname}
-Version: 4.0.0
-Release: 12
+Summary: Dinomi Module System
+Name:    dinomi-%{modname}
+Version: 1.0.0
+Release: 1
 License: GPL
 Group:   Applications/System
 #Source0: %{modname}_%{version}-2.tgz
 Source0: %{modname}_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Prereq: elastix-framework >= 4.0.0-14
-#Prereq: elastix-fax >= 2.2.0-4
+Prereq: dinomi-framework >= 1.0.0-1
 Prereq: php-soap
 Conflicts: elastix-agenda < 2.2.0-1
 Conflicts: elastix-pbx <= 2.4.0-15

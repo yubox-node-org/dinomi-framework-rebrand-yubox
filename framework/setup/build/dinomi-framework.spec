@@ -1,12 +1,11 @@
-Summary: Elastix is a Web based software to administrate a PBX based in open source programs
-Name: elastix-framework
+Summary: Dinomi is a Web based software to operate and administrate a call center system based in open source programs
+Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
-Version: 4.0.0
-Release: 19
+Version: 1.0.0
+Release: 1
 License: GPL
 Group: Applications/System
-#Source: elastix-framework_%{version}-%{release}.tgz
-Source: elastix-framework_%{version}-%{release}.tgz
+Source: dinomi-framework_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
 Prereq: /sbin/chkconfig, /etc/sudoers, sudo
@@ -14,10 +13,11 @@ Prereq: php, php-gd, php-pear, php-xml, php-mysql, php-pdo, php-imap, php-soap
 Prereq: httpd, mysql-server, ntp, mod_ssl
 # /usr/sbin/close-on-exec.pl /usr/local/sbin/motd.sh
 Prereq: perl
-Prereq: elastix-firstboot >= 2.3.0-4
+Prereq: dinomi-firstboot
 Prereq: /sbin/pidof
 Obsoletes: elastix-additionals
 Provides: elastix-additionals
+Obsoletes: elastix-framework
 Conflicts: elastix-system <= 4.0.0-8
 Conflicts: elastix-callcenter <= 2.0.0-16
 Conflicts: elastix-pbx <= 2.2.0-16
@@ -57,20 +57,20 @@ Requires: sqlite
 # elastix-framework should stand by itself without an asterisk dependency.
 
 %description
-Elastix is a Web based software to administrate a PBX based in open source programs
+Dinomi is a Web based software to operate and administrate a call center system based in open source programs.
 
 %package themes-extra
-Summary: Elastix GUI themes from 2.4 and earlier
+Summary: Dinomi GUI themes from 2.4 and earlier
 Group: Applications/System
 BuildArch: noarch
-Requires: elastix-framework = %{version}-%{release}
+Requires: dinomi-framework = %{version}-%{release}
 
 %description themes-extra
-This package provides the Elastix GUI themes from earlier versions.
+This package provides the Dinomi GUI themes from earlier versions.
 
 
 %prep
-%setup -n elastix-framework
+%setup -n dinomi-framework
 
 %install
 ## ** Step 1: Creation path for the installation ** ##
@@ -104,8 +104,8 @@ mkdir -p $RPM_BUILD_ROOT/etc/init.d
 
 ## ** Step 2: Installation of files and folders ** ##
 # ** Installating framework elastix webinterface ** #
-#rm -rf $RPM_BUILD_DIR/elastix-framework/framework/html/modules/userlist/  # Este modulo no es el modificado para soporte de correo, eso se encuentra en modules-core
-mv $RPM_BUILD_DIR/elastix-framework/framework/html/*                              $RPM_BUILD_ROOT/var/www/html/
+#rm -rf $RPM_BUILD_DIR/dinomi-framework/framework/html/modules/userlist/  # Este modulo no es el modificado para soporte de correo, eso se encuentra en modules-core
+mv $RPM_BUILD_DIR/dinomi-framework/framework/html/*                              $RPM_BUILD_ROOT/var/www/html/
 
 # ** Installating modules elastix webinterface ** #
 #mv $RPM_BUILD_DIR/elastix/modules-core/*                                $RPM_BUILD_ROOT/var/www/html/modules/
@@ -120,63 +120,63 @@ chmod 777 $RPM_BUILD_ROOT/var/www/db/
 chmod 755 $RPM_BUILD_ROOT/usr/share/elastix/privileged
 
 # ** Httpd and Php config ** #
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/httpd/conf.d/elastix.conf        $RPM_BUILD_ROOT/etc/httpd/conf.d/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/httpd/conf.d/elastix-htaccess.conf  $RPM_BUILD_ROOT/etc/httpd/conf.d/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/php.d/elastix.ini                $RPM_BUILD_ROOT/etc/php.d/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/httpd/conf.d/elastix.conf        $RPM_BUILD_ROOT/etc/httpd/conf.d/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/httpd/conf.d/elastix-htaccess.conf  $RPM_BUILD_ROOT/etc/httpd/conf.d/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/php.d/elastix.ini                $RPM_BUILD_ROOT/etc/php.d/
 
 # ** crons config ** #
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/cron.d/elastix.cron              $RPM_BUILD_ROOT/etc/cron.d/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/cron.d/elastix.cron              $RPM_BUILD_ROOT/etc/cron.d/
 chmod 644 $RPM_BUILD_ROOT/etc/cron.d/*
 
 # ** Repos config ** #
-#mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/yum.repos.d/CentOS-Base.repo     $RPM_BUILD_ROOT/usr/share/elastix/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/yum.repos.d/elastix.repo         $RPM_BUILD_ROOT/etc/yum.repos.d/
+#mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/yum.repos.d/CentOS-Base.repo     $RPM_BUILD_ROOT/usr/share/elastix/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/yum.repos.d/elastix.repo         $RPM_BUILD_ROOT/etc/yum.repos.d/
 
 # ** sudoers config ** #
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/sudoers                          $RPM_BUILD_ROOT/usr/share/elastix/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/sudoers                          $RPM_BUILD_ROOT/usr/share/elastix/
 
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/rc.local                         $RPM_BUILD_ROOT/usr/share/elastix/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/rc.local                         $RPM_BUILD_ROOT/usr/share/elastix/
 
 # ** /usr/local/ files ** #
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/local/elastix/sampler.php        $RPM_BUILD_ROOT/usr/local/elastix/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/local/sbin/motd.sh               $RPM_BUILD_ROOT/usr/local/sbin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/local/elastix/sampler.php        $RPM_BUILD_ROOT/usr/local/elastix/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/local/sbin/motd.sh               $RPM_BUILD_ROOT/usr/local/sbin/
 chmod 755 $RPM_BUILD_ROOT/usr/local/sbin/motd.sh
 
 # ** /usr/share/ files ** #
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/share/pear/DB/sqlite3.php                    $RPM_BUILD_ROOT/usr/share/pear/DB/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/share/pear/DB/sqlite3.php                    $RPM_BUILD_ROOT/usr/share/pear/DB/
 
 # ** setup ** #
-mv $RPM_BUILD_DIR/elastix-framework/framework/setup/usr/share/elastix/privileged/*   $RPM_BUILD_ROOT/usr/share/elastix/privileged/
+mv $RPM_BUILD_DIR/dinomi-framework/framework/setup/usr/share/elastix/privileged/*   $RPM_BUILD_ROOT/usr/share/elastix/privileged/
 rmdir framework/setup/usr/share/elastix/privileged/ framework/setup/usr/share/elastix framework/setup/usr/share framework/setup/usr
-mv $RPM_BUILD_DIR/elastix-framework/framework/setup/                                 $RPM_BUILD_ROOT/usr/share/elastix/module_installer/%{name}-%{version}-%{release}/
-mv $RPM_BUILD_DIR/elastix-framework/framework/menu.xml                               $RPM_BUILD_ROOT/usr/share/elastix/module_installer/%{name}-%{version}-%{release}/
+mv $RPM_BUILD_DIR/dinomi-framework/framework/setup/                                 $RPM_BUILD_ROOT/usr/share/elastix/module_installer/%{name}-%{version}-%{release}/
+mv $RPM_BUILD_DIR/dinomi-framework/framework/menu.xml                               $RPM_BUILD_ROOT/usr/share/elastix/module_installer/%{name}-%{version}-%{release}/
 
 # ** elastix-* file ** #
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/elastix-menumerge            $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/elastix-menuremove           $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/elastix-dbprocess            $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/compareVersion		   $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/search_ami_admin_pwd             $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/elastix-add-yum-exclude             $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/elastix-notification             $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-menumerge            $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-menuremove           $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-dbprocess            $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/compareVersion		   $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/search_ami_admin_pwd             $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-add-yum-exclude             $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-notification             $RPM_BUILD_ROOT/usr/bin/
 chmod 755 $RPM_BUILD_ROOT/usr/bin/compareVersion
 chmod 755 $RPM_BUILD_ROOT/usr/bin/search_ami_admin_pwd
 
 # ** Moving elastix_helper
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/bin/elastix-helper               $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/sbin/elastix-helper              $RPM_BUILD_ROOT/usr/sbin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-helper               $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/sbin/elastix-helper              $RPM_BUILD_ROOT/usr/sbin/
 
 chmod 755 $RPM_BUILD_ROOT/usr/sbin/elastix-helper
 chmod 755 $RPM_BUILD_ROOT/usr/bin/elastix-helper
 
 
 # Archivos generic-cloexec y close-on-exec.pl
-mv $RPM_BUILD_DIR/elastix-framework/additionals/usr/sbin/close-on-exec.pl            $RPM_BUILD_ROOT/usr/sbin/
-mv $RPM_BUILD_DIR/elastix-framework/additionals/etc/init.d/generic-cloexec           $RPM_BUILD_ROOT/etc/init.d/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/sbin/close-on-exec.pl            $RPM_BUILD_ROOT/usr/sbin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/init.d/generic-cloexec           $RPM_BUILD_ROOT/etc/init.d/
 
 #Logrotate
 mkdir -p    $RPM_BUILD_ROOT/etc/logrotate.d/
-mv          $RPM_BUILD_DIR/elastix-framework/additionals/etc/logrotate.d/*           $RPM_BUILD_ROOT/etc/logrotate.d/
+mv          $RPM_BUILD_DIR/dinomi-framework/additionals/etc/logrotate.d/*           $RPM_BUILD_ROOT/etc/logrotate.d/
 # Los archivos de logrotate TIENEN que ser 0644 (http://bugs.elastix.org/view.php?id=2608)
 chmod 644 $RPM_BUILD_ROOT/etc/logrotate.d/*
 
@@ -188,9 +188,9 @@ touch	    $RPM_BUILD_ROOT/var/log/elastix/postfix_stats.log
 %pre
 #Para conocer la version de elastix antes de actualizar o instalar
 mkdir -p /usr/share/elastix/module_installer/%{name}-%{version}-%{release}/
-touch /usr/share/elastix/module_installer/%{name}-%{version}-%{release}/preversion_elastix-framework.info
+touch /usr/share/elastix/module_installer/%{name}-%{version}-%{release}/preversion_dinomi-framework.info
 if [ $1 -eq 2 ]; then
-    rpm -q --queryformat='%{VERSION}-%{RELEASE}' %{name} > /usr/share/elastix/module_installer/%{name}-%{version}-%{release}/preversion_elastix-framework.info
+    rpm -q --queryformat='%{VERSION}-%{RELEASE}' %{name} > /usr/share/elastix/module_installer/%{name}-%{version}-%{release}/preversion_dinomi-framework.info
 fi
 
 # if not exist add the asterisk group
@@ -243,8 +243,8 @@ sed --in-place "s,Group\sapache,#Group apache,g" /etc/httpd/conf/httpd.conf
 
 # ** Uso de elastix-dbprocess ** #
 pathModule="/usr/share/elastix/module_installer/%{name}-%{version}-%{release}"
-preversion=`cat $pathModule/preversion_elastix-framework.info`
-rm -f $pathModule/preversion_elastix-framework.info
+preversion=`cat $pathModule/preversion_dinomi-framework.info`
+rm -f $pathModule/preversion_dinomi-framework.info
 
 if [ $1 -eq 1 ]; then #install
     # The installer database

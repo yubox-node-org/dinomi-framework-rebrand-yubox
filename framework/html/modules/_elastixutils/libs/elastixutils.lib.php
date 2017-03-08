@@ -37,7 +37,7 @@ function obtenerDetallesRPMS()
 {
     $packageClass = array(
         'Kernel'    =>  NULL,
-        'Elastix'   =>  array('elastix*'),
+        'Dinomi'   =>  array('dinomi*'),
         'RoundCubeMail'  =>  array('RoundCubeMail'),
         'Mail'          =>  array('postfix', 'cyrus-imapd'),
         'IM'            =>  array('openfire'),
