@@ -130,7 +130,7 @@ chmod 644 $RPM_BUILD_ROOT/etc/cron.d/*
 
 # ** Repos config ** #
 #mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/yum.repos.d/CentOS-Base.repo     $RPM_BUILD_ROOT/usr/share/elastix/
-mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/yum.repos.d/elastix.repo         $RPM_BUILD_ROOT/etc/yum.repos.d/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/yum.repos.d/dinomi.repo         $RPM_BUILD_ROOT/etc/yum.repos.d/
 
 # ** sudoers config ** #
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/sudoers                          $RPM_BUILD_ROOT/usr/share/elastix/
@@ -391,7 +391,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/cron.d/elastix.cron
 %config(noreplace) /etc/httpd/conf.d/elastix.conf
 %config(noreplace) /etc/php.d/elastix.ini
-%config(noreplace) /etc/yum.repos.d/elastix.repo
+%config(noreplace) /etc/yum.repos.d/dinomi.repo
 #%config(noreplace) /etc/logrotate.d/elastixAccess.logrotate
 %config(noreplace) /etc/logrotate.d/elastixAudit.logrotate
 %config(noreplace) /etc/logrotate.d/elastixEmailStats.logrotate

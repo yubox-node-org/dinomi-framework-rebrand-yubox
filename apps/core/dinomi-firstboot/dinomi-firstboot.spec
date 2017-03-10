@@ -1,7 +1,7 @@
 Summary: Dinomi First Boot Setup
 Name:    dinomi-firstboot
 Version: 1.0.0
-Release: 1
+Release: 2
 License: GPL
 Group:   Applications/System
 Source0: %{name}-%{version}.tar.bz2
@@ -135,6 +135,11 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/dinomi-admin-passwords
 
 %changelog
+* Fri Mar 10 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-2
+- CHANGED: firstboot - Build/dinomi-firstboot.spec:  update specfile with latest
+  SVN history. The name has changed in order to be grouped in the family of Dinomi
+  packages. Bumped Version and Release in specfile.
+
 * Thu Jan 14 2016 Luis Abarca <labarca@palosanto.com> 4.0.0-3
 - CHANGED: firstboot - Build/elastix-firstboot.spec:  update specfile with latest
   SVN history. Bumped Version and Release in specfile.
