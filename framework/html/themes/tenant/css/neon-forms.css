@@ -6333,6 +6333,12 @@ hr + .mail-env {
 .login-page {
   background: #303641;
 }
+
+.login-page .login-container {
+  width: 800px;
+  margin: 40px auto;
+  background-color: #474e5a;
+}
 .login-page .login-content {
   position: relative;
   width: 320px;
@@ -6349,12 +6355,15 @@ hr + .mail-env {
 }
 .login-page .login-header {
   position: relative;
-  background: #373e4a;
+  /* background: #373e4a; */
+  background: #fafafa;
   padding: 100px 0;
   -moz-transition: all 550ms ease-in-out;
   -o-transition: all 550ms ease-in-out;
   -webkit-transition: all 550ms ease-in-out;
   transition: all 550ms ease-in-out;
+  /* Line added by PS */
+  height: 320px;
 }
 .login-page .login-header .description {
   font-size: 13px;
@@ -6375,7 +6384,7 @@ hr + .mail-env {
   height: 0px;
   border-style: solid;
   border-width: 13px 12.5px 0 12.5px;
-  border-color: #373e4a transparent transparent transparent;
+  border-color: #fafafa transparent transparent transparent;
   bottom: -13px;
   -moz-transition: all 550ms ease-in-out;
   -o-transition: all 550ms ease-in-out;

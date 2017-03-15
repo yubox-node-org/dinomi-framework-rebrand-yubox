@@ -26,6 +26,11 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
+	<script src="//d3js.org/d3-timer.v0.3.min.js"></script>
+	<script src="//d3js.org/d3-ease.v0.7.min.js"></script>
+	<script src="/themes/tenant/js/isometric.js"></script>
+	
+
     {$HEADER_LIBS_JQUERY}
 </head>
 <body class="page-body login-page login-form-fall" data-url="http://neon.dev">
@@ -38,12 +43,10 @@ var baseurl = '';
 <div class="login-container">
 
 	<div class="login-header login-caret">
-
+		<canvas id=loginanimation width="800" height="320" style="position: absolute; top: 0px; padding: 0px;"></canvas>
 		<div class="login-content">
 
-			<img src="{$WEBPATH}themes/{$THEMENAME}/images/elastix_logo_mini.png" width="200" height="62" alt="elastix logo" />
-
-			<p class="description">Dear user, log in to access the admin area!</p>
+			<img src="{$WEBPATH}themes/{$THEMENAME}/images/dinomilogobig.png" width="280" height="80" alt="elastix logo" />
 
 			<!-- progress bar indicator -->
 			<div class="login-progressbar-indicator">
@@ -105,7 +108,7 @@ var baseurl = '';
 
 			<div class="login-bottom-links">
 
-				Copyright by <a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+				Copyright by <a href="http://www.dinomi.com" style="text-decoration: none;" target='_blank'>Dinomi</a>. 2006 - {$currentyear}.</div>
 
 			</div>
 
@@ -126,6 +129,7 @@ var baseurl = '';
 	<script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-login.js"></script>
 	<script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-custom.js"></script>
 	<script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-demo.js"></script>
+	<script src="/themes/tenant/js/loginanimation.js"></script>
 
 </body>
 </html>

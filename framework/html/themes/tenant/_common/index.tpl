@@ -55,7 +55,7 @@
 
         <!-- Footer -->
         <footer class="main" style="margin-left:16px;">
-            Copyright by <a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.
+            Copyright by <a href="http://www.dinomi.com" style="text-decoration: none;" target='_blank'>Dinomi</a>. 2006 - {$currentyear}.
         </footer>
 
         {*<br />*}
