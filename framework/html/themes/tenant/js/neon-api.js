@@ -22,15 +22,16 @@ jQuery.extend(public_vars, {
 	isRightSidebar: false
 });
 
+
+
 function show_sidebar_menu(with_animation)
 {
 	if(isxs())
 		return;
-		
-	if(public_vars.isRightSidebar)
-	{
-		rb_show_sidebar_menu(with_animation);
-		return;
+
+	// Condition added by PS
+	if(typeof(window.localStorage) !== "undefined") {
+		localStorage.setItem('sidebar-was-collapsed', '');
 	}
 	
 	if( ! with_animation)
@@ -81,6 +82,7 @@ function show_sidebar_menu(with_animation)
 		
 		$logo_env.transit({padding: logo_env_padding}, public_vars.sidebarTransitionTime);
 		
+		show_wide_logo_header();
 
 		// Second Phase
 		setTimeout(function()
@@ -110,6 +112,7 @@ function show_sidebar_menu(with_animation)
 				// Last Phase
 				setTimeout(function()
 				{	
+
 					// Reset Vars
 					public_vars.$pageContainer
 					.add(public_vars.$sidebarMenu)
@@ -122,7 +125,6 @@ function show_sidebar_menu(with_animation)
 					public_vars.$pageContainer.removeClass(public_vars.sidebarOnTransitionClass);
 					
 					public_vars.$mainMenu.data('is-busy', false); // Transition End
-					
 					
 					fit_main_content_height();
 					
@@ -139,11 +141,10 @@ function hide_sidebar_menu(with_animation)
 {
 	if(isxs())
 		return;
-		
-	if(public_vars.isRightSidebar)
-	{
-		rb_hide_sidebar_menu(with_animation);
-		return;
+
+	// Condition added by PS
+	if(typeof(window.localStorage) !== "undefined") {
+		localStorage.setItem('sidebar-was-collapsed', 'yes');
 	}
 		
 	if( ! with_animation)
@@ -191,9 +192,12 @@ function hide_sidebar_menu(with_animation)
 		TweenMax.to($submenus, public_vars.sidebarTransitionTime / 1100, {css: {height: 0}});
 		
 		//TMP$search_input.transit({opacity: 0}, public_vars.sidebarTransitionTime);
+
 		$search_button.transit({right: padding_diff}, public_vars.sidebarTransitionTime);
 		$logo.transit({scale: [1,0], perspective: 300/*, opacity: 0*/}, public_vars.sidebarTransitionTime/2);
 		$logo_env.transit({padding: logo_env_padding}, public_vars.sidebarTransitionTime);
+
+		
 		//$collapse_icon.transit({left: -padding_diff+3}, public_vars.sidebarTransitionTime * 5);
 		
 		if( ! rtl())
@@ -209,6 +213,7 @@ function hide_sidebar_menu(with_animation)
 		setTimeout(function()
 		{
 			// In the end do some stuff
+
 			public_vars.$pageContainer
 			.add(public_vars.$sidebarMenu)
 			.add($search_input)
@@ -233,9 +238,22 @@ function hide_sidebar_menu(with_animation)
 	}
 }
 
+// Class added by PS
+function show_wide_logo_header() {
+	//jQuery('.logo-env').css('display', 'inline-block');
+	//jQuery('.menulogo-min').css('display', 'none');
+	//jQuery('.page-container .sidebar-menu #main-menu > li i').css('font-size','15px');
+	//jQuery('.page-container .sidebar-menu #main-menu > li').css('text-align','left');
+	//jQuery('.page-container .sidebar-menu #main-menu > li a i').css('top','0px');
+	//jQuery('.page-container .sidebar-menu #main-menu li#search').css('display', 'list-item');
+	// We added next rule because a weird bug
+	jQuery('.page-container.sidebar-collapsed .sidebar-menu .logo-env > div.sidebar-collapse').attr('style', '');
+}
+
 function toggle_sidebar_menu(with_animation)
 {
 	var open = public_vars.$pageContainer.hasClass(public_vars.sidebarCollapseClass);
+
 	
 	if(open)
 	{
@@ -263,192 +281,4 @@ function rtl() // checks whether the content is in RTL mode
 function rtlc()
 {
 	return rtl() ? -1 : 1;
-}
-
-
-// Right sidebar closing methods
-function rb_hide_sidebar_menu(with_animation)
-{		
-	if( ! with_animation)
-	{
-		public_vars.$pageContainer.addClass(public_vars.sidebarCollapseClass);
-	}
-	else
-	{
-		if(public_vars.$mainMenu.data('is-busy') || public_vars.$pageContainer.hasClass(public_vars.sidebarCollapseClass))
-			return;
-		
-		fit_main_content_height();
-		
-		var current_padding = parseInt(public_vars.$pageContainer.css('padding-left'), 10);
-		
-		// Check
-		public_vars.$pageContainer.addClass(public_vars.sidebarCollapseClass);		
-		
-		var padding_left     = parseInt(public_vars.$pageContainer.css('padding-left'), 10),
-			$span_elements   = public_vars.$mainMenu.find('li a span'),
-			$submenus        = public_vars.$mainMenu.find('.has-sub > ul'),
-			$search_input    = public_vars.$mainMenu.find('#search .search-input'),
-			$search_button   = public_vars.$mainMenu.find('#search button'),
-			$logo_env		 = public_vars.$sidebarMenu.find('.logo-env'),
-			$collapse_icon	 = $logo_env.find('.sidebar-collapse'),
-			$logo			 = $logo_env.find('.logo'),
-			$sidebar_ulink	 = public_vars.$sidebarUser.find('span, strong'),
-			
-			logo_env_padding = parseInt($logo_env.css('padding'), 10);
-			
-		
-		// Return to normal state
-		public_vars.$pageContainer.removeClass(public_vars.sidebarCollapseClass);
-		
-		var padding_diff = current_padding - padding_left;
-		
-		// Start animation (1)
-		public_vars.$mainMenu.data('is-busy', true);
-		
-		
-		// Add Classes & Hide Span Elements
-		public_vars.$pageContainer.addClass(public_vars.sidebarOnTransitionClass);
-		setTimeout(function(){ public_vars.$pageContainer.addClass(public_vars.sidebarOnHideTransitionClass); }, 1);
-		
-		TweenMax.to($submenus, public_vars.sidebarTransitionTime / 1100, {css: {height: 0}});
-		
-		$logo.transit({scale: [1,0], perspective: 300/*, opacity: 0*/}, public_vars.sidebarTransitionTime/2);
-		$logo_env.transit({padding: logo_env_padding}, public_vars.sidebarTransitionTime);
-		
-		
-		setTimeout(function()
-		{
-			public_vars.$pageContainer.addClass('sidebar-collapsing-phase-2');
-			
-			setTimeout(function()
-			{
-				public_vars.$mainMenu.data('is-busy', false);
-				public_vars.$pageContainer.addClass(public_vars.sidebarCollapseClass);
-				public_vars.$pageContainer.removeClass('sidebar-collapsing-phase-2');
-				
-				console.log(public_vars.sidebarTransitionTime);
-				// In the end do some stuff
-				public_vars.$pageContainer
-				.add(public_vars.$sidebarMenu)
-				.add($search_input)
-				.add($search_button)
-				.add($logo_env)
-				.add($logo)
-				.add($span_elements)
-				.add($collapse_icon)
-				.add($submenus)
-				.add($sidebar_ulink)
-				.add(public_vars.$mainMenu)
-				.add($collapse_icon)
-				.attr('style', '');
-				
-				public_vars.$pageContainer.removeClass(public_vars.sidebarOnTransitionClass).removeClass(public_vars.sidebarOnHideTransitionClass);
-				
-				fit_main_content_height();
-				
-				
-			}, public_vars.sidebarTransitionTime);
-			
-		}, public_vars.sidebarTransitionTime / 2);
-	}
-}
-
-function rb_show_sidebar_menu(with_animation)
-{	
-	if( ! with_animation)
-	{
-		public_vars.$pageContainer.removeClass(public_vars.sidebarCollapseClass);
-	}
-	else
-	{
-		if(public_vars.$mainMenu.data('is-busy') || ! public_vars.$pageContainer.hasClass(public_vars.sidebarCollapseClass))
-			return;
-		
-		fit_main_content_height();
-		
-		var current_padding = parseInt(public_vars.$pageContainer.css('padding-right'), 10);
-		
-		// Check
-		public_vars.$pageContainer.removeClass(public_vars.sidebarCollapseClass);
-		
-		var padding_right     = parseInt(public_vars.$pageContainer.css('padding-right'), 10),
-			$span_elements   = public_vars.$mainMenu.find('li a span'),
-			$submenus        = public_vars.$mainMenu.find('.has-sub > ul'),
-			$search_input    = public_vars.$mainMenu.find('#search .search-input'),
-			$search_button   = public_vars.$mainMenu.find('#search button'),
-			$logo_env		 = public_vars.$sidebarMenu.find('.logo-env'),
-			$collapse_icon	 = $logo_env.find('.sidebar-collapse'),
-			$logo			 = $logo_env.find('.logo'),
-			$sidebar_ulink	 = public_vars.$sidebarUser.find('span, strong'),
-			
-			logo_env_padding = parseInt($logo_env.css('padding'), 10);
-		
-		
-		// Return to normal state
-		public_vars.$pageContainer.addClass(public_vars.sidebarCollapseClass);
-		
-		// Showing Class
-		setTimeout(function(){ public_vars.$pageContainer.addClass(public_vars.sidebarOnShowTransitionClass); }, 1);
-		
-		var padding_diff = padding_right - current_padding;
-		
-		// Start animation
-		public_vars.$mainMenu.data('is-busy', true);
-		
-		public_vars.$pageContainer.addClass(public_vars.sidebarOnTransitionClass);
-	
-		
-		public_vars.$pageContainer.transit({paddingRight: padding_right}, public_vars.sidebarTransitionTime);	
-		public_vars.$sidebarMenu.transit({width: padding_right}, public_vars.sidebarTransitionTime);
-		
-		$logo_env.transit({padding: logo_env_padding}, public_vars.sidebarTransitionTime);
-		
-		// Second Phase
-		setTimeout(function()
-		{
-			public_vars.$pageContainer.removeClass(public_vars.sidebarCollapseClass);
-			
-			$submenus.hide().filter('.visible').slideDown('normal', function()
-			{
-				$submenus.attr('style', '');
-			});
-			
-			// Logo Animation
-			$logo.css({width: 'auto', height: 'auto'});
-			TweenMax.set($logo, {css: {scaleY: 0}});
-			
-			TweenMax.to($logo, (public_vars.sidebarTransitionTime/2) / 1000, {css: {scaleY: 1}});
-			
-			setTimeout(function()
-			{				
-				public_vars.$pageContainer.removeClass(public_vars.sidebarOnTransitionClass);
-				public_vars.$pageContainer.removeClass(public_vars.sidebarOnShowTransitionClass);
-				
-				
-				setTimeout(function()
-				{
-					// Reset Vars
-					public_vars.$pageContainer
-					.add(public_vars.$sidebarMenu)
-					.add($logo_env)
-					.add($logo)
-					.add($span_elements)
-					.add($submenus)
-					.add($collapse_icon)
-					.attr('style', '');
-					
-					public_vars.$pageContainer.removeClass(public_vars.sidebarOnTransitionClass);
-					
-					public_vars.$mainMenu.data('is-busy', false); // Transition End
-					
-					
-					fit_main_content_height();
-					
-				}, public_vars.sidebarTransitionTime);
-					
-			}, public_vars.sidebarTransitionTime/2);
-				
-		}, public_vars.sidebarTransitionTime/2);
-	}
 }

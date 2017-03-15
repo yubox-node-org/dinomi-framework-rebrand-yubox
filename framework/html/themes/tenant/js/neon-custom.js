@@ -22,8 +22,8 @@ var public_vars = public_vars || {};
 		public_vars.$mainContent	= public_vars.$pageContainer.find('.main-content');
 		public_vars.$sidebarUserEnv = public_vars.$sidebarMenu.find('.sidebar-user-info');
 		public_vars.$sidebarUser 	= public_vars.$sidebarUserEnv.find('.user-link');
-		
-		
+
+
 		public_vars.$body.addClass('loaded');
 		
 		// Just to make sure...
@@ -39,12 +39,8 @@ var public_vars = public_vars || {};
 		}
 		
 		
-		
-		
 		// Sidebar Menu Setup
 		setup_sidebar_menu();
-		
-		
 		
 		
 		// Horizontal Menu Setup
@@ -63,7 +59,15 @@ var public_vars = public_vars || {};
 			toggle_sidebar_menu(with_animation);
 		});
 		
-		
+		// Condition added by PS
+		public_vars.$sidebarMenu.find(".menulogo-min").on('click', function(ev)
+		{
+			ev.preventDefault();
+			
+			var with_animation = $(this).hasClass('with-animation');
+			
+			toggle_sidebar_menu(with_animation);
+		});
 		
 		
 		// Mobile Sidebar Collapse icon
@@ -118,16 +122,24 @@ var public_vars = public_vars || {};
 		
 		
 		
-		// Close Sidebar if Tablet Screen is visible
+		// Get initial state of sidebar. If it is open or closed
 		public_vars.$sidebarMenu.data('initial-state', (public_vars.$pageContainer.hasClass('sidebar-collapsed') ? 'closed' : 'open'));
+
 		
+		// Close Sidebar if Tablet Screen is visible
 		if(is('tabletscreen'))
 		{
 			hide_sidebar_menu(false);
 		}
 	
-	
-	
+		// Added by PS: If menu sidebar (menu) was collapsed, then when reload if should remains collapsed
+		if(typeof(window.localStorage) !== "undefined") {
+			var sidebarWasCollapsed = localStorage.getItem('sidebar-was-collapsed');
+			if (sidebarWasCollapsed=='yes' && public_vars.$pageContainer.hasClass('sidebar-collapsed')==false) {			
+				hide_sidebar_menu(false);
+			}
+		}
+
 	
 		// NiceScroll
 		if($.isFunction($.fn.niceScroll))
@@ -298,7 +310,6 @@ var public_vars = public_vars || {};
 				$panel.removeClass('panel-collapse');
 			}
 		});
-		
 		
 		
 		

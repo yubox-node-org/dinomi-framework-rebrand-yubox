@@ -2735,7 +2735,7 @@ input[type="button"].btn-block {
   top: 0;
   left: 0;
   bottom: 0;
-  background: #303641;
+  background: #384050;
   color: #aaabae;
   z-index: 1;
   -webkit-box-sizing: border-box;
@@ -2750,10 +2750,13 @@ input[type="button"].btn-block {
 }
 .page-container .sidebar-menu .logo-env {
   width: 100%;
-  padding: 18px;
+  padding: 20px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  /* Lines added by PS */
+  height: 80px;
+  background-color: #485060;
 }
 .page-container .sidebar-menu .logo-env:before,
 .page-container .sidebar-menu .logo-env:after {
@@ -2779,11 +2782,12 @@ input[type="button"].btn-block {
 .page-container .sidebar-menu .logo-env > div.sidebar-mobile-menu {
   position: relative;
   float: right;
+  top: 4px;
 }
 .page-container .sidebar-menu .logo-env > div.sidebar-collapse a,
 .page-container .sidebar-menu .logo-env > div.sidebar-mobile-menu a {
   display: inline-block;
-  border: 1px solid #454a54;
+  border: 1px solid #707190;
   text-align: center;
   padding: 0;
   line-height: 1;
@@ -2805,6 +2809,13 @@ input[type="button"].btn-block {
 .page-container .sidebar-menu .logo-env > div.sidebar-mobile-menu a:hover {
   background-color: rgba(69, 74, 84, 0.4);
 }
+.page-container .sidebar-menu div.menulogo-min {
+  display: none;
+  width: 80px;
+  height: 80px;
+  padding: 11px;
+  background-color: #485060;
+}
 .page-container .sidebar-menu #main-menu {
   list-style: none;
   margin: 0;
@@ -2815,7 +2826,7 @@ input[type="button"].btn-block {
   position: relative;
   margin: 0;
   font-size: 12px;
-  border-bottom: 1px solid rgba(69, 74, 84, 0.7);
+  border-bottom: 1px solid rgba(94, 106, 130, 0.9);
 }
 .page-container .sidebar-menu #main-menu li#search {
   background: #262b34;
@@ -2909,8 +2920,17 @@ input[type="button"].btn-block {
   border: 1px solid #454a54;
   top: -1px;
 }
+/* Class added by PS */
+.page-container .sidebar-menu #main-menu > li.active {
+  background-color: #d9d9e2;
+}
+.page-container .sidebar-menu #main-menu > li.active i {
+  color: #cccccc;
+}
+/* end */
+
 .page-container .sidebar-menu #main-menu li.active > a {
-  background-color: #2b303a;
+  background-color: #586070;
   color: #ffffff;
 }
 .page-container .sidebar-menu #main-menu li.has-sub > a:before {
@@ -2951,10 +2971,10 @@ input[type="button"].btn-block {
   display: block;
 }
 .page-container .sidebar-menu #main-menu li ul > li {
-  border-bottom: 1px solid rgba(69, 74, 84, 0.4);
+  border-bottom: 1px solid rgba(94, 106, 130, 0.9);
 }
 .page-container .sidebar-menu #main-menu li ul > li > a {
-  background-color: #2b303a;
+  background-color: #384050;
   padding-left: 40px;
 }
 .page-container .sidebar-menu #main-menu li ul > li > a:hover {
@@ -3221,7 +3241,7 @@ input[type="button"].btn-block {
   box-sizing: border-box;
 }
 .page-container.sidebar-collapsed {
-  padding-left: 65px;
+  padding-left: 80px;
 }
 .page-container.sidebar-collapsed .sidebar-user-info {
   padding: 13.63636364px 5px;
@@ -3247,10 +3267,11 @@ input[type="button"].btn-block {
   opacity: 0;
   filter: alpha(opacity=0);
 }
+
 .page-container.sidebar-collapsed .sidebar-user-info .sui-hover {
   position: absolute;
   top: 0;
-  left: 65px;
+  left: 80px;
   width: 280px;
   padding-top: 8px;
   padding-bottom: 8px;
@@ -3276,10 +3297,16 @@ input[type="button"].btn-block {
 }
 .page-container.sidebar-collapsed .sidebar-menu {
   z-index: 4;
-  width: 65px;
+  width: 80px;
 }
+
+/* Class added by PS */
+.page-container.sidebar-collapsed .sidebar-menu div.menulogo-min {
+  display: inline-block;
+}
+
 .page-container.sidebar-collapsed .sidebar-menu .logo-env {
-  display: block;
+  display: none; /* parameter changed by PS */
   padding: 20px;
 }
 .page-container.sidebar-collapsed .sidebar-menu .logo-env > div.logo {
@@ -3291,6 +3318,11 @@ input[type="button"].btn-block {
   padding: 0;
   left: 3px;
 }
+/* Class added by PS */
+.page-container.sidebar-collapsed .sidebar-menu #main-menu > li#search  {
+  display: none;
+}
+
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li#search .search-input {
   position: absolute;
   visibility: hidden;
@@ -3305,7 +3337,7 @@ input[type="button"].btn-block {
   position: absolute;
   visibility: visible;
   top: 0px;
-  left: 65px;
+  left: 80px;
   background: #262b34;
   border: 1px solid #454a54;
   width: 250px;
@@ -3321,20 +3353,38 @@ input[type="button"].btn-block {
   border: 0;
   padding-left: 0;
 }
+
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li.has-sub > a:before {
   display: none;
 }
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li.has-sub > a {
   background-color: transparent;
+  /* Line added by PS */
+  height: 40px;
 }
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li > a {
   position: relative;
 }
+
+/* Class added by PS */
+.page-container.sidebar-collapsed .sidebar-menu #main-menu > li {
+  height: 80px;
+  text-align: center;
+}
+.page-container.sidebar-collapsed .sidebar-menu #main-menu > li i {
+  font-size: 28px;
+  top: 14px;
+}
+.page-container.sidebar-collapsed .sidebar-menu #main-menu > li.active i {
+  color: #444444;
+}
+/* end classes added by PS */
+
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li > a > span:not(.badge) {
   display: block;
   position: absolute;
   top: 0;
-  left: 65px;
+  left: 80px;
   margin-top: -1px;
   padding: 12px 10px;
   background: #303641;
@@ -3353,6 +3403,7 @@ input[type="button"].btn-block {
   opacity: 0;
   filter: alpha(opacity=0);
 }
+
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li > a span {
   -moz-transition: none;
   -o-transition: none;
@@ -3374,7 +3425,7 @@ input[type="button"].btn-block {
   position: absolute;
   height: 0;
   top: auto;
-  left: 65px;
+  left: 80px;
   width: 250px;
   -webkit-border-radius: 0 0 3px 0;
   -webkit-background-clip: padding-box;
@@ -3390,6 +3441,8 @@ input[type="button"].btn-block {
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li > ul > li > a span.badge {
   display: none;
 }
+
+
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li > ul li {
   border-bottom: 1px solid #454a54;
 }
@@ -3511,7 +3564,7 @@ input[type="button"].btn-block {
   padding-left: 280px;
 }
 .page-container.horizontal-menu.with-sidebar.sidebar-collapsed {
-  padding-left: 65px;
+  padding-left: 80px;
 }
 .page-container.horizontal-menu.with-sidebar.fit-logo-with-sidebar header.navbar .navbar-brand {
   width: 280px;
@@ -4460,12 +4513,12 @@ input[type="button"].btn-block {
   }
   .page-container.right-sidebar.sidebar-collapsed {
     padding-left: 0;
-    padding-right: 65px;
+    padding-right: 80px;
   }
   .page-container.right-sidebar.sidebar-collapsed .sidebar-menu #main-menu > li > a > span,
   .page-container.right-sidebar.sidebar-collapsed .sidebar-menu #main-menu > li > ul {
     left: auto;
-    right: 65px;
+    right: 80px;
   }
   .page-container.right-sidebar.sidebar-collapsed .sidebar-menu #main-menu > li > a > i {
     margin-right: 0;
@@ -4492,7 +4545,7 @@ input[type="button"].btn-block {
     margin-left: 5px;
   }
   .page-container.right-sidebar.sidebar-collapsed .sidebar-menu #main-menu > li > ul {
-    right: 65px;
+    right: 80px;
     left: auto;
   }
   .page-container.right-sidebar.sidebar-collapsed .sidebar-menu #main-menu > li > ul {
@@ -4505,7 +4558,7 @@ input[type="button"].btn-block {
   }
   .page-container.right-sidebar.sidebar-collapsed .sidebar-menu #main-menu > li#search.focused .search-input {
     left: auto;
-    right: 65px;
+    right: 80px;
     -webkit-border-radius: 3px 0 0 3px;
     -webkit-background-clip: padding-box;
     -moz-border-radius: 3px 0 0 3px;
@@ -4519,7 +4572,7 @@ input[type="button"].btn-block {
   }
   .page-container.right-sidebar.horizontal-menu.with-sidebar.sidebar-collapsed {
     padding-left: 0;
-    padding-right: 65px;
+    padding-right: 80px;
   }
   .page-container.right-sidebar.chat-visible .main-content {
     padding-left: 300px;
@@ -4560,14 +4613,14 @@ input[type="button"].btn-block {
     filter: alpha(opacity=0);
   }
   .page-container.right-sidebar.sidebar-is-collapsing.sidebar-collapsing-phase-2 {
-    padding-right: 65px;
+    padding-right: 80px;
     -moz-transition: all 600ms;
     -o-transition: all 600ms;
     -webkit-transition: all 600ms;
     transition: all 600ms;
   }
   .page-container.right-sidebar.sidebar-is-collapsing.sidebar-collapsing-phase-2 .sidebar-menu {
-    width: 65px;
+    width: 80px;
   }
   .page-container.right-sidebar.sidebar-is-collapsing.sidebar-collapsing-phase-2 .sidebar-menu .logo-env > .logo,
   .page-container.right-sidebar.sidebar-is-collapsing.sidebar-collapsing-phase-2 .sidebar-menu #main-menu li > a:before,

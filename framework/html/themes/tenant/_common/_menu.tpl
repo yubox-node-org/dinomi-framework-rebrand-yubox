@@ -11,8 +11,6 @@ $(document).ready(function(){
         }
     });
 
-
-
     $("#export_button").hover(
       function () {
           $(this).addClass("exportBorder");
@@ -25,6 +23,7 @@ $(document).ready(function(){
           $("#subMenuExport").addClass("neo-display-none");
       }
     );
+
     $("#neo-table-button-download-right").click(
       function () {
           if($(this).attr("aria-expanded") == "false"){
@@ -104,22 +103,25 @@ function removeNeoDisplayOnMouseOver(ref){
         <!-- logo -->
         <div class="logo">
             <a href="index.php">
-                <img src="{$WEBPATH}themes/{$THEMENAME}/images/elastix_logo_mini2.png" width="120" alt="" />
+                <img src="{$WEBPATH}themes/{$THEMENAME}/images/dinomi_logo_mini3.png" width="140px" height="40" alt="" />
             </a>
         </div>
         <!-- logo collapse icon -->
         <div class="sidebar-collapse">
-            <a href="#" class="sidebar-collapse-icon with-animation"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+            <a href="#" class="sidebar-collapse-icon">
                 <i class="entypo-menu"></i>
             </a>
         </div>
         <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
         <div class="sidebar-mobile-menu visible-xs">
-            <a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
+            <a href="#" class="">
                 <i class="entypo-menu"></i>
             </a>
         </div>
     </header>
+    <div class="menulogo-min">
+        <img src="{$WEBPATH}themes/{$THEMENAME}/images/dinomi_icon.png" width="58" height="58" alt="" />
+    </div>
 
     <ul id="main-menu" class="">
         <!-- add class "multiple-expanded" to allow multiple submenus to open -->
@@ -188,7 +190,7 @@ function removeNeoDisplayOnMouseOver(ref){
 
 <!-- inicio del head principal-->
 <div class="main-content">
-<div style="height:72px;background-color:#efefef;padding:15px;">
+<div style="height:80px;background-color:#efefef;padding:15px;">
     <!-- Profile Info and Notifications -->
     <span style='float:right; text-align:right; padding:0px 5px 0px 0px; width:175px;' class="col-md-6 col-sm-8 clearfix">
         <ul style='float:right;' class="user-info pull-none-xsm">

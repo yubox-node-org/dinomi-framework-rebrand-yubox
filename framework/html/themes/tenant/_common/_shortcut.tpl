@@ -1,5 +1,5 @@
+{if $SHORTCUT_BOOKMARKS}
 <li>
-    {if $SHORTCUT_BOOKMARKS}
         <a href="#">
             <i class="fa fa-star"></i>
             <span>{$SHORTCUT_BOOKMARKS_LABEL}</span>
@@ -13,8 +13,8 @@
                 </li>
             {/foreach}
         </ul>
-    {/if}
 </li>
+{/if}
 
 <li>
     <a href="#">
