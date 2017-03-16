@@ -115,6 +115,8 @@ function setIcon($idMenu){
         case 'extras': return 'fa fa-plus';
         case 'dinomi_ccpro': return 'fa fa-cubes';
         case 'dinomi_ccpro_operative': return 'fa fa-headphones';
+        case 'ccpro_reports_ingoing_call': return 'fa fa-bar-chart-o';
+        case 'ccpro_callcenter_config': return 'fa fa-cog';
         //case 'sysdash': return 'fa fa-tachometer';
 
         default: return 'fa fa-caret-right';
