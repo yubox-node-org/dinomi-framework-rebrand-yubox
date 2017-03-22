@@ -13,12 +13,12 @@ function ejecutarPeticionPaquete(msg_wait, request_param)
         var arrData = response.message;
         var statusResponse = response.statusResponse;
         var error = response.error;
-
+        /*
         if (arrData["registered"] != "yes-all"){
             showPopupCloudLogin('',540,335);
             return;
         }
-
+        */
         $("#estaus_reloj").val('prendido');
         $("#relojArena").html("<img src='modules/packages/images/loading.gif' align='absmiddle' /> <br /> <font style='font-size:12px; color:red'>" + msg_wait + "</font>");
 

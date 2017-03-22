@@ -116,7 +116,8 @@ function setIcon($idMenu){
         case 'dinomi_ccpro': return 'fa fa-cubes';
         case 'dinomi_ccpro_operative': return 'fa fa-headphones';
         case 'ccpro_reports_ingoing_call': return 'fa fa-bar-chart-o';
-        case 'ccpro_callcenter_config': return 'fa fa-cog';
+        case 'dinomi_configuration': return 'fa fa-cog';
+        case 'dinomi_licensing': return 'fa fa-id-card';
         //case 'sysdash': return 'fa fa-tachometer';
 
         default: return 'fa fa-caret-right';

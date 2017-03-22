@@ -279,6 +279,7 @@ $(document).ready(function(){
 
     // En el index.php del framework se hacía uso de smarty para
     // setear el estado del registro, ahora se hace desde javascript.
+
     $.get('index.php', {
         menu:       'registration',
         action:     'isRegistered',
@@ -292,9 +293,9 @@ $(document).ready(function(){
         $('.register_link').text(arrData['label']);
 
         // Mostrar el popup si no está registrado
-        if (arrData.auto_popup) $('a.register_link').click();
+        //if (arrData.auto_popup) $('a.register_link').click();
     });
-    $('a.register_link').click(function() { showPopupCloudLogin('',540,335); });
+    //$('a.register_link').click(function() { showPopupCloudLogin('',540,335); });
 });
 
 //Si se presiona enter se hace un submit al formulario para que se aplica el filtro
