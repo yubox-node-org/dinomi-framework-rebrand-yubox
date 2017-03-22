@@ -137,7 +137,7 @@ class Applet_ProcessesStatus
             'Postfix'   =>  'postfix',
             'MySQL'     =>  'mysqld',
             'Apache'    =>  'httpd',
-            'Dialer'    =>  'elastixdialer',
+            'Dialer'    =>  'dinomidialerpro',
         );
     	if (!isset($_REQUEST['process'])) {
     		$respuesta['status'] = 'error';
@@ -209,10 +209,12 @@ class Applet_ProcessesStatus
         $arrSERVICES["Hylafax"]["status_service"]  = $this->getStatusHylafax();
         $arrSERVICES["Hylafax"]["activate"]        = $this->_isActivate("hylafax");
         $arrSERVICES["Hylafax"]["name_service"]    = "Fax Service";
+        
 /*
         $arrSERVICES["IAXModem"]["status_service"] = $this->_existPID_ByFile("/var/run/iaxmodem.pid","iaxmodem");
         $arrSERVICES["IAXModem"]["name_service"]   = "IAXModem Service";
 */
+
         $arrSERVICES["Postfix"]["status_service"]  = $this->_existPID_ByCMD("master","postfix");
         $arrSERVICES["Postfix"]["activate"]        = $this->_isActivate("postfix");
         $arrSERVICES["Postfix"]["name_service"]    = "Email Service";
@@ -225,9 +227,9 @@ class Applet_ProcessesStatus
         $arrSERVICES["Apache"]["activate"]     = $this->_isActivate("httpd");
         $arrSERVICES["Apache"]["name_service"]     = "Web Server";
 
-        $arrSERVICES["Dialer"]["status_service"]   = $this->_existPID_ByFile("/opt/elastix/dialer/dialerd.pid","elastixdialer");
-        $arrSERVICES["Dialer"]["activate"]     = $this->_isActivate("elastixdialer");
-        $arrSERVICES["Dialer"]["name_service"]     = "Elastix Call Center Service";
+        $arrSERVICES["Dialer"]["status_service"]   = $this->_existPID_ByFile("/opt/elastix/ccpro_dialer/ccpro_dialerd.pid","dinomidialerpro");
+        $arrSERVICES["Dialer"]["activate"]     = $this->_isActivate("dinomidialerpro");
+        $arrSERVICES["Dialer"]["name_service"]     = "Dinomi Call Center Service";
 
         return $arrSERVICES;
     }

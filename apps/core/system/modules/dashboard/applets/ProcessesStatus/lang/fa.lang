@@ -38,6 +38,6 @@ $arrLangModule = array(
     "Email Service" => "سرويس ايميل",
     "Database Service" => "سرويس پايگاه داده",
     "Web Server" => "سرور وب",
-    "Elastix Call Center Service" => "Cytbox سرويس مرکز تلفن",
+    "Dinomi Call Center Service" => "Dinomi سرويس مرکز تلفن",
 );
 ?>

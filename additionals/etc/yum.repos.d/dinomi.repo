@@ -1,27 +1,27 @@
 [dinomi-base]
 name=Base RPM Repository for Dinomi
-baseurl=http://repo.dinomi.com/dinomi/normal_pbxs/4/base/$basearch/
+baseurl=http://repo.dinomi.com/dinomi/standalone/base/$basearch/
 gpgcheck=1
 enabled=1
 gpgkey=http://repo.dinomi.com/dinomi/RPM-GPG-KEY-palosanto
 
 [dinomi-updates]
 name=Updates RPM Repository for Dinomi
-baseurl=http://repo.dinomi.com/dinomi/normal_pbxs/4/updates/$basearch/
+baseurl=http://repo.dinomi.com/dinomi/standalone/updates/$basearch/
 gpgcheck=1
 enabled=1
 gpgkey=http://repo.dinomi.com/dinomi/RPM-GPG-KEY-palosanto
 
 [dinomi-beta]
 name=Beta RPM Repository for Dinomi
-baseurl=http://repo.dinomi.com/dinomi/normal_pbxs/4/beta/$basearch/
+baseurl=http://repo.dinomi.com/dinomi/standalone/beta/$basearch/
 gpgcheck=1
 enabled=0
 gpgkey=http://repo.dinomi.com/dinomi/RPM-GPG-KEY-palosanto
 
 [dinomi-extras]
 name=Extras RPM Repository for Dinomi
-baseurl=http://repo.dinomi.com/dinomi/normal_pbxs/4/extras/$basearch/
+baseurl=http://repo.dinomi.com/dinomi/standalone/extras/$basearch/
 gpgcheck=1
 enabled=1
 gpgkey=http://repo.dinomi.com/dinomi/RPM-GPG-KEY-palosanto
