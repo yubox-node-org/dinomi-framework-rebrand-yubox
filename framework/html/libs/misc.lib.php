@@ -577,12 +577,31 @@ function generarDSNSistema($sNombreUsuario, $sNombreDB, $ruta_base='')
         if (is_null($sClave)) return NULL;
         return 'mysql://root:'.$sClave.'@localhost/'.$sNombreDB;
     case 'asteriskuser':
-        $pConfig = new paloConfig("/etc", "amportal.conf", "=", "[[:space:]]*=[[:space:]]*");
-        $listaParam = $pConfig->leer_configuracion(FALSE);
-        return $listaParam['AMPDBENGINE']['valor']."://".
-               $listaParam['AMPDBUSER']['valor']. ":".
-               $listaParam['AMPDBPASS']['valor']. "@".
-               $listaParam['AMPDBHOST']['valor']. "/".$sNombreDB;
+        if (is_readable('/etc/amportal.conf')) {
+            $pConfig = new paloConfig("/etc", "amportal.conf", "=", "[[:space:]]*=[[:space:]]*");
+            $listaParam = $pConfig->leer_configuracion(FALSE);
+            return $listaParam['AMPDBENGINE']['valor']."://".
+                   $listaParam['AMPDBUSER']['valor']. ":".
+                   $listaParam['AMPDBPASS']['valor']. "@".
+                   $listaParam['AMPDBHOST']['valor']. "/".$sNombreDB;
+        }
+        if (is_readable('/opt/elastix/ccpro_dialer/DBConnCCP.lib.php')) {
+            /* Esto asume que se ejecuta en la DINOMI ISO donde siempre hay un
+             * archivo que permite la ejecución del código. */
+            require_once '/opt/elastix/ccpro_dialer/DBConnCCP.lib.php';
+            try {
+                $dsn_ccpro = getCallCenterDBString(TRUE);
+                $db_ccpro = new PDO($dsn_ccpro[0], $dsn_ccpro[1], $dsn_ccpro[2]);
+                $db_ccpro->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $db_ccpro->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+
+                $dsn_fpbx = getFreePBXDBString($db_ccpro, FALSE);
+                $dsn_fpbx = preg_replace('|/asterisk$|', "/$sNombreDB", $dsn_fpbx);
+                return $dsn_fpbx;
+            } catch (PDOException $e) {
+                //
+            }
+        }
     }
     return NULL;
 }
