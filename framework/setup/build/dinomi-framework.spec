@@ -231,7 +231,7 @@ chmod 755 /etc/rc.d/rc.local
 
 # ** Change content of CentOS-Base.repo ** #
 if [ -e /etc/yum.repos.d/CentOS-Base.repo ] ; then
-    /usr/bin/elastix-add-yum-exclude /etc/yum.repos.d/CentOS-Base.repo 'redhat-logos' 'php53*' 'kernel*'
+    /usr/bin/elastix-add-yum-exclude /etc/yum.repos.d/CentOS-Base.repo 'redhat-logos'
 fi
 
 # Patch httpd.conf so that User and Group directives in elastix.conf take effect
