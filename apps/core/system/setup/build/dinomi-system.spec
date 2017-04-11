@@ -14,6 +14,7 @@ Prereq: dinomi-framework >= 1.0.0-1
 Prereq: php-soap
 Conflicts: elastix-agenda < 2.2.0-1
 Conflicts: elastix-pbx <= 2.4.0-15
+Requires: nodejs-dinomi-monitor
 Requires: dhcp
 Requires: php-simplepie
 Requires: hdparm
