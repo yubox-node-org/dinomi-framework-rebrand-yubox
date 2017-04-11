@@ -34,10 +34,16 @@ function _moduleContent($smarty, $module_name)
 {
     require_once "modules/$module_name/libs/paloSantoApplets.class.php";
 
-	load_language_module($module_name);
+  	load_language_module($module_name);
+
+    if ($_SESSION["elastix_user"] == "admin"){
+      $USR_ADMIN = TRUE;
+    }else{
+      $USR_ADMIN = FALSE;
+    }
 
     $smarty->assign("module_name",  $module_name);
-
+    $smarty->assign("USR_ADMIN", $USR_ADMIN);
     // Leer lista de applets implementados y validar con directorio
     $paloApplets = new paloSantoApplets();
     $appletlist = $paloApplets->leerAppletsActivados($_SESSION["elastix_user"]);

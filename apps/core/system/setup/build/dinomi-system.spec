@@ -3,7 +3,7 @@
 Summary: Dinomi Module System
 Name:    dinomi-%{modname}
 Version: 1.0.0
-Release: 1
+Release: 2
 License: GPL
 Group:   Applications/System
 #Source0: %{modname}_%{version}-2.tgz
@@ -178,6 +178,12 @@ fi
 %config(noreplace) /etc/dahdi/genconf_parameters
 
 %changelog
+* Tue Apr 11 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-2
+- CHANGED: system - Build/dinomi-system.spec: update specfile with latest
+  GIT history. Changed release in specfile.
+- ADDED: system - dinomi-monitor: A new "applet" for dashboard that shows 
+  data in real time has been implemented.
+
 * Tue Feb 14 2017 Luis Abarca <labarca@palosanto.com> 4.0.0-12
 - CHANGED: system - Build/elastix-system.spec: update specfile with latest
   SVN history. Changed release in specfile.

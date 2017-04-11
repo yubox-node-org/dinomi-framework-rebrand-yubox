@@ -2,7 +2,7 @@ Summary: Dinomi is a Web based software to operate and administrate a call cente
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
 Version: 1.0.0
-Release: 2
+Release: 3
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -413,6 +413,15 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
+* Tue Apr 11 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-3
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  GIT history. Bump Release in specfile.
+
+* Thu Mar 23 2017 Alex Villacís Lasso <a_villacis@palosanto.com>
+- Framework: se intenta usar FreePBX remoto de DINOMI CallCenter
+  Esto se requiere para reusar la configuración de FreePBX remoto en el
+  webphone.
+
 * Thu Nov 24 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Added Russian translations to some framework modules that missed them.
   SVN Rev[7780]
