@@ -107,14 +107,14 @@ class paloMenu {
 SELECT id, IdParent, Link, Name, Type, order_no
 FROM menu, (
     SELECT acl_resource.name AS acl_resource_name, acl_group.name AS acl_name
-    FROM acl_membership, acl_group, acl_group_permission, acl_resource
+    FROM acl.acl_membership, acl.acl_group, acl.acl_group_permission, acl.acl_resource
     WHERE acl_membership.id_user = ?
         AND acl_membership.id_group = acl_group.id
         AND acl_group.id = acl_group_permission.id_group
         AND acl_group_permission.id_resource = acl_resource.id
     UNION
     SELECT acl_resource.name AS acl_resource_name, acl_user.name AS acl_name
-    FROM acl_user, acl_user_permission, acl_resource
+    FROM acl.acl_user, acl.acl_user_permission, acl.acl_resource
     WHERE acl_user_permission.id_user = ?
         AND acl_user_permission.id_resource = acl_resource.id
 ) AS aclu

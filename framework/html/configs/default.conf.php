@@ -32,9 +32,11 @@ global $arrConf;
 $arrConf['basePath'] = realpath(dirname(__FILE__).'/..');
 $arrConf['elastix_dbdir'] = '/var/www/db';
 $arrConf['elastix_dsn'] = array(
-                                "acl"       =>  "sqlite3:///$arrConf[elastix_dbdir]/acl.db",
+                                /*"acl"       =>  "sqlite3:///$arrConf[elastix_dbdir]/acl.db",*/
+                                "acl"       =>  generarDSNSistema("root","acl","/var/www/html/"),
                                 "settings"  =>  "sqlite3:///$arrConf[elastix_dbdir]/settings.db",
-                                "menu"      =>  "sqlite3:///$arrConf[elastix_dbdir]/menu.db",
+                                /*"menu"      =>  "sqlite3:///$arrConf[elastix_dbdir]/menu.db",*/
+                                "menu"      =>  generarDSNSistema("root","menu","/var/www/html/"),
                                 "samples"   =>  "sqlite3:///$arrConf[elastix_dbdir]/samples.db",
                             );
 $arrConf['theme'] = 'default'; //theme personal para los modulos esencialmente

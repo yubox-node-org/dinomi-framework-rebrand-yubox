@@ -1,9 +1,7 @@
-BEGIN TRANSACTION;
-CREATE TABLE acl_user_shortcut(
-       id           INTEGER     NOT NULL   PRIMARY KEY,
-       id_user      INTEGER     NOT NULL,
-       id_resource  INTEGER     NOT NULL,
-       type         VARCHAR(25) NOT NULL,
-       description  VARCHAR(25)
-);
-COMMIT;
+CREATE TABLE IF NOT EXISTS `acl`.`acl_user_shortcut` (
+  `id` INT NOT NULL,
+  `id_user` INT NOT NULL,
+  `id_resource` INT NOT NULL,
+  `type` LONGTEXT NOT NULL,
+  `description` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`));

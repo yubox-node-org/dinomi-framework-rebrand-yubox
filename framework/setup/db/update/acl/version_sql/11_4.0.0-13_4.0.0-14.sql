@@ -1,31 +1,36 @@
-BEGIN TRANSACTION;
-
-CREATE TABLE acl_module_privileges (
-    id              INTEGER     NOT NULL    PRIMARY KEY,
-    id_resource     INTEGER     NOT NULL,
-    privilege       VARCHAR(32) NOT NULL,
-    desc_privilege  TEXT,
-
-    FOREIGN KEY (id_resource) REFERENCES acl_resource(id)
+-- ----------------------------------------------------------------------------
+-- Table acl.acl_module_privileges
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acl`.`acl_module_privileges` (
+  `id` INT NOT NULL,
+  `id_resource` INT NOT NULL,
+  `privilege` LONGTEXT NOT NULL,
+  `desc_privilege` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (id_resource) REFERENCES acl_resource(id)
 );
 
-CREATE TABLE acl_module_user_permissions (
-    id                  INTEGER     NOT NULL    PRIMARY KEY,
-    id_user             INTEGER     NOT NULL,
-    id_module_privilege INTEGER     NOT NULL,
-
-    FOREIGN KEY (id_user) REFERENCES acl_user(id),
-    FOREIGN KEY (id_module_privilege) REFERENCES acl_module_privileges(id)
+-- ----------------------------------------------------------------------------
+-- Table acl.acl_module_user_permissions
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acl`.`acl_module_user_permissions` (
+  `id` INT NOT NULL,
+  `id_user` INT NOT NULL,
+  `id_module_privilege` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (id_user) REFERENCES acl_user(id),
+  FOREIGN KEY (id_module_privilege) REFERENCES acl_module_privileges(id)
 );
 
-CREATE TABLE acl_module_group_permissions (
-    id                  INTEGER     NOT NULL    PRIMARY KEY,
-    id_group            INTEGER     NOT NULL,
-    id_module_privilege INTEGER     NOT NULL,
+-- ----------------------------------------------------------------------------
+-- Table acl.acl_module_group_permissions
+-- ----------------------------------------------------------------------------
 
-    FOREIGN KEY (id_group) REFERENCES acl_group(id),
-    FOREIGN KEY (id_module_privilege) REFERENCES acl_module_privileges(id)
+CREATE TABLE IF NOT EXISTS `acl`.`acl_module_group_permissions` (
+  `id` INT NOT NULL,
+  `id_group` INT NOT NULL,
+  `id_module_privilege` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (id_group) REFERENCES acl_group(id),
+  FOREIGN KEY (id_module_privilege) REFERENCES acl_module_privileges(id)
 );
-
-COMMIT;
-
