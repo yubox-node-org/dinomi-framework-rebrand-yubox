@@ -58,7 +58,7 @@ var chart = c3.generate({
         xFormat: null,
         columns: [
             ['x', Date.now()],
-            ['data1', Math.random(0)],
+            ['data1', 0.0],
         ],
         types: {
             data1: 'area',
@@ -95,7 +95,7 @@ var chart = c3.generate({
                 count: 4,
                 format: d3.format(".2f")
             },
-            label: { 
+            label: {
                 text: '% CPU Usage',
                 position: 'outer-middle',
             }
@@ -118,7 +118,7 @@ var chart2 = c3.generate({
         xFormat: null,
         columns: [
             ['x', Date.now()],
-            ['data1', Math.random(0)],
+            ['data1', 0.0],
         ],
         types: {
             data1: 'area',
@@ -155,7 +155,7 @@ var chart2 = c3.generate({
                 count: 4,
                 format: d3.format(".2f")
             },
-            label: { 
+            label: {
                 text: '# Processes',
                 position: 'outer-middle',
             }
@@ -178,7 +178,7 @@ var chart3 = c3.generate({
         xFormat: null,
         columns: [
             ['x', Date.now()],
-            ['data1', Math.random(0)],
+            ['data1', 0.0],
         ],
         types: {
             data1: 'area',
@@ -212,7 +212,7 @@ var chart3 = c3.generate({
                 count: 4,
                 format: d3.format(".2f")
             },
-            label: { 
+            label: {
                 text: '# Agents',
                 position: 'outer-middle',
             }
