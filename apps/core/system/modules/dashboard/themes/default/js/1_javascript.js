@@ -74,17 +74,14 @@ function startGraphicMonitoringRT()
 {
     charts.push({
         chartobj: c3.generate(createChartParams('#chart', '#3333aa', '% CPU Usage')),
-        flowing: false,
         queuedpoints: []
     });
     charts.push({
         chartobj: c3.generate(createChartParams('#chart2', '#33aa33', '# Processes')),
-        flowing: false,
         queuedpoints: []
     });
     charts.push({
         chartobj: c3.generate(createChartParams('#chart3', '#aa3333', '# Agents')),
-        flowing: false,
         queuedpoints: []
     });
 
@@ -178,15 +175,34 @@ function createChartParams(bindto, color, labeltxt)
     return chartParams;
 }
 
-function updateChartDataRT(chartidx, value)
+function updateChartDataRT(idx, value)
 {
     var ts_now = Date.now();
-    charts[chartidx].chartobj.flow({
-        columns: [
-            ['x', ts_now],
-            ['data1', value],
-        ],
-        //length: 2,
-        to: ts_now - 5 * 60 * 1000
-    });
+    var interval = 5 * 60 * 1000;
+
+    if (charts[idx].queuedpoints.length <= 0) {
+        charts[idx].queuedpoints.push([]);
+        charts[idx].queuedpoints.push([]);
+    }
+
+    // Empujar al final valor más reciente, eliminar más antiguos, si existen
+    charts[idx].queuedpoints[0].push(ts_now);
+    charts[idx].queuedpoints[1].push(value);
+    while (charts[idx].queuedpoints[0][0] < ts_now - interval) {
+        charts[idx].queuedpoints[0].shift();
+        charts[idx].queuedpoints[1].shift();
+    }
+
+    // Iniciar flow, si chart está libre
+    if (!charts[idx].chartobj.internal.flowing) {
+        var flowparams = {
+            columns :   charts[idx].queuedpoints,
+            to      :   ts_now - interval
+        };
+        charts[idx].queuedpoints = [];
+        flowparams.columns[0].unshift('x');
+        flowparams.columns[1].unshift('data1');
+
+        charts[idx].chartobj.flow(flowparams);
+    }
 }
