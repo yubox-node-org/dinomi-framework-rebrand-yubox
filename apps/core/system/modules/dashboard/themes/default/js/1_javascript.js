@@ -203,6 +203,28 @@ function updateChartDataRT(idx, value)
         flowparams.columns[0].unshift('x');
         flowparams.columns[1].unshift('data1');
 
-        charts[idx].chartobj.flow(flowparams);
+        // ¿Puedo agregar datos, o tengo que reemplazar todo?
+        var currdata = charts[idx].chartobj.data();
+        var currdatavals = currdata[0].values;
+        if (currdatavals.length <= 0) {
+            // Reemplazar todo el dataset
+            charts[idx].chartobj.load({
+                unload: true,
+                columns: flowparams.columns
+            });
+        } else {
+            var last_curr_t = currdatavals[currdatavals.length - 1].x;
+
+            if (last_curr_t <= ts_now - interval) {
+                // Reemplazar todo el dataset
+                charts[idx].chartobj.load({
+                    unload: true,
+                    columns: flowparams.columns
+                });
+            } else {
+                // Agregar puntos al gráfico actual
+                charts[idx].chartobj.flow(flowparams);
+            }
+        }
     }
 }
