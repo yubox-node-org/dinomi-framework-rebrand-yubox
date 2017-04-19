@@ -252,11 +252,11 @@ function startGraphicMonitoringRT()
     socket = io.connect(window.location.protocol+'//'+window.location.host);
 
     socket.on('connect', function Main(){
-
+/*
         if (conn_err){
             location.reload();
         }
-
+*/
         document.getElementById('info').style.display = 'none';
 
         socket.on('statistics1', function getCPUusage(cpuusage) {
@@ -301,7 +301,7 @@ function startGraphicMonitoringRT()
             });
         });
 
-        var conn_err = false;
+        //var conn_err = false;
     });
 
     socket.on('connect_error', function () {
@@ -309,7 +309,7 @@ function startGraphicMonitoringRT()
         document.getElementById('chart2').style.display = 'none';
         document.getElementById('chart3').style.display = 'none';
         document.getElementById('info').style.display = 'block';
-        var conn_err = true;
+        //var conn_err = true;
     });
 
 }
