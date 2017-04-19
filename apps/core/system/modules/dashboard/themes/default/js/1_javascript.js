@@ -67,18 +67,30 @@ function appletRefresh(appletwindow_content)
     });
 }
 
-var chart, chart2, chart3;
-var socket;
+var charts = [];
+var monitorsocket;
 
 function startGraphicMonitoringRT()
 {
-    chart = c3.generate(createChartParams('#chart', '#3333aa', '% CPU Usage'));
-    chart2 = c3.generate(createChartParams('#chart2', '#33aa33', '# Processes'));
-    chart3 = c3.generate(createChartParams('#chart3', '#aa3333', '# Agents'));
+    charts.push({
+        chartobj: c3.generate(createChartParams('#chart', '#3333aa', '% CPU Usage')),
+        flowing: false,
+        queuedpoints: []
+    });
+    charts.push({
+        chartobj: c3.generate(createChartParams('#chart2', '#33aa33', '# Processes')),
+        flowing: false,
+        queuedpoints: []
+    });
+    charts.push({
+        chartobj: c3.generate(createChartParams('#chart3', '#aa3333', '# Agents')),
+        flowing: false,
+        queuedpoints: []
+    });
 
-    socket = io.connect(window.location.protocol+'//'+window.location.host);
+    monitorsocket = io.connect(window.location.protocol+'//'+window.location.host);
 
-    socket.on('connect', function() {
+    monitorsocket.on('connect', function() {
 /*
         if (conn_err){
             location.reload();
@@ -87,14 +99,13 @@ function startGraphicMonitoringRT()
         $('div#dinomi-monitor-error').hide();
         $('div.dinomi-monitor-chart').show();
 
-        socket.on('statistics1', function(v) { updateChartDataRT(chart, v * 100.0); });
-        socket.on('statistics2', function(v) { updateChartDataRT(chart2, v); });
-        socket.on('statistics3', function(v) { updateChartDataRT(chart3, v); });
-
         //var conn_err = false;
     });
+    monitorsocket.on('statistics1', function(v) { updateChartDataRT(0, v * 100.0); });
+    monitorsocket.on('statistics2', function(v) { updateChartDataRT(1, v); });
+    monitorsocket.on('statistics3', function(v) { updateChartDataRT(2, v); });
 
-    socket.on('connect_error', function () {
+    monitorsocket.on('connect_error', function () {
         $('div.dinomi-monitor-chart').hide();
         $('div#dinomi-monitor-error').show();
         //var conn_err = true;
@@ -167,16 +178,15 @@ function createChartParams(bindto, color, labeltxt)
     return chartParams;
 }
 
-function updateChartDataRT(chartobj, value)
+function updateChartDataRT(chartidx, value)
 {
     var ts_now = Date.now();
-    var ts_5mins_ago = ts_now - 300000;
-    chartobj.flow({
+    charts[chartidx].chartobj.flow({
         columns: [
             ['x', ts_now],
             ['data1', value],
         ],
-        length: 2,
-        to: ts_5mins_ago
+        //length: 2,
+        to: ts_now - 5 * 60 * 1000
     });
 }
