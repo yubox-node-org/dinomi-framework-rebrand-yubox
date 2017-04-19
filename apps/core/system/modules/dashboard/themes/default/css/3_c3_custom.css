@@ -7,3 +7,12 @@
 .c3-axis-y .tick {
 	color: #aaaaaa;
 }
+
+div.dinomi-monitor-chart
+{
+    display: inline;
+}
+div#dinomi-monitor-error
+{
+    align: center;
+}

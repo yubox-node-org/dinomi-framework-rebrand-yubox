@@ -1,8 +1,8 @@
 {if $USR_ADMIN}
-    <div id="info" style="display:none; align:center;">NO INFO TO DISPLAY..... SERVER DOWN</div>
-    <div id="chart"></div>
-    <div id="chart2"></div>
-    <div id="chart3"></div>
+    <div id="dinomi-monitor-error" style="display:none;">NO INFO TO DISPLAY..... SERVER DOWN</div>
+    <div class="dinomi-monitor-chart" id="chart"></div>
+    <div class="dinomi-monitor-chart" id="chart2"></div>
+    <div class="dinomi-monitor-chart" id="chart3"></div>
 {/if}
 <table width="80%" cellspacing="0" id="applet_grid" align="center">
 <tr>
