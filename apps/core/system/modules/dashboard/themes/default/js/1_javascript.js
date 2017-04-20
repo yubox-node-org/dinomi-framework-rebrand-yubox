@@ -98,6 +98,17 @@ function startGraphicMonitoringRT()
 
         //var conn_err = false;
     });
+
+    monitorsocket.on('oncharged', function(state) {
+        if(state){
+
+            monitorsocket.on('data_cpu', function(data1) { charts[0].chartobj.load( createChartLoadParams(data1,'statistics1',0) ); });
+            monitorsocket.on('data_proc', function(data2) { charts[1].chartobj.load( createChartLoadParams(data2,'statistics2',1) ); });
+            monitorsocket.on('data_agnt', function(data3) { charts[2].chartobj.load( createChartLoadParams(data3,'statistics3',2) ); });
+
+        }
+    });
+
     monitorsocket.on('statistics1', function(v) { updateChartDataRT(0, v * 100.0); });
     monitorsocket.on('statistics2', function(v) { updateChartDataRT(1, v); });
     monitorsocket.on('statistics3', function(v) { updateChartDataRT(2, v); });
@@ -109,6 +120,22 @@ function startGraphicMonitoringRT()
     });
 
 }
+
+function createChartLoadParams(data,emitData,idx)
+{
+    var chartLoad = {
+        columns: [
+            ['x', data[0].date_cpu, data[1].date_cpu, data[2].date_cpu, data[3].date_cpu, data[4].date_cpu],
+            ['data1', data[0].data_cpu, data[1].data_cpu, data[2].data_cpu, data[3].data_cpu, data[4].data_cpu],   
+        ],
+        
+        done: () => {
+            monitorsocket.on(emitData, function(v) { updateChartDataRT(idx, v); });
+        },
+        
+    };
+    return chartLoad;
+};
 
 function createChartParams(bindto, color, labeltxt)
 {
