@@ -126,13 +126,13 @@ function createChartLoadParams(data,emitData,idx)
     var chartLoad = {
         columns: [
             ['x', data[0].date_cpu, data[1].date_cpu, data[2].date_cpu, data[3].date_cpu, data[4].date_cpu],
-            ['data1', data[0].data_cpu, data[1].data_cpu, data[2].data_cpu, data[3].data_cpu, data[4].data_cpu],   
+            ['data1', data[0].data_cpu, data[1].data_cpu, data[2].data_cpu, data[3].data_cpu, data[4].data_cpu],
         ],
-        
+
         done: () => {
             monitorsocket.on(emitData, function(v) { updateChartDataRT(idx, v); });
         },
-        
+
     };
     return chartLoad;
 };
@@ -186,12 +186,16 @@ function createChartParams(bindto, color, labeltxt)
                 show: true,
                 tick: {
                     count: 4,
-                    format: d3.format(".2f")
+                    format: d3.format(".0f")
                 },
                 label: {
                     text: labeltxt,
                     position: 'outer-middle',
-                }
+                },
+                padding: {
+                    bottom: 3
+                },
+                min: 0
             },
         },
         area: {
