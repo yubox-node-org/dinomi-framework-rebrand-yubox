@@ -167,8 +167,11 @@ function createChartParams(bindto, color, labeltxt)
                 }
             },
         },
+        area: {
+            zerobased: false
+        },
         point: {
-            show: false
+            show: true
         }
     };
 
