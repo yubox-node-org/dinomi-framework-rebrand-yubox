@@ -45,5 +45,6 @@ $arrLangModule = array(
     "Invalid request" => "Invalid request",
     "Emails" => "Emails",
     "Voicemails" => "Voicemails",
+    "Monitor WSConn" => "NO INFO TO DISPLAY..... Service 'dashmon' is currently down.",
 );
 ?>

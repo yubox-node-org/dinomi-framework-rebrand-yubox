@@ -118,6 +118,7 @@ function setIcon($idMenu){
         case 'ccpro_reports_ingoing_call': return 'fa fa-bar-chart-o';
         case 'dinomi_configuration': return 'fa fa-cog';
         case 'dinomi_licensing': return 'fa fa-id-card';
+        case 'dinomianywhere': return 'fa fa-tty';
         //case 'sysdash': return 'fa fa-tachometer';
 
         default: return 'fa fa-caret-right';

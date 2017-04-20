@@ -14,5 +14,5 @@ div.dinomi-monitor-chart
 }
 div#dinomi-monitor-error
 {
-    align: center;
+    text-align:center;
 }

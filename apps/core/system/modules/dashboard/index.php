@@ -44,6 +44,7 @@ function _moduleContent($smarty, $module_name)
 
     $smarty->assign("module_name",  $module_name);
     $smarty->assign("USR_ADMIN", $USR_ADMIN);
+    $smarty->assign("MSG_MON_NOCONN", _tr('Monitor WSConn'));
     // Leer lista de applets implementados y validar con directorio
     $paloApplets = new paloSantoApplets();
     $appletlist = $paloApplets->leerAppletsActivados($_SESSION["elastix_user"]);

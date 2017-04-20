@@ -1,5 +1,5 @@
 {if $USR_ADMIN}
-    <div id="dinomi-monitor-error" style="display:none;">NO INFO TO DISPLAY..... SERVER DOWN</div>
+    <div id="dinomi-monitor-error" style="display:none;">{$MSG_MON_NOCONN}</div>
     <div class="dinomi-monitor-chart" id="chart"></div>
     <div class="dinomi-monitor-chart" id="chart2"></div>
     <div class="dinomi-monitor-chart" id="chart3"></div>
