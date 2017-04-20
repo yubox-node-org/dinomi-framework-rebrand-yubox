@@ -16,10 +16,12 @@
     "promise": ">=4.0.0",
     "dinomi-eccp": ">=1.0.0",
     "os-toolbox": ">=0.2.4",
-    "socket.io": ">=1.0.0"
+    "socket.io": ">=1.0.0",
+    "node-json-db": ">=0.7.3"
   },
   "bundledDependencies": [
     "os-toolbox",
-    "socket.io"
+    "socket.io",
+    "node-json-db"
   ]
 }

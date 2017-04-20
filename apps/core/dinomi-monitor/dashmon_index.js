@@ -16,6 +16,9 @@ const dialerhost = 'localhost';
 var eccpconn = null;
 var io = null;
 
+var dbFile = "/usr/lib/node_modules/dinomi-monitor/myDataBase.json";
+var JsonDB = require('node-json-db');
+
 function loadKeys(path)
 {
     var readFile = Promise.denodeify(fs.readFile);
@@ -146,6 +149,38 @@ function dinomiLoggedInAgents()
     );
 }
 
+function snd_data_autopopulate(){
+    var d1 = JSON.parse(JSON.stringify(db.getData("/data_cpu")));
+    var new_d1 = d1.slice(Math.max(d1.length - 5, 1));
+    var d2 = JSON.parse(JSON.stringify(db.getData("/data_proc")));
+    var new_d2 = d2.slice(Math.max(d2.length - 5, 1));
+    var d3 = JSON.parse(JSON.stringify(db.getData("/data_agnt")));
+    var new_d3 = d3.slice(Math.max(d3.length - 5, 1));
+    io.emit('data_cpu', new_d1);
+    io.emit('data_proc', new_d2);
+    io.emit('data_agnt', new_d3);
+    console.log(new_d1);
+    console.log(new_d2);
+    console.log(new_d3);
+};
+
+function countProperties(obj) {
+    return Object.keys(obj).length;
+};
+
+var io_options = {
+/*
+    pingTimeout: 3000,
+    pingInterval: 3000,
+    transports: ['polling','websocket'],
+    allowUpgrades: true,
+    httpCompression: false,
+*/
+};
+
+var db = new JsonDB(dbFile, true, true);
+var data = db.getData("/");
+
 setupECCP();
 setInterval(() => {
     Promise.all([
@@ -158,6 +193,10 @@ setInterval(() => {
         io.emit('statistics2', rs[1]);
         io.emit('statistics3', rs[2]);
 
+        db.push("/data_cpu[]", [ Date.now() , rs[0] ], true);
+        db.push("/data_proc[]", [ Date.now() , rs[1] ], true);
+        db.push("/data_agnt[]", [ Date.now() , rs[2] ], true);
+
         console.log(Date.now());
         console.log('CPU valor: ' + rs[0]);
         console.log('Number of Active Process: ' + rs[1]);
@@ -165,18 +204,15 @@ setInterval(() => {
     });
 }, 5000);
 
-var io_options = {
-/*
-    pingTimeout: 3000,
-    pingInterval: 3000,
-    transports: ['polling','websocket'],
-    allowUpgrades: true,
-    httpCompression: false,
-*/
-};
 var server = http.createServer();
 io = socketio(server, io_options);
-server.listen(8080, '127.0.0.1');
 
+io.on('connect', () => {
+    if(countProperties(data) > 0){
+        snd_data_autopopulate();
+    }
+});
+
+server.listen(8080, '127.0.0.1');
 
 
