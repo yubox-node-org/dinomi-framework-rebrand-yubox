@@ -1,0 +1,14 @@
+[Unit]
+Description=Dinomi DashMon
+After=http.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /usr/lib/node_modules/dinomi-monitor/dashmon_index.js
+ExecStop=/bin/killall -9 node
+
+KillSignal=SIGCONT
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

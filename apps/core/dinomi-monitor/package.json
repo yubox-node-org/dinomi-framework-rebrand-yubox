@@ -1,0 +1,25 @@
+{
+  "name": "dinomi-monitor",
+  "version": "1.0.0",
+  "description": "DINOMI system activity and callcenter monitor",
+  "main": "dashmon_index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dinomi"
+  ],
+  "author": "Alex Villacís Lasso",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.3.2",
+    "promise": ">=4.0.0",
+    "dinomi-eccp": ">=1.0.0",
+    "os-toolbox": ">=0.2.4",
+    "socket.io": ">=1.0.0"
+  },
+  "bundledDependencies": [
+    "os-toolbox",
+    "socket.io"
+  ]
+}

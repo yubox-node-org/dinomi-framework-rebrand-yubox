@@ -1,0 +1,15 @@
+--- /etc/httpd/conf.d/ssl.conf.original	2017-04-20 11:52:23.125737995 -0500
++++ /etc/httpd/conf.d/ssl.conf	2017-04-20 11:45:39.085891475 -0500
+@@ -212,6 +212,12 @@
+ #   compact non-error SSL logfile on a virtual host basis.
+ CustomLog logs/ssl_request_log \
+           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
++          
++RewriteEngine On
++RewriteCond %{REQUEST_URI}  ^/socket.io            [NC]
++RewriteCond %{HTTP:Upgrade} =websocket             [NC]
++RewriteCond %{QUERY_STRING} transport=websocket    [NC]
++RewriteRule /(.*)           ws://127.0.0.1:8080/$1 [P,L]
+ 
+ </VirtualHost>                                  
+ 
