@@ -209,6 +209,7 @@ io = socketio(server, io_options);
 
 io.on('connect', () => {
     if(countProperties(data) > 0){
+        io.emit('oncharged', true);
         snd_data_autopopulate();
     }
 });

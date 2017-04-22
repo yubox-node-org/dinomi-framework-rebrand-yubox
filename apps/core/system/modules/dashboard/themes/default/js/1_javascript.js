@@ -99,13 +99,11 @@ function startGraphicMonitoringRT()
         //var conn_err = false;
     });
 
-    monitorsocket.on('oncharged', function(state) {
-        if(state){
-
+    monitorsocket.on('oncharged', function(state){
+        if (state){
             monitorsocket.on('data_cpu', function(data1) { charts[0].chartobj.load( createChartLoadParams(data1,'statistics1',0) ); });
             monitorsocket.on('data_proc', function(data2) { charts[1].chartobj.load( createChartLoadParams(data2,'statistics2',1) ); });
             monitorsocket.on('data_agnt', function(data3) { charts[2].chartobj.load( createChartLoadParams(data3,'statistics3',2) ); });
-
         }
     });
 
@@ -125,14 +123,9 @@ function createChartLoadParams(data,emitData,idx)
 {
     var chartLoad = {
         columns: [
-            ['x', data[0].date_cpu, data[1].date_cpu, data[2].date_cpu, data[3].date_cpu, data[4].date_cpu],
-            ['data1', data[0].data_cpu, data[1].data_cpu, data[2].data_cpu, data[3].data_cpu, data[4].data_cpu],
+            ['x', data[0][0], data[1][0], data[2][0], data[3][0], data[4][0] ],
+            ['data1', data[0][1], data[1][1], data[2][1], data[3][1], data[4][1] ], 
         ],
-
-        done: () => {
-            monitorsocket.on(emitData, function(v) { updateChartDataRT(idx, v); });
-        },
-
     };
     return chartLoad;
 };
