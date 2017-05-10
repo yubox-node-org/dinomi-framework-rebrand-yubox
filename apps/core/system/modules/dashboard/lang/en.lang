@@ -46,5 +46,7 @@ $arrLangModule = array(
     "Emails" => "Emails",
     "Voicemails" => "Voicemails",
     "Monitor WSConn" => "NO INFO TO DISPLAY..... Service 'dashmon' is currently down.",
+    "Title DLMS" => "DINOMI LIVE MONITORING SYSTEM - DLMS",
+    "Title Applets" => "DINOMI APPLETS",
 );
 ?>

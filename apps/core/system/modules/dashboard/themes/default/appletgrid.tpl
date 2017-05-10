@@ -1,9 +1,11 @@
 {if $USR_ADMIN}
+    <div id="dinomi-titles">{$TITLE_DLMS}</div>
     <div id="dinomi-monitor-error" style="display:none;">{$MSG_MON_NOCONN}</div>
     <div class="dinomi-monitor-chart" id="chart"></div>
     <div class="dinomi-monitor-chart" id="chart2"></div>
     <div class="dinomi-monitor-chart" id="chart3"></div>
 {/if}
+<div id="dinomi-titles">{$TITLE_APPLETS}</div>
 <table width="80%" cellspacing="0" id="applet_grid" align="center">
 <tr>
     <td class="appletcolumn" id="applet_col_1">

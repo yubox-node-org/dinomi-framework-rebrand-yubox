@@ -121,10 +121,24 @@ function startGraphicMonitoringRT()
 
 function createChartLoadParams(data,emitData,idx)
 {
+    var arr_x = ['x'];
+    var arr_data1 = ['data1'];
+    var i, count;
+
+    for (i = 0, count = data.length; i <= count; i++) {
+        if (data[i] != undefined){
+            arr_x.push(data[i][0]);
+            if (idx == 0){
+                arr_data1.push(data[i][1] * 100);
+            }else{
+                arr_data1.push(data[i][1]);
+            };
+        };
+    };
     var chartLoad = {
         columns: [
-            ['x', data[0][0], data[1][0], data[2][0], data[3][0], data[4][0] ],
-            ['data1', data[0][1], data[1][1], data[2][1], data[3][1], data[4][1] ], 
+            arr_x,
+            arr_data1, 
         ],
     };
     return chartLoad;

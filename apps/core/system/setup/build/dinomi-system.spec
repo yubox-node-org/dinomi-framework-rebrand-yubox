@@ -3,7 +3,7 @@
 Summary: Dinomi Module System
 Name:    dinomi-%{modname}
 Version: 1.0.0
-Release: 2
+Release: 3
 License: GPL
 Group:   Applications/System
 #Source0: %{modname}_%{version}-2.tgz
@@ -179,6 +179,14 @@ fi
 %config(noreplace) /etc/dahdi/genconf_parameters
 
 %changelog
+* Tue May 02 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-3
+- CHANGED: system - Build/dinomi-system.spec: update specfile with latest
+  GIT history. Changed release in specfile.
+- ADDED: system - dinomi-monitor: Now the DLMS has the ability to show the last
+  five minutes of data in the graphic.
+- FIXED: system - dinomi-monitor: The graphic showing the CPU usage, now loads 
+  correctly data, showing the values stored in database.
+
 * Tue Apr 11 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-2
 - CHANGED: system - Build/dinomi-system.spec: update specfile with latest
   GIT history. Changed release in specfile.
