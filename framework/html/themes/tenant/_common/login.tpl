@@ -26,8 +26,10 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-	<script src="//d3js.org/d3-timer.v0.3.min.js"></script>
-	<script src="//d3js.org/d3-ease.v0.7.min.js"></script>
+	<!--script src="//d3js.org/d3-timer.v0.3.min.js"></script>
+	<script src="//d3js.org/d3-ease.v0.7.min.js"></script-->
+	<script src="/themes/tenant/js/d3-timer.v0.3.min.js"></script>
+	<script src="/themes/tenant/js/d3-ease.v0.7.min.js"></script>
 	<script src="/themes/tenant/js/isometric.js"></script>
 	
 
