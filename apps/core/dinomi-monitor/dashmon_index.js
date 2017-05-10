@@ -139,6 +139,7 @@ function dinomiLoggedInAgents()
             'loadpauseinfo' : 0
     }).then(
         (r) => {
+            if (r.agents[0].agent == undefined) return 0;
             return r.agents[0].agent.filter((a) => { return (a.status != 'offline'); }).length;
         },
         (err) => {
@@ -149,19 +150,21 @@ function dinomiLoggedInAgents()
     );
 }
 
-function snd_data_autopopulate(){
+function snd_data_autopopulate(numpoints){
     var d1 = JSON.parse(JSON.stringify(db.getData("/data_cpu")));
-    var new_d1 = d1.slice(Math.max(d1.length - 5, 1));
+    var new_d1 = d1.slice(Math.max(d1.length - numpoints, 1));
     var d2 = JSON.parse(JSON.stringify(db.getData("/data_proc")));
-    var new_d2 = d2.slice(Math.max(d2.length - 5, 1));
+    var new_d2 = d2.slice(Math.max(d2.length - numpoints, 1));
     var d3 = JSON.parse(JSON.stringify(db.getData("/data_agnt")));
-    var new_d3 = d3.slice(Math.max(d3.length - 5, 1));
+    var new_d3 = d3.slice(Math.max(d3.length - numpoints, 1));
     io.emit('data_cpu', new_d1);
     io.emit('data_proc', new_d2);
     io.emit('data_agnt', new_d3);
+    /*
     console.log(new_d1);
     console.log(new_d2);
     console.log(new_d3);
+    */
 };
 
 function countProperties(obj) {
@@ -179,7 +182,37 @@ var io_options = {
 };
 
 var db = new JsonDB(dbFile, true, true);
-var data = db.getData("/");
+try{
+    var data = db.getData("/");    
+}catch(e) {
+    switch(e.message){
+        case 'Can\'t Load Database':
+            console.log('Oh no!, Enter to CLD error');
+            var string = e.inner.toString(),
+            substring = "Unexpected end of JSON input";
+            var verif_1 = string.includes(substring);
+            switch(verif_1){
+                case true:
+                    console.log('Oh no!, Enter to '+verif_1+' error');
+                    fs.writeFile(dbFile, "{}", function(err) {
+                    if(err) {
+                        return console.log(err);
+                    }
+                    console.log("The file was fixed!");
+                    }); 
+                break;
+
+                default:
+                    console.log('Oh no!, nothing to do here.');
+                break;
+            };    
+        break;
+
+        default:
+            console.log('Oh no!, an undeterminated error has been caught:\n' + e);
+        break;
+    };
+}
 
 setupECCP();
 setInterval(() => {
@@ -196,11 +229,11 @@ setInterval(() => {
         db.push("/data_cpu[]", [ Date.now() , rs[0] ], true);
         db.push("/data_proc[]", [ Date.now() , rs[1] ], true);
         db.push("/data_agnt[]", [ Date.now() , rs[2] ], true);
-
-        console.log(Date.now());
+        /*
         console.log('CPU valor: ' + rs[0]);
         console.log('Number of Active Process: ' + rs[1]);
         console.log('Number of Agents: ' + rs[2] + '\n');
+        */
     });
 }, 5000);
 
@@ -210,7 +243,23 @@ io = socketio(server, io_options);
 io.on('connect', () => {
     if(countProperties(data) > 0){
         io.emit('oncharged', true);
-        snd_data_autopopulate();
+        var content1 = db.getData("/data_cpu");
+        var content2 = db.getData("/data_proc");
+        var content3 = db.getData("/data_agnt");
+        if ( countProperties(content2) === countProperties(content1) && countProperties(content2) === countProperties(content3) && countProperties(content2) !== null ){
+            var content_glob = db.getData("/data_cpu");
+            switch (true) {
+                case countProperties(content_glob) > 0 && countProperties(content_glob) < 5:
+                    snd_data_autopopulate(4);
+                break;
+                case countProperties(content_glob) > 5 && countProperties(content_glob) < 60:
+                    snd_data_autopopulate(5);
+                break;
+                case countProperties(content_glob) > 60:
+                    snd_data_autopopulate(60);
+                break;
+            };
+        };
     }
 });
 

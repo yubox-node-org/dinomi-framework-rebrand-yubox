@@ -2,12 +2,12 @@
 
 Name:       nodejs-dinomi-monitor
 Version:    1.0.0
-Release:    1%{?dist}
+Release:    3%{?dist}
 Summary:    DINOMI dashboard monitor for Node.js
 License:    ISC
 Group:      System Environment/Libraries
 URL:        http://dinomi.com
-Source0:    dinomi-monitor-%{version}-1.tgz
+Source0:    dinomi-monitor-%{version}-2.tgz
 Requires:	nodejs
 Requires:	nodejs-promise
 Requires: 	nodejs-mysql
@@ -65,9 +65,14 @@ fi
 /etc/httpd/conf.d/wstunnel-dashmon.conf
 
 %changelog
+* Tue May 02 2017 Luis Anghelo Abarca Villacís <labarca@palosanto.com> - 1.0.0-3
+- A way to handle errors to json db has been implemented.
+
+* Tue May 02 2017 Luis Anghelo Abarca Villacís <labarca@palosanto.com> - 1.0.0-2
+- Some bugs have been corrected.
+
 * Tue Apr 18 2017 Luis Anghelo Abarca Villacís <labarca@palosanto.com> - 1.0.0-1
 - Now once the ssl.conf.patch is applied its deleted.
-- The Graphic 
 
 * Mon Apr 10 2017 Luis Anghelo Abarca Villacís <labarca@palosanto.com> - 1.0.0-0
 - initial package
