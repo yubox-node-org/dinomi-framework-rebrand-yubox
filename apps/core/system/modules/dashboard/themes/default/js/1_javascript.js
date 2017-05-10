@@ -107,9 +107,9 @@ function startGraphicMonitoringRT()
         }
     });
 
-    monitorsocket.on('statistics1', function(v) { updateChartDataRT(0, v * 100.0); });
-    monitorsocket.on('statistics2', function(v) { updateChartDataRT(1, v); });
-    monitorsocket.on('statistics3', function(v) { updateChartDataRT(2, v); });
+    monitorsocket.on('statistics1', function(v) { updateChartDataRT(0, v[0] * 100.0, v[1]); });
+    monitorsocket.on('statistics2', function(v) { updateChartDataRT(1, v[0], v[1]); });
+    monitorsocket.on('statistics3', function(v) { updateChartDataRT(2, v[0], v[1]); });
 
     monitorsocket.on('connect_error', function () {
         $('div.dinomi-monitor-chart').hide();
@@ -216,9 +216,9 @@ function createChartParams(bindto, color, labeltxt)
     return chartParams;
 }
 
-function updateChartDataRT(idx, value)
+function updateChartDataRT(idx, value, ts)
 {
-    var ts_now = Date.now();
+    var ts_now = ts;
     var interval = 5 * 60 * 1000;
 
     if (charts[idx].queuedpoints.length <= 0) {

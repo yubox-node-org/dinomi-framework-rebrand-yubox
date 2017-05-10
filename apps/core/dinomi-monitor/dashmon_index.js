@@ -222,13 +222,15 @@ setInterval(() => {
         dinomiLoggedInAgents()
     ]).done((rs) => {
         // Emitir valores de la estadística a TODOS los clientes conectados
-        io.emit('statistics1', rs[0]);
-        io.emit('statistics2', rs[1]);
-        io.emit('statistics3', rs[2]);
+        var timeDate_stamp = Date.now();
+        io.emit('statistics1', [rs[0], timeDate_stamp]);
+        io.emit('statistics2', [rs[1], timeDate_stamp]);
+        io.emit('statistics3', [rs[2], timeDate_stamp]);
+        io.emit('time_server',  timeDate_stamp);
 
-        db.push("/data_cpu[]", [ Date.now() , rs[0] ], true);
-        db.push("/data_proc[]", [ Date.now() , rs[1] ], true);
-        db.push("/data_agnt[]", [ Date.now() , rs[2] ], true);
+        db.push("/data_cpu[]", [ timeDate_stamp , rs[0] ], true);
+        db.push("/data_proc[]", [ timeDate_stamp , rs[1] ], true);
+        db.push("/data_agnt[]", [ timeDate_stamp , rs[2] ], true);
         /*
         console.log('CPU valor: ' + rs[0]);
         console.log('Number of Active Process: ' + rs[1]);
