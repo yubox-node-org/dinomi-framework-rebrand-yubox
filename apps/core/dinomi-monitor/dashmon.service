@@ -4,7 +4,7 @@ After=http.target network.target remote-fs.target nss-lookup.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/node /usr/lib/node_modules/dinomi-monitor/dashmon_index.js
+ExecStart=/usr/bin/supervisor -w /usr/lib/node_modules/dinomi-monitor/ /usr/lib/node_modules/dinomi-monitor/dashmon_index.js
 ExecStop=/bin/killall -9 node
 
 KillSignal=SIGCONT
