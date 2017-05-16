@@ -191,6 +191,7 @@ function removeNeoDisplayOnMouseOver(ref){
 <!-- inicio del head principal-->
 <div class="main-content">
 <div style="height:80px;background-color:#efefef;padding:15px;">
+    <span style="float:left; white-space: nowrap; padding:14px 5px 0px 8px; width:220px; font-family:Verdana,arial,helvetica,sans-serif; font-size: 18px; "><strong>{$BREADCRUMB|@end}</strong></span>
     <!-- Profile Info and Notifications -->
     <span style='float:right; text-align:right; padding:0px 5px 0px 0px; width:175px;' class="col-md-6 col-sm-8 clearfix">
         <ul style='float:right;' class="user-info pull-none-xsm">
@@ -228,7 +229,7 @@ function removeNeoDisplayOnMouseOver(ref){
     </span>
 
     <!-- Raw Links -->
-    <span style='float:right; width:400px;'>
+    <span style='float:right; width:400px;' class='neo-notifications-span'>
         <ul style="padding-top:12px;" class="list-inline links-list pull-right neo-topbar-notification">
 
         <li id="header_notification_bar" class="profile-info dropdown">
@@ -244,7 +245,6 @@ function removeNeoDisplayOnMouseOver(ref){
                 <!--<li><a href="#" class="register_link">{$Registered}</a></li>-->
                 <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
                 <li><a href="http://www.dinomi.com" target="_blank"><i class="fa fa-external-link"></i>Dinomi Website</a></li>
-                <li><a href="#" id="dialogaboutelastix"><i class="fa fa-info-circle"></i>{$ABOUT_ELASTIX2}</a></li>
             </ul>
         </li>
 
@@ -307,33 +307,6 @@ function removeNeoDisplayOnMouseOver(ref){
 
 
 </div>
-
-				<!-- Breadcrumb 3 -->
-<ol class="breadcrumb bc-2">
-
-    {foreach from=$BREADCRUMB item=value name=menu}
-        {if $smarty.foreach.menu.first}
-             <li>
-                <a href="/"> <i class="entypo-home"></i></a>
-                <a href="#"> {$value}</a>
-             </li>
-        {elseif $smarty.foreach.menu.last}
-            <li class="active"><strong>{$value}</strong></li>
-        {else}
-            <li><a href="#">{$value}</a></li>
-        {/if}
-   {/foreach}
-   <li id="tenant-help">
-    <a class="" href="#" onclick="popUp('help/?id_nodo={if !empty($idSubMenu2Selected)}{$idSubMenu2Selected}&name_nodo={$nameSubMenu2Selected}{else}{$idSubMenuSelected}&name_nodo={$nameSubMenuSelected}{/if}','1000','460')">
-        <i class="fa fa-support"></i>
-    </a>
-   </li>
-   <li id="tenant-sticky" class="dropdown">
-   	<a id="togglestickynote1" href="#">
-   		<i class="fa fa-sticky-note"></i>
-   	</a>
-   </li>
-</ol>
 
 <!-- contenido del modulo-->
 <div id="neo-contentbox">

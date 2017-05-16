@@ -394,3 +394,17 @@ img.neo-smenubox-arrow-more-right{
 	top:0px;
 	float:right;
 }
+
+@media (max-width: 1110px) {
+  .neo-notifications-span {
+        display: none;
+  }
+}
+@media (max-width: 768px) {
+  .dropdown-toggle img {
+        display: none;
+  }
+  .profile-info.dropdown.pull-right {
+        padding: 8px 0px 0px 0px;
+  }
+}

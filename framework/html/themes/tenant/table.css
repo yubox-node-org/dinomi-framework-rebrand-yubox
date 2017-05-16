@@ -9,20 +9,20 @@ button {
     position: relative;
     float: left;
     color: #ffffff;
-    background-color:#57c8f1;
-    border: 1px solid #57c8f1;
-    margin: 3px 3px 3px 3px;
+    background-color:#4cbeff;
+    border: 1px solid #4cbeff;
+    margin: 2px 3px 3px 3px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     /* text-shadow: 1px 1px #ccc; */
-    padding: 6px 12px 6px 12px;
+    padding: 8px 12px 8px 12px;
     /* background-image:url(../../../../web/_common/images/bgicon.png); */
 }
 
 .neo-table-header-row {
         position:relative;
-        height:39px;
+        height:44px;
         padding: 0px 8px 10px 0px;
         background-color: #ffffff;
         /* margin-top:8px; */
