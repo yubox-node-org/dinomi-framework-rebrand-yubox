@@ -234,20 +234,6 @@ $(document).ready(function(){
             // La plantilla tiene una referencia a script que llama a changePasswordElastix
        });
     });
-    $('#dialogaboutelastix').click(function() {
-        $.get("index.php", {
-            menu:       '_elastixutils',
-            action:     'showAboutUs',
-            rawmode:    'yes'
-        }, function(response) {
-            var arrData = response.message;
-            var statusResponse = response.statusResponse;
-            var error = response.error;
-
-            ShowModalPopUP(arrData['title'],450,120,arrData['html']);
-        });
-    });
-
     $('#search_module_elastix').autocomplete({
     	autoFocus:	true,
     	delay:		0,
