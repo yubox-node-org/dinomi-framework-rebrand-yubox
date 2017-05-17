@@ -16,3 +16,204 @@
     border-radius: 5px 5px 5px 5px;
     padding: 6px 12px 6px 12px;
 }
+
+
+/* Styles for fancy checkbox */
+.neo-checkbox-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.neo-checkbox-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+input.neo-checkbox-toggle-round + label {
+  padding: 2px;
+  width: 40px;
+  height: 18px;
+  background-color: #dddddd;
+  border-radius: 19px;
+}
+input.neo-checkbox-toggle-round + label:before,
+input.neo-checkbox-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+input.neo-checkbox-toggle-round + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  transition: background 0.4s;
+}
+input.neo-checkbox-toggle-round + label:after {
+  width: 20px;
+  background-color: #fff;
+  border-radius: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: margin 0.4s;
+}
+
+input.neo-checkbox-toggle-round:checked + label {
+  background-color: #4cbeff;
+}
+input.neo-checkbox-toggle-round:checked + label:before {
+  background-color: #4cbeff;
+}
+input.neo-checkbox-toggle-round:checked + label:after {
+  margin-left: 20px;
+}
+
+/* Styles for fancy Dropdown menu */
+.wrapper-dropdown-5 {
+    /* Size & position */
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+    padding: 9px 15px;
+
+    /* Styles */
+    background: #f6f6f6;
+    border-radius: 5px;
+    /* box-shadow: 0 1px 0 rgba(0,0,0,0.2); */
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-out;
+    border: 1px solid #dddddd;
+}
+
+.wrapper-dropdown-5:after { /* Little arrow */
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    margin-top: -3px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #4cbeff transparent;
+}
+.wrapper-dropdown-5 .dropdown {
+    /* Size & position */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    /* Styles */
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-top: none;
+    border-bottom: none;
+    list-style: none;
+    transition: all 0.3s ease-out;
+
+    /* Hiding */
+    max-height: 0;
+    overflow: hidden;
+}
+
+ul.dropdown {
+    padding: 0px;
+}
+
+.wrapper-dropdown-5 .dropdown li {
+    padding: 0 10px ;
+}
+
+.wrapper-dropdown-5 .dropdown li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 10px 0;
+    transition: all 0.3s ease-out;
+    border-bottom: 1px solid #e6e8ea;
+}
+
+.wrapper-dropdown-5 .dropdown li:last-of-type a {
+    border: none;
+}
+
+.wrapper-dropdown-5 .dropdown li i {
+    margin-right: 5px;
+    color: inherit;
+    vertical-align: middle;
+}
+
+/* Hover state */
+.wrapper-dropdown-5 .dropdown li:hover a {
+    color: #57a9d9;
+}
+/* Active state */
+.wrapper-dropdown-5.active {
+    border-radius: 5px 5px 0 0;
+    background: #4cbeff;
+    box-shadow: none;
+    border-bottom: none;
+    color: white;
+}
+
+.wrapper-dropdown-5.active:after {
+    border-color: #82d1ff transparent;
+}
+
+.wrapper-dropdown-5.active .dropdown {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    max-height: 400px;
+}
+
+/* Fancy file input */
+.left {
+  float: left;
+}
+.both {
+  clear: both;
+}
+.file-upload-container {
+  width:400px;
+  border: 1px solid #efefef;
+  padding:10px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  background: #fbfbfa;
+}
+.file-upload-override-button {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background-color:#4cbeff;
+  padding: 8px 20px 8px 20px;
+  color: #ffffff;
+  border-radius: 6px;
+}
+.file-upload-override-button:hover {
+  background-color:#378de5;
+}
+.file-upload-override-button:active {
+  position:relative; top:1px;
+}
+.file-upload-button {
+  position: absolute;
+  height: 50px;
+  top: -10px;
+  left: -10px;
+  cursor: pointer;
+  opacity: 0;
+  filter:alpha(opacity=0);
+}
+.file-upload-filename {
+  margin-left: 10px;
+  height: auto;
+  padding: 8px;
+}

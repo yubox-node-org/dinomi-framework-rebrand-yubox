@@ -20,6 +20,13 @@ button {
     /* background-image:url(../../../../web/_common/images/bgicon.png); */
 }
 
+.neo-table-header-subtitle {
+        position:relative;
+        height: 38px;
+        text-align: left;
+        font-size: 20px;
+        padding: 10px 0px 0px 4px;
+}
 .neo-table-header-row {
         position:relative;
         height:44px;
