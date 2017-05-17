@@ -173,6 +173,7 @@
             {/if}
         </tbody>
             {if $numData > 3}
+                {if $hideBottomTitles==false }
         <tfoot>
                 <tr>
                     {section name=columnNum loop=$numColumns start=0 step=1}
@@ -180,6 +181,16 @@
                     {/section}
                 </tr>
         </tfoot>
+                {else}
+        <tfoot>
+                <tr>
+                    {section name=columnNum loop=$numColumns start=0 step=1}
+                    <th>&nbsp;</th>
+                    {/section}
+                </tr>
+        </tfoot>
+
+                {/if}
             {/if}
         </table>
     {*</div>*}
