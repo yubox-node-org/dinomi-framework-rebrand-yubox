@@ -36,17 +36,17 @@ function nformat($x) { return number_format($x, 2, '.', ''); }
 
 $oSampler = new paloSampler();
 
+$counter_channels_dahdi = 0;
+$counter_channels_sip = 0;
+$counter_channels_iax = 0;
+$counter_channels_h323 = 0;
+$counter_channels_local = 0;
+
 if (file_exists('/usr/sbin/asterisk')) {
   // NUMERO DE LLAMADAS SIMULTANEAS
   $simCalls = 0;
   $comando = "/usr/sbin/asterisk -r -x \"core show channels\"";
   exec($comando, $arrSalida, $varSalida);
-
-  $counter_channels_dahdi = 0;
-  $counter_channels_sip = 0;
-  $counter_channels_iax = 0;
-  $counter_channels_h323 = 0;
-  $counter_channels_local = 0;
 
   foreach($arrSalida as $linea) {
       if(preg_match("#^DAHDI/#i", $linea)) {
@@ -64,11 +64,10 @@ if (file_exists('/usr/sbin/asterisk')) {
       }
   }
 
-  $counter_channels_total = $counter_channels_dahdi + $counter_channels_sip + $counter_channels_iax + $counter_channels_h323 + $counter_channels_local;
-
   $timestamp = time();
   $oSampler->insertSample(1, $timestamp, $simCalls);
 }
+$counter_channels_total = $counter_channels_dahdi + $counter_channels_sip + $counter_channels_iax + $counter_channels_h323 + $counter_channels_local;
 
 $arrSysInfo = obtener_info_de_sistema();
 
@@ -82,7 +81,7 @@ $memUsage = nformat(($arrSysInfo['MemTotal'] - $arrSysInfo['MemFree'] - $arrSysI
 $timestamp = time();
 $oSampler->insertSample(3, $timestamp, $memUsage);
 
-if ($retval != "0") {
+if (file_exists('/usr/sbin/asterisk')) {
   // Total Channels Usage
   $timestamp = time();
   $oSampler->insertSample(4, $timestamp, $counter_channels_total);
