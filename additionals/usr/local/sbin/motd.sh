@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # Check for existence of /etc/init.d/wanrouter
-rpm -qa asterisk
-if [ $? = 1 ]; then
+if [ -e /usr/sbin/asterisk ]; then
 	if [ ! -e /etc/init.d/wanrouter ] ; then
 	        if [ -e /usr/sbin/wanrouter ] ; then
 	                ln -s /usr/sbin/wanrouter /etc/init.d/wanrouter
@@ -40,7 +39,7 @@ do
 
 		sit*)
 		;;
-				
+
 		# Since CentOS 7 the way of naming network interfaces change to "Consistent Network Device Naming"
 		# wich implements a change in the usual name 'ethN' to others network names of the form:
 		# en* for ethernet interfaces
