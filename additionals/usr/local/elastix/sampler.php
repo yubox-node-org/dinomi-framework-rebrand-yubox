@@ -36,9 +36,7 @@ function nformat($x) { return number_format($x, 2, '.', ''); }
 
 $oSampler = new paloSampler();
 
-$comandverif = "/usr/bin/rpm -qa asterisk";
-exec($comandverif,$output,$retval);
-if ($retval != "0") {
+if (file_exists('/usr/sbin/asterisk')) {
   // NUMERO DE LLAMADAS SIMULTANEAS
   $simCalls = 0;
   $comando = "/usr/sbin/asterisk -r -x \"core show channels\"";
