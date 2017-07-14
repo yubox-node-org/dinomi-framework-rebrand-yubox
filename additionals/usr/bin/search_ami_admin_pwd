@@ -51,8 +51,7 @@ if(file_exists("/etc/elastix.conf")){
 }
 
 if($dosearch){
-  exec("rpm -qa asterisk",$output,$retval);
-  if ($retval != "0") {
+  if (file_exists('/usr/sbin/asterisk')) {
     $ami_file = "manager.conf";
     $secret = "";
     $files_searched = array();
@@ -79,7 +78,7 @@ TEMP;
 
     $fhandler = fopen("/etc/elastix.conf","a");
     echo "Writing the key amiadminpwd in /etc/elastix.conf\n";
-    fwrite($fhandler,"amiadminpwd=$secret\n"); 
+    fwrite($fhandler,"amiadminpwd=$secret\n");
     fclose($fhandler);
     chown("/etc/elastix.conf","apache");
     chgrp("/etc/elastix.conf","apache");
