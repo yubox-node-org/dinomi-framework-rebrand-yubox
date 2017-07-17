@@ -150,26 +150,17 @@ function dinomiLoggedInAgents()
     );
 }
 
-function snd_data_autopopulate(numpoints){
-    var d1 = JSON.parse(JSON.stringify(db.getData("/data_cpu")));
-    var new_d1 = d1.slice(Math.max(d1.length - numpoints, 1));
-    var d2 = JSON.parse(JSON.stringify(db.getData("/data_proc")));
-    var new_d2 = d2.slice(Math.max(d2.length - numpoints, 1));
-    var d3 = JSON.parse(JSON.stringify(db.getData("/data_agnt")));
-    var new_d3 = d3.slice(Math.max(d3.length - numpoints, 1));
-    io.emit('data_cpu', new_d1);
-    io.emit('data_proc', new_d2);
-    io.emit('data_agnt', new_d3);
-    /*
-    console.log(new_d1);
-    console.log(new_d2);
-    console.log(new_d3);
-    */
-};
-
-function countProperties(obj) {
-    return Object.keys(obj).length;
-};
+function pushTrimmedData()
+{
+    // Trim all historic data older than 5 minutes
+    var ts_trim = Date.now() - 5 * 60 * 1000;
+    for (var k in data) {
+        while (data[k].length > 0 && (data[k][0].length <= 0 || data[k][0][0] < ts_trim)) {
+            data[k].shift();
+        }
+    }
+    db.push('/', data, true);
+}
 
 var io_options = {
 /*
@@ -182,37 +173,22 @@ var io_options = {
 };
 
 var db = new JsonDB(dbFile, true, true);
-try{
-    var data = db.getData("/");    
-}catch(e) {
-    switch(e.message){
-        case 'Can\'t Load Database':
-            console.log('Oh no!, Enter to CLD error');
-            var string = e.inner.toString(),
-            substring = "Unexpected end of JSON input";
-            var verif_1 = string.includes(substring);
-            switch(verif_1){
-                case true:
-                    console.log('Oh no!, Enter to '+verif_1+' error');
-                    fs.writeFile(dbFile, "{}", function(err) {
-                    if(err) {
-                        return console.log(err);
-                    }
-                    console.log("The file was fixed!");
-                    }); 
-                break;
-
-                default:
-                    console.log('Oh no!, nothing to do here.');
-                break;
-            };    
-        break;
-
-        default:
-            console.log('Oh no!, an undeterminated error has been caught:\n' + e);
-        break;
+var data = null;
+try {
+    data = db.getData("/");
+} catch(e) {
+    console.log('ERROR: could not load historic data: '+e.message);
+    console.log('ERROR: resetting data...');
+    data = {
+        data_cpu:   [],
+        data_proc:  [],
+        data_agnt:  []
     };
 }
+if (data.data_cpu == null) data.data_cpu = [];
+if (data.data_proc == null) data.data_proc = [];
+if (data.data_agnt == null) data.data_agnt = [];
+pushTrimmedData();
 
 setupECCP();
 setInterval(() => {
@@ -228,14 +204,10 @@ setInterval(() => {
         io.emit('statistics3', [rs[2], timeDate_stamp]);
         io.emit('time_server',  timeDate_stamp);
 
-        db.push("/data_cpu[]", [ timeDate_stamp , rs[0] ], true);
-        db.push("/data_proc[]", [ timeDate_stamp , rs[1] ], true);
-        db.push("/data_agnt[]", [ timeDate_stamp , rs[2] ], true);
-        /*
-        console.log('CPU valor: ' + rs[0]);
-        console.log('Number of Active Process: ' + rs[1]);
-        console.log('Number of Agents: ' + rs[2] + '\n');
-        */
+        data.data_cpu.push([ timeDate_stamp , rs[0] ]);
+        data.data_proc.push([ timeDate_stamp , rs[1] ]);
+        data.data_agnt.push([ timeDate_stamp , rs[2] ]);
+        pushTrimmedData();
     });
 }, 5000);
 
@@ -243,26 +215,10 @@ var server = http.createServer();
 io = socketio(server, io_options);
 
 io.on('connect', () => {
-    if(countProperties(data) > 0){
-        io.emit('oncharged', true);
-        var content1 = db.getData("/data_cpu");
-        var content2 = db.getData("/data_proc");
-        var content3 = db.getData("/data_agnt");
-        if ( countProperties(content2) === countProperties(content1) && countProperties(content2) === countProperties(content3) && countProperties(content2) !== null ){
-            var content_glob = db.getData("/data_cpu");
-            switch (true) {
-                case countProperties(content_glob) > 0 && countProperties(content_glob) < 5:
-                    snd_data_autopopulate(4);
-                break;
-                case countProperties(content_glob) > 5 && countProperties(content_glob) < 60:
-                    snd_data_autopopulate(5);
-                break;
-                case countProperties(content_glob) > 60:
-                    snd_data_autopopulate(60);
-                break;
-            };
-        };
-    }
+    io.emit('oncharged', true);
+    io.emit('data_cpu', data.data_cpu);
+    io.emit('data_proc', data.data_proc);
+    io.emit('data_agnt', data.data_agnt);
 });
 
 server.listen(8080, '127.0.0.1');
