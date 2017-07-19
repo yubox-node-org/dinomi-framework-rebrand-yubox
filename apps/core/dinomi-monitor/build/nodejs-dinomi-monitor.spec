@@ -24,7 +24,6 @@ DINOMI ISO dashboard monitor of local and remote services.
 
 %prep
 %setup -q -n dinomi-monitor
-%nodejs_fixdep -r os-toolbox
 %nodejs_fixdep -r socket.io
 %nodejs_fixdep -r node-json-db
 

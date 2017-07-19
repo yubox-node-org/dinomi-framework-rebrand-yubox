@@ -6,7 +6,6 @@ const http = require('http');
 const mysql = require('mysql');
 const Promise = require('promise');
 const ECCP = require('dinomi-eccp');
-const ostoolbox = require('os-toolbox');
 const socketio = require('socket.io');
 
 const remotecnf = '/etc/ccpro_dbremoteconfig.conf';
