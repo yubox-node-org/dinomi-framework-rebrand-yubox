@@ -15,6 +15,7 @@ const dialerhost = 'localhost';
 // Inicialización
 var eccpconn = null;
 var io = null;
+var tasks = null;
 
 var dbFile = "/usr/lib/node_modules/dinomi-monitor/myDataBase.json";
 var JsonDB = require('node-json-db');
@@ -26,13 +27,13 @@ function loadKeys(path)
     .then((data) => {
         var conf = {};
         var rx_keyval = /^(\w+)\s*=\s*(.*)/;
-        
+
         data.split("\n").map((s) => { return s.trim(); })
         .forEach((s) => {
             var regs;
             if ((regs = s.match(rx_keyval)) != null) conf[regs[1]] = regs[2];
         });
-        
+
         return conf;
     });
 }
@@ -85,7 +86,7 @@ function setupECCP()
         }
         var sth_eccpuser = Promise.denodeify(dbconn.query)
         .bind(dbconn, 'SELECT md5_password FROM eccp_authorized_clients where username = ?');
-        
+
         return sth_eccpuser([cred.eccpuser])
         .then((rs) => {
             dbconn.end();
@@ -192,11 +193,17 @@ pushTrimmedData();
 
 setupECCP();
 setInterval(() => {
-    Promise.all([
+    if (tasks != null) return;
+
+    // Lista de promesas a resolver en paralelo
+    tasks = [
         ostoolbox.cpuLoad().then((percent) => { return percent / 100.0; }),
         ostoolbox.currentProcesses().then((proclist) => { return proclist.length }),
         dinomiLoggedInAgents()
-    ]).done((rs) => {
+    ];
+    Promise.all(tasks).done((rs) => {
+        tasks = null;
+
         // Emitir valores de la estadística a TODOS los clientes conectados
         var timeDate_stamp = Date.now();
         io.emit('statistics1', [rs[0], timeDate_stamp]);
