@@ -125,6 +125,18 @@ function setupECCP()
     );
 }
 
+function processCount()
+{
+    var readdir = Promise.denodeify(fs.readdir);
+    return readdir('/proc', 'utf8')
+    .then((files) => {
+        // Count entirely numeric entries under /proc
+        return files.filter((f) => { return (f.match(/^\d+$/)); }).length;
+    }, (e) => {
+        return 0;
+    });
+}
+
 function dinomiLoggedInAgents()
 {
     if (eccpconn == null) {
@@ -198,7 +210,7 @@ setInterval(() => {
     // Lista de promesas a resolver en paralelo
     tasks = [
         ostoolbox.cpuLoad().then((percent) => { return percent / 100.0; }),
-        ostoolbox.currentProcesses().then((proclist) => { return proclist.length }),
+        processCount(),
         dinomiLoggedInAgents()
     ];
     Promise.all(tasks).done((rs) => {
