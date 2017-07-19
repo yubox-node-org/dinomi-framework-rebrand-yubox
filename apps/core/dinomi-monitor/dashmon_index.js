@@ -1,5 +1,6 @@
 'use strict';
 
+const os = require('os');
 const fs = require('fs');
 const http = require('http');
 const mysql = require('mysql');
@@ -137,6 +138,26 @@ function processCount()
     });
 }
 
+var prevsample = null;
+function cpuLoad()
+{
+    var sample = {
+        idle:   0,
+        total:  0,
+    };
+    os.cpus().forEach((cpu) => {
+        sample.idle += cpu.times.idle;
+        sample.total += cpu.times.idle + cpu.times.nice + cpu.times.user + cpu.times.sys + cpu.times.irq;
+    });
+
+    var load = 0.0;
+    if (prevsample != null) {
+        load = 1.0 - ((sample.idle - prevsample.idle) / (sample.total - prevsample.total));
+    }
+    prevsample = sample;
+    return Promise.resolve(load);
+}
+
 function dinomiLoggedInAgents()
 {
     if (eccpconn == null) {
@@ -209,7 +230,7 @@ setInterval(() => {
 
     // Lista de promesas a resolver en paralelo
     tasks = [
-        ostoolbox.cpuLoad().then((percent) => { return percent / 100.0; }),
+        cpuLoad(),
         processCount(),
         dinomiLoggedInAgents()
     ];
