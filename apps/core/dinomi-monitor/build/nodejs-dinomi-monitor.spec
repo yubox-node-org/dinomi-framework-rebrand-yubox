@@ -34,6 +34,7 @@ DINOMI ISO dashboard monitor of local and remote services.
 %install
 mkdir -p %{buildroot}/etc/httpd/conf.d/
 mkdir -p %{buildroot}/usr/lib/systemd/system/
+mkdir -p %{buildroot}/var/lib/dinomi-monitor/
 
 mv wstunnel-dashmon.conf		%{buildroot}/etc/httpd/conf.d/
 mv dashmon.service 			%{buildroot}/usr/lib/systemd/system/
@@ -58,11 +59,23 @@ else
 	systemctl start dashmon.service
 fi
 
+if [ ! -e /var/lib/dinomi-monitor/myDataBase.json ] ; then
+    if [ -e /usr/lib/node_modules/dinomi-monitor/myDataBase.json ] ; then
+        echo "Migrating DINOMI monitor datafile to non-privileged location..."
+        systemctl stop dashmon.service
+        mv /usr/lib/node_modules/dinomi-monitor/myDataBase.json /var/lib/dinomi-monitor/
+        chown apache.apache /var/lib/dinomi-monitor/myDataBase.json
+        systemctl start dashmon.service
+    fi
+fi
+
 %files
-# % doc LICENSE Readme.md
+%defattr(-, root, root)
 %{nodejs_sitelib}/dinomi-monitor
 /usr/lib/systemd/system/dashmon.service
 /etc/httpd/conf.d/wstunnel-dashmon.conf
+%defattr(-, apache, apache)
+/var/lib/dinomi-monitor/
 
 %changelog
 * Thu May 11 2017 Luis Anghelo Abarca Villacís <labarca@palosanto.com> - 1.0.0-4
