@@ -17,7 +17,7 @@ var eccpconn = null;
 var io = null;
 var tasks = null;
 
-var dbFile = "/usr/lib/node_modules/dinomi-monitor/myDataBase.json";
+var dbFile = "/var/lib/dinomi-monitor/myDataBase.json";
 var JsonDB = require('node-json-db');
 
 function loadKeys(path)
