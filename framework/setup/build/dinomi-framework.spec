@@ -2,7 +2,7 @@ Summary: Dinomi is a Web based software to operate and administrate a call cente
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
 Version: 1.0.0
-Release: 4
+Release: 6
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -413,6 +413,14 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
+* Tue Jun 06 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-6
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  GIT history. Bump Release in specfile.
+
+* Wed May 24 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-5
+- CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
+  GIT history. Bump Release in specfile.
+
 * Wed May 10 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-4
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   GIT history. Bump Release in specfile.
