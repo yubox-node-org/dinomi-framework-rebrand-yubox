@@ -1,4 +1,7 @@
-updateksfile.php && listfile2xmlfile.php && genisoimage -U -r -v -T -J -joliet-long -V "CentOS 7 x86_64" -volset "CentOS 7 x86_64" -A "CentOS 7 x86_64" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e images/efiboot.img -no-emul-boot -o Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017.iso Dinomi_Pelado_10022017/ && md5sum Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017.iso > Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017.iso.md5sum && rsync -avh --progress Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017* root@srv19.palosanto.com:/var/www/iso_dinomi_com/ISOs/
+updateksfile.php && listfile2xmlfile.php
+&& genisoimage -U -r -v -T -J -joliet-long -V "CentOS 7 x86_64" -volset "CentOS 7 x86_64" -A "CentOS 7 x86_64" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e images/efiboot.img -no-emul-boot -o Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017.iso Dinomi_Pelado_10022017/
+&& md5sum Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017.iso > Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017.iso.md5sum
+&& rsync -avh --progress Dinomi-1.0.39-STABLE-x86_64-bin-06Jun2017* root@srv19.palosanto.com:/var/www/iso_dinomi_com/ISOs/
 
 
 Notas:
