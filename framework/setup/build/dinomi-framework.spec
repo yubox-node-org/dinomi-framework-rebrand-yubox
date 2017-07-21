@@ -2,15 +2,15 @@ Summary: Dinomi is a Web based software to operate and administrate a call cente
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
 Version: 1.0.0
-Release: 6
+Release: 7
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Prereq: /sbin/chkconfig, /etc/sudoers, sudo
-Prereq: php, php-gd, php-pear, php-xml, php-mysql, php-pdo, php-imap, php-soap
-Prereq: httpd, mysql-server, ntp, mod_ssl
+Requires(pre): /sbin/chkconfig, /etc/sudoers, sudo
+Requires(pre): php, php-gd, php-pear, php-xml, php-mysql, php-pdo, php-imap, php-soap
+Requires(pre): httpd, mysql-server, ntp, mod_ssl
 # /usr/sbin/close-on-exec.pl /usr/local/sbin/motd.sh
 Prereq: perl
 Prereq: dinomi-firstboot
@@ -184,6 +184,9 @@ chmod 644 $RPM_BUILD_ROOT/etc/logrotate.d/*
 mkdir -p    $RPM_BUILD_ROOT/var/log/elastix
 touch       $RPM_BUILD_ROOT/var/log/elastix/audit.log
 touch	    $RPM_BUILD_ROOT/var/log/elastix/postfix_stats.log
+
+mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/cache
+mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/templates_c
 
 %pre
 #Para conocer la version de elastix antes de actualizar o instalar
@@ -413,6 +416,10 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
+* Fri Jul 21 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-7
+- CHANGED: framework - fix inefficient test for asterisk in sampler.php, motd.sh
+  and search_ami_admin_pwd .
+
 * Tue Jun 06 2017 Luis Abarca <labarca@palosanto.com> 1.0.0-6
 - CHANGED: framework - Build/elastix-framework.spec: update specfile with latest
   GIT history. Bump Release in specfile.
