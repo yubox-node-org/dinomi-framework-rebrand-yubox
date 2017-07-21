@@ -30,3 +30,6 @@ $(ISONAME)-$(ISODATE).iso.md5sum: $(ISONAME)-$(ISODATE).iso
 
 clean:
 	rm -f *.distro-pkglist $(ISONAME)-$(ISODATE).iso $(ISONAME)-$(ISODATE).iso.md5sum
+
+rsync: all
+	rsync -avh --progress $(ISONAME)-$(ISODATE).iso* root@srv19.palosanto.com:/var/www/iso_dinomi_com/ISOs/
