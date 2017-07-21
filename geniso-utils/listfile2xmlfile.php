@@ -37,7 +37,7 @@ date_default_timezone_set('America/Guayaquil');
 
 
 if (file_exists($fname)) {
-	//A lo que inserta no hace un salto de linea. El .PHP_EOL funciona a medias	
+	//A lo que inserta no hace un salto de linea. El .PHP_EOL funciona a medias
 	$xml = simplexml_load_file($fname);
 	printf("\nLIMPIANDO LOS NOMBRES DE LOS RPMS DE LA RUTA ELASTIX".PHP_EOL);
 	printf("ESPERE UN MOMENTO POR FAVOR...".PHP_EOL);
@@ -59,9 +59,9 @@ if (file_exists($fname)) {
 		$namepkg = trim($pkgsarr[$nmpkg]);
 		$entry = $xml->group[1]->packagelist->addChild('packagereq',"$namepkg");
 		$entry->addAttribute('type', 'mandatory');
-		
+
 		$bar1->update($nmpkg);
-		
+
 		sleep(1);
 	}
 	//echo date('h:i:s') . "\n";
@@ -88,68 +88,11 @@ if (file_exists($fname)) {
 	printf("".PHP_EOL);
 	printf("ACTUALIZANDO EL REPOSITORIO CON LA INFORMACION DEL NUEVO ARCHIVO COMPS.XML".PHP_EOL);
 	system("createrepo -g $fname $crtrppath");
-	
+
 }else {
 	printf('The file '.$fname.' does not exist.'.PHP_EOL);
 }
 
-
-function recurse_copy($src,$dst) { 
-    $dir = opendir($src); 
-    @mkdir($dst); 
-    while(false !== ( $file = readdir($dir)) ) { 
-        if (( $file != '.' ) && ( $file != '..' )) { 
-            if ( is_dir($src . '/' . $file) ) { 
-                recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-            } 
-            else { 
-                copy($src . '/' . $file,$dst . '/' . $file); 
-            } 
-        } 
-    } 
-    closedir($dir); 
-}
-
-/**
- * Copy a file, or recursively copy a folder and its contents
- * @param       string   $source    Source path
- * @param       string   $dest      Destination path
- * @param       string   $permissions New folder creation permissions
- * @return      bool     Returns true on success, false on failure
- */
-function xcopy($source, $dest, $permissions = 0755)
-{
-    // Check for symlinks
-    if (is_link($source)) {
-        return symlink(readlink($source), $dest);
-    }
-
-    // Simple copy for a file
-    if (is_file($source)) {
-        return copy($source, $dest);
-    }
-
-    // Make destination directory
-    if (!is_dir($dest)) {
-        mkdir($dest, $permissions);
-    }
-
-    // Loop through the folder
-    $dir = dir($source);
-    while (false !== $entry = $dir->read()) {
-        // Skip pointers
-        if ($entry == '.' || $entry == '..') {
-            continue;
-        }
-
-        // Deep copy directories
-        xcopy("$source/$entry", "$dest/$entry", $permissions);
-    }
-
-    // Clean up
-    $dir->close();
-    return true;
-}
 
 function arraymaker_rpms($path){
 $rpms = glob($path."/*.rpm");
@@ -182,7 +125,7 @@ function dateDiff($time1, $time2, $precision = 6) {
     if (!is_int($time2)) {
       $time2 = strtotime($time2);
     }
- 
+
     // If time1 is bigger than time2
     // Then swap time1 and time2
     if ($time1 > $time2) {
@@ -190,11 +133,11 @@ function dateDiff($time1, $time2, $precision = 6) {
       $time1 = $time2;
       $time2 = $ttime;
     }
- 
+
     // Set up intervals and diffs arrays
     $intervals = array('year','month','day','hour','minute','second');
     $diffs = array();
- 
+
     // Loop thru all intervals
     foreach ($intervals as $interval) {
       // Create temp time from time1 and interval
@@ -209,11 +152,11 @@ function dateDiff($time1, $time2, $precision = 6) {
         $ttime = strtotime("+" . $add . " " . $interval, $time1);
         $looped++;
       }
- 
+
       $time1 = strtotime("+" . $looped . " " . $interval, $time1);
       $diffs[$interval] = $looped;
     }
-    
+
     $count = 0;
     $times = array();
     // Loop thru all diffs
@@ -222,7 +165,7 @@ function dateDiff($time1, $time2, $precision = 6) {
       if ($count >= $precision) {
  break;
       }
-      // Add value and interval 
+      // Add value and interval
       // if value is bigger than 0
       if ($value > 0) {
  // Add s if value is not 1
@@ -234,7 +177,7 @@ function dateDiff($time1, $time2, $precision = 6) {
  $count++;
       }
     }
- 
+
     // Return string with times
     return implode(", ", $times);
   }
