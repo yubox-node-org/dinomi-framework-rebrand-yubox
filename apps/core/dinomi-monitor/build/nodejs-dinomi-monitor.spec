@@ -1,17 +1,17 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:       nodejs-dinomi-monitor
-Version:    1.0.0
-Release:    4%{?dist}
+Version: 1.0.0
+Release: 5
 Summary:    DINOMI dashboard monitor for Node.js
 License:    ISC
 Group:      System Environment/Libraries
 URL:        http://dinomi.com
-Source0:    dinomi-monitor-%{version}-4.tgz
+Source0:    dinomi-monitor_%{version}-%{release}.tgz
 Requires:	nodejs
 Requires:	nodejs-promise
 Requires: 	nodejs-mysql
-Requires:	nodejs-dinomi-eccp
+Requires:	nodejs-dinomi-eccp >= 1.0.0-1
 Requires:	nodejs-supervisor
 Requires:   httpd >= 2.4.6-32
 Requires:	dinomi-system >= 1.0.0-2
@@ -65,6 +65,7 @@ if [ ! -e /var/lib/dinomi-monitor/myDataBase.json ] ; then
         systemctl stop dashmon.service
         mv /usr/lib/node_modules/dinomi-monitor/myDataBase.json /var/lib/dinomi-monitor/
         chown apache.apache /var/lib/dinomi-monitor/myDataBase.json
+        systemctl daemon-reload
         systemctl start dashmon.service
     fi
 fi
@@ -78,6 +79,17 @@ fi
 /var/lib/dinomi-monitor/
 
 %changelog
+* Thu Jul 20 2017 Alex Villacís Lasso <a_villacis@palosanto.com> - 1.0.0-5
+- Switch to user apache for running monitor.
+- Replace use of ostoolbox to calculate CPU load with simpler and more precise
+  implementation.
+- Replace use of ostoolbox to count active processes with simpler implementation,
+  thereby avoiding a periodic invocation of an external command.
+- Do not run new sample poll if previous sample poll is still running.
+- Fix disorganized trimming of samples leading to severe memory leak. Now only
+  the last 5 minutes of samples are saved. Also greatly simplify internal use of
+  JsonDB API.
+
 * Thu May 11 2017 Luis Anghelo Abarca Villacís <labarca@palosanto.com> - 1.0.0-4
 - A better way to start the dashmon service has been deployed.
 
