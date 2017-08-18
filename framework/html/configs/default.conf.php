@@ -36,6 +36,7 @@ $arrConf = array(
     'language'                      =>  'en',
     'elastix_dbdir'                 =>  '/var/www/db',
     'elastix_dsn'                   =>  array(),
+    'session_name'                  =>  'elastixSession',
 
     /* La siguiente lista define los módulos provistos por el framework que deben
      * estar siempre disponibles sin importar el estado del menú. Estos módulos deben

@@ -52,14 +52,14 @@ include_once("libs/paloSantoACL.class.php");// Don activate unless you know what
 
 load_default_timezone();
 
-session_name("elastixSession");
+session_name($arrConf['session_name']);
 session_start();
 
 if(isset($_GET['logout']) && $_GET['logout']=='yes') {
     $user = isset($_SESSION['elastix_user'])?$_SESSION['elastix_user']:"unknown";
     writeLOG("audit.log", "LOGOUT $user: Web Interface logout successful. Accepted logout for $user from $_SERVER[REMOTE_ADDR].");
     session_destroy();
-    session_name("elastixSession");
+    session_name($arrConf['session_name']);
     session_start();
     header("Location: index.php");
     exit;
