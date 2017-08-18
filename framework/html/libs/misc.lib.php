@@ -586,8 +586,24 @@ function generarDSNSistema($sNombreUsuario, $sNombreDB, $ruta_base='')
                 $listaParam['AMPDBPASS']['valor']. "@".
                 $listaParam['AMPDBHOST']['valor']. "/".$sNombreDB;
         }
+        return NULL;
+    default:
+        if (!is_readable('/etc/dinomi-dsn.conf')) return NULL;
+        $dsns = parse_ini_file('/etc/dinomi-dsn.conf', TRUE);
+        if (!(is_array($dsns) && isset($dsns[$sNombreUsuario]) && is_array($dsns[$sNombreUsuario])))
+            return NULL;
+        // A partir de aquí se asume que se requiere clave de acceso
+        $dsn = $dsns[$sNombreUsuario];
+        $dbengine = 'mysql';
+        if (isset($dsn['DBENGINE'])) $dbengine = $dsn['DBENGINE'];
+        foreach (array('DBUSER', 'DBPASSWORD', 'DBHOST') as $k) {
+            if (!isset($dsn[$k])) return NULL;
+        }
+        return $dbengine."://".
+            $dsn['DBUSER']. ":".
+            $dsn['DBPASSWORD']. "@".
+            $dsn['DBHOST']. "/".$sNombreDB;
     }
-    return NULL;
 }
 
 function isPostfixToElastix2(){
