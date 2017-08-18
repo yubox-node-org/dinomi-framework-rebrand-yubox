@@ -107,6 +107,8 @@ mkdir -p $RPM_BUILD_ROOT/etc/init.d
 #rm -rf $RPM_BUILD_DIR/dinomi-framework/framework/html/modules/userlist/  # Este modulo no es el modificado para soporte de correo, eso se encuentra en modules-core
 mv $RPM_BUILD_DIR/dinomi-framework/framework/html/*                              $RPM_BUILD_ROOT/var/www/html/
 
+mkdir -p $RPM_BUILD_ROOT/var/www/html/configs.d
+
 # ** Installating modules elastix webinterface ** #
 #mv $RPM_BUILD_DIR/elastix/modules-core/*                                $RPM_BUILD_ROOT/var/www/html/modules/
 
@@ -363,6 +365,7 @@ rm -rf $RPM_BUILD_ROOT
 # %config(noreplace) /var/www/db/
 %defattr(-, root, root)
 /var/www/html/configs
+/var/www/html/configs.d
 /var/www/html/favicon.ico
 /var/www/html/help
 /var/www/html/images
