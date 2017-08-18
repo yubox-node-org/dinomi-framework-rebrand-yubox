@@ -29,34 +29,42 @@
 
 global $arrConf;
 
-$arrConf['basePath'] = realpath(dirname(__FILE__).'/..');
-$arrConf['elastix_dbdir'] = '/var/www/db';
-$arrConf['elastix_dsn'] = array(
-                                "acl"       =>  "sqlite3:///$arrConf[elastix_dbdir]/acl.db",
-                                "settings"  =>  "sqlite3:///$arrConf[elastix_dbdir]/settings.db",
-                                "menu"      =>  "sqlite3:///$arrConf[elastix_dbdir]/menu.db",
-                                "samples"   =>  "sqlite3:///$arrConf[elastix_dbdir]/samples.db",
-                            );
-$arrConf['theme'] = 'default'; //theme personal para los modulos esencialmente
+// Lo siguiente asume que no se debe preservar ningún valor anterior
+$arrConf = array(
+    'basePath'                      =>  realpath(dirname(__FILE__).'/..'),
+    'theme'                         =>  'default',
+    'language'                      =>  'en',
+    'elastix_dbdir'                 =>  '/var/www/db',
+    'elastix_dsn'                   =>  array(),
+
+    /* La siguiente lista define los módulos provistos por el framework que deben
+     * estar siempre disponibles sin importar el estado del menú. Estos módulos deben
+     * funcionar únicamente con requerimientos AJAX, y para consistencia, todo
+     * requerimiento a un módulo listado aquí debe usar rawmode=yes.
+     * El módulo _elastixutils sirve para contener las utilidades json que
+     * atienden requerimientos de varios widgets de la interfaz Elastix. Todo
+     * requerimiento nuevo que no sea un módulo debe de agregarse en _elastixutils.
+     * El módulo registration atiende las funcionalidades de registro de Elastix.
+     * El módulo _elastixpanel redirige la petición al panel indicado por el parámetro panel.*/
+    'elx_framework_globalmodules'   =>  array('_elastixutils', 'registration', '_elastixpanel'),
+);
+
+// Fuentes de datos heredadas
+foreach (array('acl', 'settings', 'menu', 'samples') as $k) {
+    $arrConf['elastix_dsn'][$k] = "sqlite3:///{$arrConf['elastix_dbdir']}/{$k}.db";
+}
+
+// Oportunidad para redefinir elementos de la configuración global
+$customdir = $arrConf['basePath'].'/configs.d';
+if (is_dir($customdir) && is_readable($customdir)) {
+    foreach (glob($customdir.'/*.conf.php') as $f) {
+        if (is_readable($f)) include_once($f);
+    }
+}
 
 // Verifico si las bases del framework están, debido a la migración de dichas bases como archivos .db a archivos .sql
 checkFrameworkDatabases($arrConf['elastix_dbdir']);
 
-$arrConf['mainTheme'] = load_theme($arrConf['basePath']."/"); //theme para la parte plantilla principal del elastix (se usa para la inclusion de los css)
-$arrConf['elastix_version'] = load_version_elastix($arrConf['basePath']."/"); //la version y le release  del sistema elastix
-$arrConf['defaultMenu'] = 'config';
-$arrConf['language'] = 'en';
-
-/* La siguiente lista define los módulos provistos por el framework que deben
- * estar siempre disponibles sin importar el estado del menú. Estos módulos deben
- * funcionar únicamente con requerimientos AJAX, y para consistencia, todo
- * requerimiento a un módulo listado aquí debe usar rawmode=yes.
- * El módulo _elastixutils sirve para contener las utilidades json que
- * atienden requerimientos de varios widgets de la interfaz Elastix. Todo
- * requerimiento nuevo que no sea un módulo debe de agregarse en _elastixutils.
- * El módulo registration atiende las funcionalidades de registro de Elastix.
- * El módulo _elastixpanel redirige la petición al panel indicado por el parámetro panel.*/
-$arrConf['elx_framework_globalmodules'] = array('_elastixutils', 'registration', '_elastixpanel');
-
-// cadena_dsn es sólo para compatibilidad con versiones de elastix-callcenter < 2.2.0-6 (Elastix bug #1795)
-$arrConf['cadena_dsn'] = "mysql://asterisk:asterisk@localhost/call_center";
+// Los siguientes elementos requieren acceso a la base de datos
+if (!isset($arrConf['mainTheme'])) $arrConf['mainTheme'] = load_theme($arrConf['basePath']."/");
+if (!isset($arrConf['elastix_version'])) $arrConf['elastix_version'] = load_version_elastix($arrConf['basePath']."/");
