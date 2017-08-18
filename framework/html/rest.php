@@ -53,7 +53,7 @@ if(!empty($pACL->errMsg)){
     exit;
 }
 
-session_name("elastixSession");
+session_name($arrConf['session_name']);
 session_start();
 if (isset($_SESSION['elastix_user']) && isset($_SESSION['elastix_pass'])) {
     $auth_user = $_SESSION['elastix_user'];

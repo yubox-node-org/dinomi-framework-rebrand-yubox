@@ -37,7 +37,7 @@ include_once("../libs/paloSantoMenu.class.php");
 
 load_default_timezone();
 
-session_name("elastixSession");
+session_name($arrConf['session_name']);
 session_start();
 
 global $arrConf;
