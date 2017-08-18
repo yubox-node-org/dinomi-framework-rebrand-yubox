@@ -57,8 +57,3 @@ $arrConf['language'] = 'en';
  * El módulo registration atiende las funcionalidades de registro de Elastix.
  * El módulo _elastixpanel redirige la petición al panel indicado por el parámetro panel.*/
 $arrConf['elx_framework_globalmodules'] = array('_elastixutils', 'registration', '_elastixpanel');
-
-// cadena_dsn es sólo para compatibilidad con versiones de elastix-callcenter < 2.2.0-6 (Elastix bug #1795)
-$arrConf['cadena_dsn'] = "mysql://asterisk:asterisk@localhost/call_center";
-
-?>
