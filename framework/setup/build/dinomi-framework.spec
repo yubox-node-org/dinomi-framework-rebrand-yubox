@@ -15,24 +15,6 @@ Requires(pre): httpd, mysql-server, ntp, mod_ssl
 Prereq: perl
 Prereq: dinomi-firstboot
 Prereq: /sbin/pidof
-Obsoletes: elastix-additionals
-Provides: elastix-additionals
-Obsoletes: elastix-framework
-Conflicts: elastix-system <= 4.0.0-8
-Conflicts: elastix-callcenter <= 2.0.0-16
-Conflicts: elastix-pbx <= 2.2.0-16
-Conflicts: elastix-fax <= 2.2.0-5
-Conflicts: elastix-email_admin <= 2.3.0-8
-Conflicts: elastix-developer <= 2.3.0-4
-Conflicts: elastix-addons <= 2.5.0-3
-Conflicts: elastix-monitoring_services <= 5.4.1-8
-Conflicts: kernel-module-dahdi
-Conflicts: kernel-module-rhino
-Conflicts: kernel-module-wanpipe
-Conflicts: kernel-module-dahdi-xen
-Conflicts: kernel-module-rhino-xen
-Conflicts: kernel-module-wanpipe-xen
-Obsoletes: elastix <= 2.2.0-17
 Requires: php-Smarty
 Requires: php-jpgraph
 Requires: php-tcpdf
