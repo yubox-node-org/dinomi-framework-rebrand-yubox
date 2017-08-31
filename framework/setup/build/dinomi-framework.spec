@@ -36,7 +36,6 @@ Obsoletes: elastix <= 2.2.0-17
 Requires: php-Smarty
 Requires: php-jpgraph
 Requires: php-tcpdf
-Requires: php-PHPMailer
 
 # commands: uname df rm cat
 Requires: coreutils
