@@ -86,7 +86,13 @@ mv setup/etc/cyrus.conf.elastix               $RPM_BUILD_ROOT/etc/
 # ** /usr/local/ files ** #
 mv setup/usr/local/bin/spamfilter.sh          $RPM_BUILD_ROOT/usr/local/bin/
 
-rmdir setup/etc/postfix setup/etc
+#Logrotate
+mkdir -p    $RPM_BUILD_ROOT/etc/logrotate.d/
+mv          setup/etc/logrotate.d/*           $RPM_BUILD_ROOT/etc/logrotate.d/
+# Los archivos de logrotate TIENEN que ser 0644 (http://bugs.elastix.org/view.php?id=2608)
+chmod 644 $RPM_BUILD_ROOT/etc/logrotate.d/*
+
+rmdir setup/etc/logrotate.d/ setup/etc/postfix setup/etc
 rmdir setup/usr/share/elastix/privileged setup/usr/share/elastix setup/usr/share
 rmdir setup/usr/local/bin setup/usr/local setup/usr
 
@@ -174,6 +180,12 @@ chown -R asterisk.asterisk /tmp/new_module/%{modname}
 php /tmp/new_module/%{modname}/setup/installer.php
 rm -rf /tmp/new_module
 
+touch       /var/log/elastix/postfix_stats.log
+chown apache.apache /var/log/elastix/postfix_stats.log
+
+# Los archivos de logrotate TIENEN que ser 0644 (http://bugs.elastix.org/view.php?id=2608)
+chmod 644 /etc/logrotate.d/elastixEmailStats.logrotate
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -200,6 +212,7 @@ fi
 /var/www/deleteSpam.php
 /usr/local/elastix/postfix_stats.php
 /var/www/disable_vacations.php
+%config(noreplace) /etc/logrotate.d/elastixEmailStats.logrotate
 %defattr(644, root, root)
 /etc/cron.d/postfix_stats.cron
 %defattr(755, root, root)

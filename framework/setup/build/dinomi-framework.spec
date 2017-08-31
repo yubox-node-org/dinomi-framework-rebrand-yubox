@@ -169,7 +169,6 @@ chmod 644 $RPM_BUILD_ROOT/etc/logrotate.d/*
 # File Elastix Access Audit log
 mkdir -p    $RPM_BUILD_ROOT/var/log/elastix
 touch       $RPM_BUILD_ROOT/var/log/elastix/audit.log
-touch	    $RPM_BUILD_ROOT/var/log/elastix/postfix_stats.log
 
 mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/cache
 mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/templates_c
@@ -316,7 +315,6 @@ elastix-menumerge $pathModule/menu.xml
 
 # Los archivos de logrotate TIENEN que ser 0644 (http://bugs.elastix.org/view.php?id=2608)
 chmod 644 /etc/logrotate.d/elastixAudit.logrotate
-chmod 644 /etc/logrotate.d/elastixEmailStats.logrotate
 
 %preun
 # Reverse the patching of php.conf
@@ -380,7 +378,6 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/dinomi.repo
 #%config(noreplace) /etc/logrotate.d/elastixAccess.logrotate
 %config(noreplace) /etc/logrotate.d/elastixAudit.logrotate
-%config(noreplace) /etc/logrotate.d/elastixEmailStats.logrotate
 %config /etc/httpd/conf.d/elastix-htaccess.conf
 /etc/init.d/generic-cloexec
 %defattr(755, root, root)
