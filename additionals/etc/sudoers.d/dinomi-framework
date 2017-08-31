@@ -1,0 +1,5 @@
+apache ALL = NOPASSWD: /sbin/shutdown
+apache ALL = NOPASSWD: /sbin/service
+apache ALL = NOPASSWD: /sbin/chkconfig
+
+apache ALL = NOPASSWD: /usr/sbin/elastix-helper

@@ -8,7 +8,8 @@ Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Requires(pre): /sbin/chkconfig, /etc/sudoers, sudo
+Requires(pre): sudo >= 1.7
+Requires(pre): /sbin/chkconfig, /etc/sudoers
 Requires(pre): php, php-gd, php-pear, php-xml, php-mysql, php-pdo, php-imap, php-soap
 Requires(pre): httpd, mysql-server, ntp, mod_ssl
 # /usr/sbin/close-on-exec.pl /usr/local/sbin/motd.sh
@@ -81,6 +82,7 @@ mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d
 mkdir -p $RPM_BUILD_ROOT/etc/php.d
 mkdir -p $RPM_BUILD_ROOT/etc/yum.repos.d
 mkdir -p $RPM_BUILD_ROOT/etc/init.d
+mkdir -p $RPM_BUILD_ROOT/etc/sudoers.d
 
 
 ## ** Step 2: Installation of files and folders ** ##
@@ -107,6 +109,10 @@ mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/httpd/conf.d/elastix.conf    
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/httpd/conf.d/elastix-htaccess.conf  $RPM_BUILD_ROOT/etc/httpd/conf.d/
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/php.d/elastix.ini                $RPM_BUILD_ROOT/etc/php.d/
 
+# ** sudoers config ** #
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/sudoers.d/dinomi-framework       $RPM_BUILD_ROOT/etc/sudoers.d/
+chmod 660 $RPM_BUILD_ROOT/etc/sudoers.d/dinomi-framework
+
 # ** crons config ** #
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/cron.d/elastix.cron              $RPM_BUILD_ROOT/etc/cron.d/
 chmod 644 $RPM_BUILD_ROOT/etc/cron.d/*
@@ -114,9 +120,6 @@ chmod 644 $RPM_BUILD_ROOT/etc/cron.d/*
 # ** Repos config ** #
 #mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/yum.repos.d/CentOS-Base.repo     $RPM_BUILD_ROOT/usr/share/elastix/
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/yum.repos.d/dinomi.repo         $RPM_BUILD_ROOT/etc/yum.repos.d/
-
-# ** sudoers config ** #
-mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/sudoers                          $RPM_BUILD_ROOT/usr/share/elastix/
 
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/etc/rc.local                         $RPM_BUILD_ROOT/usr/share/elastix/
 
@@ -206,10 +209,6 @@ chkconfig --level 345 httpd on
 chkconfig --del cups  &> /dev/null
 chkconfig --del gpm   &> /dev/null
 
-
-# ** Change content of sudoers ** #
-cat   /usr/share/elastix/sudoers > /etc/sudoers
-rm -f /usr/share/elastix/sudoers
 
 cat /usr/share/elastix/rc.local > /etc/rc.d/rc.local
 rm -f /usr/share/elastix/rc.local
@@ -392,6 +391,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, apache, apache)
 /var/www/html/var/cache
 /var/www/html/var/templates_c
+%defattr(660, root, root)
+/etc/sudoers.d/dinomi-framework
 
 %files themes-extra
 %defattr(-, root, root)
