@@ -98,8 +98,8 @@
                 {if $start<=1}
                     <i class="fa fa-step-backward" style="color:#ccc;"></i>&nbsp;<i class="fa fa-backward" style="color:#ccc"></i>
                 {else}
-                    <a href="{$url}&nav=start&start={$start}" class="fa fa-step-backward neo-navigation-arrow-active" alt='{$lblStart}'></a>
-                    <a href="{$url}&nav=previous&start={$start}" class="fa fa-backward neo-navigation-arrow-active" alt='{$lblPrevious}'></a>
+                    <a href="{$url}&nav=bypage&page=1" class="fa fa-step-backward neo-navigation-arrow-active" alt='{$lblStart}'></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage-1}" class="fa fa-backward neo-navigation-arrow-active" alt='{$lblPrevious}'></a>
                 {/if}
                 &nbsp;{$lblPage}&nbsp;
                 <input type="text"  value="{$currentPage}" size="2" align="absmiddle" name="page" id="pageup" />&nbsp;{$lblof}&nbsp;{$numPage}
@@ -107,8 +107,8 @@
                 {if $end==$total}
                     <i class="fa fa-forward" style="color:#ccc;"></i>&nbsp;<i class="fa fa-step-forward" style="color:#ccc"></i>
                 {else}
-                    <a href="{$url}&nav=next&start={$start}" class="fa fa-forward neo-navigation-arrow-active" alt='{$lblNext}'></a>
-                    <a href="{$url}&nav=end&start={$start}" class="fa fa-step-forward neo-navigation-arrow-active" alt='{$lblEnd}'></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage+1}" class="fa fa-forward neo-navigation-arrow-active" alt='{$lblNext}'></a>
+                    <a href="{$url}&nav=bypage&page={$numPage}" class="fa fa-step-forward neo-navigation-arrow-active" alt='{$lblEnd}'></a>
                 {/if}
             {/if}
         </div>
@@ -202,8 +202,8 @@
                 {if $start<=1}
                     <i class="fa fa-step-backward" style="color:#ccc;"></i>&nbsp;<i class="fa fa-backward" style="color:#ccc"></i>
                 {else}
-                    <a href="{$url}&nav=start&start={$start}" class="fa fa-step-backward neo-navigation-arrow-active" alt='{$lblStart}'></a>
-                    <a href="{$url}&nav=previous&start={$start}" class="fa fa-backward neo-navigation-arrow-active" alt='{$lblPrevious}'></a>
+                    <a href="{$url}&nav=bypage&page=1" class="fa fa-step-backward neo-navigation-arrow-active" alt='{$lblStart}'></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage-1}" class="fa fa-backward neo-navigation-arrow-active" alt='{$lblPrevious}'></a>
                 {/if}
                 &nbsp;{$lblPage}&nbsp;
                 <input type="text"  value="{$currentPage}" size="2" align="absmiddle" name="page" id="pagedown" />&nbsp;{$lblof}&nbsp;{$numPage}
@@ -211,8 +211,8 @@
                 {if $end==$total}
                     <i class="fa fa-forward" style="color:#ccc;"></i>&nbsp;<i class="fa fa-step-forward" style="color:#ccc"></i>
                 {else}
-                    <a href="{$url}&nav=next&start={$start}" class="fa fa-forward neo-navigation-arrow-active" alt='{$lblNext}'></a>
-                    <a href="{$url}&nav=end&start={$start}" class="fa fa-step-forward neo-navigation-arrow-active" alt='{$lblEnd}'></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage+1}" class="fa fa-forward neo-navigation-arrow-active" alt='{$lblNext}'></a>
+                    <a href="{$url}&nav=bypage&page={$numPage}" class="fa fa-step-forward neo-navigation-arrow-active" alt='{$lblEnd}'></a>
                 {/if}
             {/if}
             </div>

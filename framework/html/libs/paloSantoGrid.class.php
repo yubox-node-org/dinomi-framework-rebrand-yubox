@@ -512,7 +512,7 @@ class paloSantoGrid {
     function setURL($arrURL)
     {
         if (is_array($arrURL))
-            $this->url = construirURL($arrURL, array('nav', 'start', 'logout','name_delete_filters'));
+            $this->url = construirURL($arrURL, array('nav', 'start', 'page', 'logout','name_delete_filters'));
         else
             $this->url = $arrURL;
     }

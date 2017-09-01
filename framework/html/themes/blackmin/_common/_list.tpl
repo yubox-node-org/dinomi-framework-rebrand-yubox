@@ -76,8 +76,8 @@
                 {if $start<=1}
                     <i class="fa fa-step-backward" style="color:#aaa;"></i>&nbsp;<i class="fa fa-backward" style="color:#aaa"></i>
                 {else}
-                    <a href="{$url}&nav=start&start={$start}" class="fa fa-step-backward"></a>
-                    <a href="{$url}&nav=previous&start={$start}" class="fa fa-backward"></a>
+                    <a href="{$url}&nav=bypage&page=1" class="fa fa-step-backward"></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage-1}" class="fa fa-backward"></a>
                 {/if}
                 &nbsp;{$lblPage}&nbsp;
                 <input type="text"  value="{$currentPage}" size="2" align="absmiddle" name="page" id="pageup" />&nbsp;{$lblof}&nbsp;{$numPage}
@@ -85,8 +85,8 @@
                 {if $end==$total}
                     <i class="fa fa-forward" style="color:#aaa;"></i>&nbsp;<i class="fa fa-step-forward" style="color:#aaa"></i>
                 {else}
-                    <a href="{$url}&nav=next&start={$start}" class="fa fa-forward"></a>
-                    <a href="{$url}&nav=end&start={$start}" class="fa fa-step-forward"></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage+1}" class="fa fa-forward"></a>
+                    <a href="{$url}&nav=bypage&page={$numPage}" class="fa fa-step-forward"></a>
                 {/if}
             {/if}
         </div>
@@ -161,16 +161,16 @@
                 {if $start<=1}
                     <i class="fa fa-step-backward" style="color:#aaa;"></i>&nbsp;<i class="fa fa-backward" style="color:#aaa"></i>
                 {else}
-                    <a href="{$url}&nav=start&start={$start}" class="fa fa-step-backward"></a>
-                    <a href="{$url}&nav=previous&start={$start}" class="fa fa-backward"></a>
+                    <a href="{$url}&nav=bypage&page=1" class="fa fa-step-backward"></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage-1}" class="fa fa-backward"></a>
                 {/if}
                 &nbsp;{$lblPage}&nbsp;
                 <input  type=text  value="{$currentPage}" size="2" align="absmiddle" name="page" id="pagedown" />&nbsp;{$lblof}&nbsp;{$numPage}{*&nbsp;({$total}&nbsp;{$lblrecords})*}
                 {if $end==$total}
                     <i class="fa fa-forward" style="color:#aaa;"></i>&nbsp;<i class="fa fa-step-forward" style="color:#aaa"></i>
                 {else}
-                    <a href="{$url}&nav=next&start={$start}" class="fa fa-forward"></a>
-                    <a href="{$url}&nav=end&start={$start}" class="fa fa-step-forward"></a>
+                    <a href="{$url}&nav=bypage&page={$currentPage+1}" class="fa fa-forward"></a>
+                    <a href="{$url}&nav=bypage&page={$numPage}" class="fa fa-step-forward"></a>
                 {/if}
             {/if}
         </div>
