@@ -664,10 +664,10 @@ class paloSantoGrid {
         $this->smarty->assign("end",   $this->end);
         $this->smarty->assign("total", $this->total);
 
-        $numPage = ($this->limit==0)?0:ceil($this->total / $this->limit);
+        $numPage = ($this->limit == 0) ? 0 : (int)ceil($this->total / $this->limit);
         $this->smarty->assign("numPage",$numPage);
 
-        $currentPage = ($this->limit==0 || $this->start==0)?0:(floor($this->start / $this->limit) + 1);
+        $currentPage = ($this->limit==0 || $this->start==0) ? 0 : ((int)floor($this->start / $this->limit) + 1);
         $this->smarty->assign("currentPage",$currentPage);
 
         if(!empty($this->url))
@@ -711,7 +711,7 @@ class paloSantoGrid {
         $accion = getParameter("nav");
 
         if($accion == "bypage"){
-            $numPage = ($this->getLimit()==0)?0:ceil($this->getTotal() / $this->getLimit());
+            $numPage = ($this->getLimit() == 0) ? 0 : (int)ceil($this->getTotal() / $this->getLimit());
 
             $page  = getParameter("page");
             if(preg_match("/[0-9]+/",$page)==0)// no es un número
