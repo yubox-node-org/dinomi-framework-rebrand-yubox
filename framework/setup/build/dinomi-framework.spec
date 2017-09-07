@@ -2,7 +2,7 @@ Summary: Dinomi is a Web based software to operate and administrate a call cente
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
 Version: 1.0.0
-Release: 7
+Release: 8
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -400,6 +400,22 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
+* Thu Sep  7 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-8
+- CHANGED: Framework: tweak tenant theme and pagination.
+- CHANGED: Framework: remove logrotate configuration that belongs to email_admin.
+- CHANGED: Framework: use /etc/sudoers.d/ instead of overwriting sudoers file.
+- CHANGED: Framework: Remove old unused PHPMailer dependency from specfile.
+- CHANGED: Framework: Support loading of additional global configuration from
+  configs.d/*.conf.php. The loaded files can switch ACL source to a different
+  DSN, and other changes.
+- CHANGED: Framework: Cleanup of old compatibility code that no longer applies
+  to dinomi-framework.
+- CHANGED: Framework: Support reading additional DSN for database connections
+  from the configuration file /etc/dinomi-dsn.conf .
+- CHANGED: Framework: consolidate sql update scripts due to version renumbering.
+  This prevents changes from being repeatedly applied because scripts have larger
+  version numbers than the current dinomi-framework package.
+
 * Fri Jul 21 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-7
 - CHANGED: framework - fix inefficient test for asterisk in sampler.php, motd.sh
   and search_ami_admin_pwd .
