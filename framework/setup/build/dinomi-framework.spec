@@ -402,7 +402,7 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
-* Thu Sep  7 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-8
+* Mon Sep 11 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-8
 - CHANGED: Framework: tweak tenant theme and pagination.
 - CHANGED: Framework: remove logrotate configuration that belongs to email_admin.
 - CHANGED: Framework: use /etc/sudoers.d/ instead of overwriting sudoers file.
