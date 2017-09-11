@@ -119,6 +119,7 @@ mkdir -p $RPM_BUILD_ROOT/etc/init.d
 mv $RPM_BUILD_DIR/elastix-framework/framework/html/*                              $RPM_BUILD_ROOT/var/www/html/
 
 mkdir -p $RPM_BUILD_ROOT/var/www/html/configs.d
+mkdir -p $RPM_BUILD_ROOT/etc/dinomi-dsn
 
 # ** Installating modules elastix webinterface ** #
 #mv $RPM_BUILD_DIR/elastix/modules-core/*                                $RPM_BUILD_ROOT/var/www/html/modules/
@@ -407,6 +408,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/compareVersion
 /usr/bin/search_ami_admin_pwd
 /usr/sbin/elastix-helper
+/etc/dinomi-dsn
 %config(noreplace) /etc/cron.d/elastix.cron
 %config(noreplace) /etc/httpd/conf.d/elastix.conf
 %config(noreplace) /etc/php.d/elastix.ini
