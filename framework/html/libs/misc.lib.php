@@ -604,8 +604,16 @@ function generarDSNSistema($sNombreUsuario, $sNombreDB, $ruta_base='')
         }
         return NULL;
     default:
-        if (!is_readable('/etc/dinomi-dsn.conf')) return NULL;
-        $dsns = parse_ini_file('/etc/dinomi-dsn.conf', TRUE);
+        // Parsear todos los archivos debajo de /etc/dinomi-dsn/
+        $dsns = array();
+        $dsndir = '/etc/dinomi-dsn';
+        if (is_dir($dsndir)) foreach (glob($dsndir.'/*.conf') as $f) {
+            if (is_readable($f)) {
+                $t_dsns = parse_ini_file($f, TRUE);
+                if (is_array($t_dsns)) $dsns = array_merge($dsns, $t_dsns);
+            }
+        }
+
         if (!(is_array($dsns) && isset($dsns[$sNombreUsuario]) && is_array($dsns[$sNombreUsuario])))
             return NULL;
         // A partir de aquí se asume que se requiere clave de acceso

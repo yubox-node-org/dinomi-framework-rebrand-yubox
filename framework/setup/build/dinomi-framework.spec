@@ -93,6 +93,7 @@ mv $RPM_BUILD_DIR/dinomi-framework/framework/html/*                             
 mkdir -p $RPM_BUILD_ROOT/var/www/html/modules/userlist/plugins
 
 mkdir -p $RPM_BUILD_ROOT/var/www/html/configs.d
+mkdir -p $RPM_BUILD_ROOT/etc/dinomi-dsn
 
 # ** Installating modules elastix webinterface ** #
 #mv $RPM_BUILD_DIR/elastix/modules-core/*                                $RPM_BUILD_ROOT/var/www/html/modules/
@@ -374,6 +375,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/compareVersion
 /usr/bin/search_ami_admin_pwd
 /usr/sbin/elastix-helper
+/etc/dinomi-dsn
 %config(noreplace) /etc/cron.d/elastix.cron
 %config(noreplace) /etc/httpd/conf.d/elastix.conf
 %config(noreplace) /etc/php.d/elastix.ini
@@ -411,7 +413,8 @@ rm -rf $RPM_BUILD_ROOT
 - CHANGED: Framework: Cleanup of old compatibility code that no longer applies
   to dinomi-framework.
 - CHANGED: Framework: Support reading additional DSN for database connections
-  from the configuration file /etc/dinomi-dsn.conf .
+  from the configuration files dropped under /etc/dinomi-dsn/*.conf . These
+  files must be parseable using parse_ini_file().
 - CHANGED: Framework: consolidate sql update scripts due to version renumbering.
   This prevents changes from being repeatedly applied because scripts have larger
   version numbers than the current dinomi-framework package.
