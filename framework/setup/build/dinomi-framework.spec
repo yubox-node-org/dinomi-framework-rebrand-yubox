@@ -2,7 +2,7 @@ Summary: Dinomi is a Web based software to operate and administrate a call cente
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
 Version: 1.0.0
-Release: 8
+Release: 9
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -402,6 +402,12 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
+* Fri Nov 10 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-9
+- FIXED: Framework: restrict "asteriskuser" translation to remote FreePBX system
+  to just the cases where the "asterisk" database is requested. This prevents
+  failure to connect to the SuperCharged Contact database due to the DSN being
+  transformed into a remote request into FreePBX.
+
 * Mon Sep 11 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-8
 - CHANGED: Framework: tweak tenant theme and pagination.
 - CHANGED: Framework: remove logrotate configuration that belongs to email_admin.
