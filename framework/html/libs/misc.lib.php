@@ -589,17 +589,25 @@ function generarDSNSistema($sNombreUsuario, $sNombreDB, $ruta_base='')
             /* Esto asume que se ejecuta en la DINOMI ISO donde siempre hay un
              * archivo que permite la ejecución del código. */
             require_once '/opt/elastix/ccpro_dialer/DBConnCCP.lib.php';
-            try {
-                $dsn_ccpro = getCallCenterDBString(TRUE);
-                $db_ccpro = new PDO($dsn_ccpro[0], $dsn_ccpro[1], $dsn_ccpro[2]);
-                $db_ccpro->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $db_ccpro->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+            if ($sNombreDB == 'asterisk') {
+                // Caso especial para base de FreePBX
+                try {
+                    $dsn_ccpro = getCallCenterDBString(TRUE);
+                    $db_ccpro = new PDO($dsn_ccpro[0], $dsn_ccpro[1], $dsn_ccpro[2]);
+                    $db_ccpro->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $db_ccpro->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 
-                $dsn_fpbx = getFreePBXDBString($db_ccpro, FALSE);
-                $dsn_fpbx = preg_replace('|/asterisk$|', "/$sNombreDB", $dsn_fpbx);
-                return $dsn_fpbx;
-            } catch (PDOException $e) {
-                //
+                    $dsn_fpbx = getFreePBXDBString($db_ccpro, FALSE);
+                    $dsn_fpbx = preg_replace('|/asterisk$|', "/$sNombreDB", $dsn_fpbx);
+                    return $dsn_fpbx;
+                } catch (PDOException $e) {
+                    //
+                }
+            } else {
+                $db_config = getDBConfig();
+                $db_config['db_engine'] = 'mysql';
+                $db_config['db_schema'] = $sNombreDB;
+                return formatCCPRODatabaseConnInfo($db_config, FALSE);
             }
         }
         return NULL;
