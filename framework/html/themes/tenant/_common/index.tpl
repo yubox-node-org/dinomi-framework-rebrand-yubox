@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Dinomi</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
@@ -34,7 +35,7 @@
     {$HEADER_MODULES}
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body" {$BODYPARAMS}>
-    <div class="page-container">
+    <div class="page-container toggle-click">
 
         {$MENU} <!-- Viene del tpl menu.tlp-->
                     {if !empty($mb_message)}
