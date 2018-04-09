@@ -31,6 +31,18 @@
 */
 require_once 'Console/Getopt.php';
 
+define('NETCONFIG_MODE_DEBIAN', 'debian');
+define('NETCONFIG_MODE_REDHAT', 'redhat');
+
+$netconfig_mode = NULL;
+if (is_dir('/etc/network')) {
+    $netconfig_mode = NETCONFIG_MODE_DEBIAN;
+} elseif (is_dir('/etc/sysconfig/network-scripts')) {
+    $netconfig_mode = NETCONFIG_MODE_REDHAT;
+} else {
+    error_exit("FATAL: cannot identify network configuration mode (RedHat or Debian)!\n");
+}
+
 // Parse command-line options
 $opt = Console_Getopt::getopt($argv, '', array(
     'genconf',  // General network configuration
@@ -445,7 +457,11 @@ function construir_ip_red($ip, $mascara)
 
 function network_restart()
 {
-    $cmd = "/sbin/service network restart 2>&1";
+    global $netconfig_mode;
+
+    $cmd = ($netconfig_mode == NETCONFIG_MODE_DEBIAN)
+        ? "/sbin/service networking restart 2>&1"
+        : "/sbin/service network restart 2>&1";
     $output = $ret = NULL;
     exec($cmd, $output, $ret);
     if ($ret != 0) {
@@ -455,3 +471,4 @@ function network_restart()
     }
     return TRUE;
 }
+
