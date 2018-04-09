@@ -160,18 +160,15 @@ function action_generalConfiguration($opt)
 
     // Restart affected services
     if ($bExito) {
-        $output = $ret = NULL;
-        exec("/sbin/service network restart 2>&1", $output, $ret);
-        if ($ret != 0) {
-            fputs(STDERR, "ERR: failed to restart network service. Output follows:\n");
-            fputs(STDERR, implode('', $output));
-            $bExito = FALSE;
-        }
-        exec("/sbin/service postfix restart 2>&1", $output, $ret);
-        if ($ret != 0) {
-            fputs(STDERR, "ERR: failed to restart postfix service. Output follows:\n");
-            fputs(STDERR, implode('', $output));
-            $bExito = FALSE;
+        $bExito = network_restart();
+        if (file_exists('/etc/postfix/main.cf')) {
+            $output = $ret = NULL;
+            exec("/sbin/service postfix restart 2>&1", $output, $ret);
+            if ($ret != 0) {
+                fputs(STDERR, "ERR: failed to restart postfix service. Output follows:\n");
+                fputs(STDERR, implode('', $output));
+                $bExito = FALSE;
+            }
         }
     }
 
@@ -180,6 +177,26 @@ function action_generalConfiguration($opt)
 
 // Set default gateway. Gateway already assumed to be in a.b.c.d format.
 function setDefaultGateway($sGateway)
+{
+    setDefaultGateway_redhat($sGateway);
+
+    // Set default gateway with route commands
+    $output = NULL; $sOldGateway = NULL;
+    exec('/sbin/route -n', $output);
+    if (is_array($output)) {
+        foreach ($output as $sLinea) {
+            $regs = NULL;
+            if (preg_match('/^0.0.0.0\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $sLinea, $regs)) {
+                $sOldGateway = $regs[1];
+            }
+        }
+    }
+    if (!is_null($sOldGateway))
+        exec("/sbin/route del -net default gw $sOldGateway");
+    exec("/sbin/route add -net default gw $sGateway");
+}
+
+function setDefaultGateway_redhat($sGateway)
 {
     $interfaces = listEthernetInterfaces();
 
@@ -212,21 +229,6 @@ function setDefaultGateway($sGateway)
     }
     if (!$bClavePresente) $contenidoNuevo[] = "GATEWAY=$sGateway\n";
     file_put_contents('/etc/sysconfig/network', $contenidoNuevo);
-
-    // Set default gateway with route commands
-    $output = NULL; $sOldGateway = NULL;
-    exec('/sbin/route -n', $output);
-    if (is_array($output)) {
-    	foreach ($output as $sLinea) {
-            $regs = NULL;
-    		if (preg_match('/^0.0.0.0\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $sLinea, $regs)) {
-    			$sOldGateway = $regs[1];
-    		}
-    	}
-    }
-    if (!is_null($sOldGateway))
-        exec("/sbin/route del -net default gw $sOldGateway");
-    exec("/sbin/route add -net default gw $sGateway");
 }
 
 // List all ethernet interfaces from the output of /proc/net/dev
@@ -243,19 +245,7 @@ function listEthernetInterfaces()
 // Set the hostname for the machine to the specified string
 function setHostname($sHostname)
 {
-    // In /etc/sysconfig/network, replace HOSTNAME or add it if absent
-    $bClavePresente = FALSE;
-    $contenidoNuevo = array();
-    foreach (file('/etc/sysconfig/network') as $sLinea) {
-        if (preg_match('/^HOSTNAME\s*=/', $sLinea)) {
-            $bClavePresente = TRUE;
-            $contenidoNuevo[] = "HOSTNAME=$sHostname\n";
-        } else {
-            $contenidoNuevo[] = $sLinea;
-        }
-    }
-    if (!$bClavePresente) $contenidoNuevo[] = "HOSTNAME=$sHostname\n";
-    file_put_contents('/etc/sysconfig/network', $contenidoNuevo);
+    setHostname_redhat($sHostname);
 
     // Create or overwrite /etc/hostname with the new hostname as content.
     // This is a noop in CentOS 5 but required in Fedora for hostname to persist
@@ -301,6 +291,23 @@ function setHostname($sHostname)
         if (!$bClavePresente['mydomain']) $contenidoNuevo[] = "mydomain = $sDomain\n";
         file_put_contents('/etc/postfix/main.cf', $contenidoNuevo);
     }
+}
+
+function setHostname_redhat($sHostname)
+{
+    // In /etc/sysconfig/network, replace HOSTNAME or add it if absent
+    $bClavePresente = FALSE;
+    $contenidoNuevo = array();
+    foreach (file('/etc/sysconfig/network') as $sLinea) {
+        if (preg_match('/^HOSTNAME\s*=/', $sLinea)) {
+            $bClavePresente = TRUE;
+            $contenidoNuevo[] = "HOSTNAME=$sHostname\n";
+        } else {
+            $contenidoNuevo[] = $sLinea;
+        }
+    }
+    if (!$bClavePresente) $contenidoNuevo[] = "HOSTNAME=$sHostname\n";
+    file_put_contents('/etc/sysconfig/network', $contenidoNuevo);
 }
 
 // Set DNS servers in /etc/resolv.conf. DNS 1 is mandatory. DNS 2 is optional
@@ -356,69 +363,68 @@ function action_interfaceConfiguration($opt)
     }
 
     if ($bExito) {
-        $sPath = '/etc/sysconfig/network-scripts/ifcfg-'.$sDevice;
-        $contenido = array();
-        if (file_exists($sPath)) $contenido = file($sPath);
-        $settings = array(
-            'DEVICE'    =>  $sDevice,
-            'BOOTPROTO' =>  $sBootproto,
-            'ONBOOT'    =>  'yes',
-            'TYPE'      =>  'Ethernet',
-            'IPADDR'    =>  '',
-            'NETMASK'   =>  '',
-            'NOZEROCONF'=>  'yes',
-        );
-        if ($sBootproto == 'static') {
-            $settings['IPADDR']     = $sIpAddr;
-            $settings['NETMASK']    = $sNetMask;
-            $settings['BROADCAST']  = construir_ip_broadcast($sIpAddr, $sNetMask);
-            $settings['NETWORK']    = construir_ip_red($sIpAddr, $sNetMask);;
-        }
-        
-        if (strpos($sDevice, 'mv-') === 0 && count($contenido) <= 0) {
-            /* Looks like an attempt to initialize a macvlan interface from 
-             * scratch under systemd-nspawn. Special settings are needed. */
-            $settings['TYPE'] = 'macvlan';
-            $settings['REALDEVICE'] = $sDevice;
-        }
+        interfaceConfiguration_redhat($sDevice, $sBootproto, $sIpAddr, $sNetMask);
 
-        $contenidoNuevo = array();
-        foreach ($contenido as $sLinea) {
-        	$regs = NULL;
-            if (preg_match('/^(\w+)\s*=\s*"?(.+?)"?$/', trim($sLinea), $regs)) {
-            	if (isset($settings[$regs[1]])) {
-                    /* Special case: if the configuration contained TYPE=macvlan
-                     * then it must NOT be overwritten with TYPE=Ethernet in 
-                     * order to avoid breaking the container configuration. */
-                    if ($regs[1] == 'TYPE' && in_array($regs[2], array('macvlan'))) {
-                        $contenidoNuevo[] = $sLinea;
-                    } else {
-            		    $contenidoNuevo[] = $regs[1]."=".$settings[$regs[1]]."\n";
-            		}
-                    unset($settings[$regs[1]]);
-            	} else {
-            		// Unknown setting - pass thru
-                    $contenidoNuevo[] = $sLinea;
-            	}
-            } else {
-                // Comment or whitespace - pass thru
-            	$contenidoNuevo[] = $sLinea;
-            }
-        }
-        foreach ($settings as $key => $value) {
-        	$contenidoNuevo[] = "$key=$value\n";
-        }
-        file_put_contents($sPath, $contenidoNuevo);
-
-        $output = $ret = NULL;
-        exec("/sbin/service network restart 2>&1", $output, $ret);
-        if ($ret != 0) {
-            fputs(STDERR, "ERR: failed to restart network service. Output follows:\n");
-            fputs(STDERR, implode('', $output));
-            $bExito = FALSE;
-        }
+        $bExito = network_restart();
     }
     return $bExito;
+}
+
+function interfaceConfiguration_redhat($sDevice, $sBootproto, $sIpAddr, $sNetMask)
+{
+    $sPath = '/etc/sysconfig/network-scripts/ifcfg-'.$sDevice;
+    $contenido = array();
+    if (file_exists($sPath)) $contenido = file($sPath);
+    $settings = array(
+        'DEVICE'    =>  $sDevice,
+        'BOOTPROTO' =>  $sBootproto,
+        'ONBOOT'    =>  'yes',
+        'TYPE'      =>  'Ethernet',
+        'IPADDR'    =>  '',
+        'NETMASK'   =>  '',
+        'NOZEROCONF'=>  'yes',
+    );
+    if ($sBootproto == 'static') {
+        $settings['IPADDR']     = $sIpAddr;
+        $settings['NETMASK']    = $sNetMask;
+        $settings['BROADCAST']  = construir_ip_broadcast($sIpAddr, $sNetMask);
+        $settings['NETWORK']    = construir_ip_red($sIpAddr, $sNetMask);;
+    }
+
+    if (strpos($sDevice, 'mv-') === 0 && count($contenido) <= 0) {
+        /* Looks like an attempt to initialize a macvlan interface from
+         * scratch under systemd-nspawn. Special settings are needed. */
+        $settings['TYPE'] = 'macvlan';
+        $settings['REALDEVICE'] = $sDevice;
+    }
+
+    $contenidoNuevo = array();
+    foreach ($contenido as $sLinea) {
+        $regs = NULL;
+        if (preg_match('/^(\w+)\s*=\s*"?(.+?)"?$/', trim($sLinea), $regs)) {
+            if (isset($settings[$regs[1]])) {
+                /* Special case: if the configuration contained TYPE=macvlan
+                 * then it must NOT be overwritten with TYPE=Ethernet in
+                 * order to avoid breaking the container configuration. */
+                if ($regs[1] == 'TYPE' && in_array($regs[2], array('macvlan'))) {
+                    $contenidoNuevo[] = $sLinea;
+                } else {
+                    $contenidoNuevo[] = $regs[1]."=".$settings[$regs[1]]."\n";
+                }
+                unset($settings[$regs[1]]);
+            } else {
+                // Unknown setting - pass thru
+                $contenidoNuevo[] = $sLinea;
+            }
+        } else {
+            // Comment or whitespace - pass thru
+            $contenidoNuevo[] = $sLinea;
+        }
+    }
+    foreach ($settings as $key => $value) {
+        $contenidoNuevo[] = "$key=$value\n";
+    }
+    file_put_contents($sPath, $contenidoNuevo);
 }
 
 function construir_ip_broadcast($ip, $mascara)
@@ -437,4 +443,15 @@ function construir_ip_red($ip, $mascara)
     return implode(".", $ip);
 }
 
-?>
+function network_restart()
+{
+    $cmd = "/sbin/service network restart 2>&1";
+    $output = $ret = NULL;
+    exec($cmd, $output, $ret);
+    if ($ret != 0) {
+        fputs(STDERR, "ERR: failed to restart network service. Output follows:\n");
+        fputs(STDERR, implode('', $output));
+        return FALSE;
+    }
+    return TRUE;
+}
