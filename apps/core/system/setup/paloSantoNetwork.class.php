@@ -53,23 +53,35 @@ class paloNetwork
     {
         $iflist = array();
 
-        $dir = '/etc/sysconfig/network-scripts';
-        foreach (scandir($dir) as $fileIf) {
-            if (strpos($fileIf, 'ifcfg-') !== 0) continue;
-
-            $if = NULL;
-            $type = 'none';
-            foreach (file($dir.'/'.$fileIf) as $lineaIfcfg) {
+        if (file_exists('/etc/network/interfaces')) {
+            // MODO DEBIAN
+            // TODO: no se procesa /etc/network/interfaces.d/
+            foreach (file('/etc/network/interfaces') as $lineaIfcfg) {
                 $regs = NULL;
-                if (preg_match('/^DEVICE\s*=\s*"?(\S+?)"?$/', trim($lineaIfcfg), $regs))
-                    $if = $regs[1];
-                $regs = NULL;
-                if (preg_match('/^BOOTPROTO\s*=\s*"?(\S+?)"?$/', trim($lineaIfcfg), $regs))
-                    $type = $regs[1];
+                if (preg_match('/^iface\s+(\S+)\s+inet\s+(\S+)/', trim($lineaIfcfg), $regs)) {
+                    $iflist[$regs[1]] = ($regs[2] == 'dhcp');
+                }
             }
-            if (!is_null($if)) {
-                if (!isset($iflist[$if])) $iflist[$if] = FALSE;
-                if (!$iflist[$if]) $iflist[$if] = ($type == 'dhcp');
+        } else {
+            // MODO REDHAT
+            $dir = '/etc/sysconfig/network-scripts';
+            foreach (scandir($dir) as $fileIf) {
+                if (strpos($fileIf, 'ifcfg-') !== 0) continue;
+
+                $if = NULL;
+                $type = 'none';
+                foreach (file($dir.'/'.$fileIf) as $lineaIfcfg) {
+                    $regs = NULL;
+                    if (preg_match('/^DEVICE\s*=\s*"?(\S+?)"?$/', trim($lineaIfcfg), $regs))
+                        $if = $regs[1];
+                    $regs = NULL;
+                    if (preg_match('/^BOOTPROTO\s*=\s*"?(\S+?)"?$/', trim($lineaIfcfg), $regs))
+                        $type = $regs[1];
+                }
+                if (!is_null($if)) {
+                    if (!isset($iflist[$if])) $iflist[$if] = FALSE;
+                    if (!$iflist[$if]) $iflist[$if] = ($type == 'dhcp');
+                }
             }
         }
         return $iflist;
