@@ -40,7 +40,8 @@ class AGI_AsteriskManager2 extends AGI_AsteriskManager
             if (in_array($this->socket, $listoEscribir)) {
                 // Escribir lo más que se puede de los datos pendientes por mostrar
                 $iBytesEscritos = fwrite($this->socket, $this->_txbuffer);
-                if ($iBytesEscritos === FALSE) {
+                // fwrite en socket bloqueante puede devolver 0 en lugar de FALSE en error
+                if ($iBytesEscritos === FALSE || $iBytesEscritos <= 0) {
                     $this->log("ERR: error al escribir datos");
                     fclose($this->socket);
                     $this->socket = NULL;

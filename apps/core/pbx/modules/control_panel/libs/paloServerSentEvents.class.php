@@ -76,9 +76,13 @@ class paloServerSentEvents
         $bSSE = (!is_null($sModoEventos) && $sModoEventos); 
         if ($bSSE) {
             Header('Content-Type: text/event-stream');
+            Header('Cache-Control: no-cache, must-revalidate');
+            Header('X-Accel-Buffering: no');
             $this->_printflush("retry: 1\n");
         } else {
             Header('Content-Type: application/json');
+            Header('Cache-Control: no-cache, must-revalidate');
+            Header('X-Accel-Buffering: no');
         }
         
         // Verificar hash correcto
@@ -171,8 +175,12 @@ class paloServerSentEvents
 
     private function _jsonflush($bSSE, $jsonResponse)
     {
-        $json = new Services_JSON();
-        $r = $json->encode($jsonResponse);
+        if (function_exists('json_encode')) {
+            $r = json_encode($jsonResponse);
+        } else {
+            $json = new Services_JSON();
+            $r = $json->encode($jsonResponse);
+        }
         if ($bSSE)
             $this->_printflush("data: $r\n\n");
         else $this->_printflush($r);
