@@ -80,7 +80,15 @@ class paloControlPanelStatus extends paloInterfaceSSE
             $this->_ami = NULL;
             return;
         }
-        
+
+        // Los siguientes eventos de alta frecuencia no son de interés
+        foreach (array('Newexten', 'RTCPSent', 'RTCPReceived', 'VarSet') as $k) {
+            if (!method_exists($this, 'msg_'.$k)) $this->_ami->send_request('Filter', array(
+                'Operation' =>  'Add',
+                'Filter'    => '!Event: '.$k,
+            ));
+        }
+
         // Instalar todos los manejadores según el nombre del método
         foreach (get_class_methods(get_class($this)) as $sMetodo) {
             $regs = NULL;
@@ -122,7 +130,7 @@ class paloControlPanelStatus extends paloInterfaceSSE
     {
         if ($this->_ami->procesarPaquetes())
             $this->_ami->procesarActividad(0);
-        else $this->_ami->procesarActividad(1);
+        else $this->_ami->procesarActividad(30);
         return !is_null($this->_ami->socket);
     }
     
