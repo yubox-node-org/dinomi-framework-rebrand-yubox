@@ -130,12 +130,18 @@ class paloForm
         if (!function_exists('_inputExtraParam_a_atributos')) {
             function _inputExtraParam_a_atributos(&$arrVars)
             {
-                if (!isset($arrVars['INPUT_EXTRA_PARAM']) ||
-                    !is_array($arrVars['INPUT_EXTRA_PARAM']) ||
-                    count($arrVars['INPUT_EXTRA_PARAM']) <= 0)
+                if ($arrVars['INPUT_TYPE'] == 'SELECT' && is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
+                    $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
+                    unset($arrAttributes['options']);
+                } else {
+                    $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
+                }
+                if (!isset($arrAttributes) ||
+                    !is_array($arrAttributes) ||
+                    count($arrAttributes) <= 0)
                     return '';
                 $listaAttr = array();
-                foreach($arrVars['INPUT_EXTRA_PARAM'] as $key => $value) {
+                foreach($arrAttributes as $key => $value) {
                     $listaAttr[] = sprintf(
                         '%s="%s"',
                         htmlentities($key, ENT_COMPAT, 'UTF-8'),
@@ -300,13 +306,19 @@ class paloForm
     protected function _form_widget_SELECT($bIngresoActivo, $varName, $varValue,
             $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
     {
+        if(is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) { 
+            $arrOptions = $arrVars['INPUT_EXTRA_PARAM']['options'];
+        } else {
+            $arrOptions = $arrVars['INPUT_EXTRA_PARAM'];
+            $attrstring = '';
+        }
         if ($bIngresoActivo) {
             $listaOpts = array();
             $keyVals = is_array($varValue)
                 ? $varValue
                 : array($varValue);
-            if (is_array($arrVars['INPUT_EXTRA_PARAM'])) {
-                foreach($arrVars['INPUT_EXTRA_PARAM'] as $idSeleccion => $nombreSeleccion) {
+            if (is_array($arrOptions)) {
+                foreach($arrOptions as $idSeleccion => $nombreSeleccion) {
                     $listaOpts[] = sprintf(
                         '<option value="%s" %s>%s</option>',
                         htmlentities($idSeleccion, ENT_COMPAT, 'UTF-8'),
@@ -321,13 +333,14 @@ class paloForm
                 $sNombreSelect .= '[]';
             }
             $strInput = sprintf(
-                '<select name="%s" id="%s" %s %s %s>%s</select>',
+                '<select name="%s" id="%s" %s %s %s %s>%s</select>',
                 $sNombreSelect,
                 $sNombreSelect,
                 $sAttrMultiple,
                 (isset($arrVars['SIZE']) && $arrVars['SIZE'] != '')
                     ? sprintf('size="%s"', htmlentities($arrVars['SIZE'], ENT_COMPAT, 'UTF-8'))
                     : '',
+                $attrstring,
                 (isset($arrVars['ONCHANGE']) && $arrVars['ONCHANGE'] != '')
                     ? "onchange='{$arrVars['ONCHANGE']}'"
                     : '',
@@ -337,11 +350,11 @@ class paloForm
                 ? '| '.implode(' | ',
                     array_map('_map_htmlentities',
                         array_intersect_key(
-                            $arrVars['INPUT_EXTRA_PARAM'],
+                            $arrOptions,
                             array_flip($varValue)
                         )))
-                : (isset($arrVars['INPUT_EXTRA_PARAM'][$varValue])
-                    ? htmlentities($arrVars['INPUT_EXTRA_PARAM'][$varValue], ENT_COMPAT, 'UTF-8')
+                : (isset($arrOptions[$varValue])
+                    ? htmlentities($arrOptions[$varValue], ENT_COMPAT, 'UTF-8')
                     : '');
         }
         return $strInput;
