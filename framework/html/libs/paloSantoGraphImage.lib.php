@@ -33,6 +33,7 @@ require_once("jpgraph/jpgraph_pie.php");
 require_once("jpgraph/jpgraph_pie3d.php");
 require_once("jpgraph/jpgraph_bar.php");
 require_once("jpgraph/jpgraph_canvas.php");
+require_once("jpgraph/jpgraph_canvtools.php");
 
 /**
  * Método que sirve de reemplazo al mecanismo de paloSantoGraph y paloSantoGraphLib
@@ -463,8 +464,6 @@ if( sizeof($G_YDATAS) >= 1 )
         $g->SetMargin(0,0,0,0);
         $g->InitFrame();
 
-        require_once("jpgraph/jpgraph_canvtools.php");
-
         $xmax = 20;
         $ymax = 20;
         $scale = new CanvasScale($g);
@@ -554,8 +553,6 @@ if( sizeof($G_YDATAS) >= 1 )
         $g->SetColor(array(250,250,250));
         
         $g->InitFrame();
-
-        require_once("jpgraph/jpgraph_canvtools.php");
 
         $xmax = 20;
         $ymax = 20;
