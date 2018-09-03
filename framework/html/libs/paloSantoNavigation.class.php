@@ -95,10 +95,8 @@ class paloSantoNavigationBase
         if (empty($idMenuSelected)) $idMenuSelected = NULL;
         if (!is_null($idMenuSelected) && !isset($this->_menunodes[$idMenuSelected]))
             $idMenuSelected = NULL;
-        if (is_null($idMenuSelected) && count($this->_menubase) > 0) {
-            $k = array_keys($this->_menubase);
-            $idMenuSelected = array_shift($k);
-        }
+        if (is_null($idMenuSelected) && count($this->_menubase) > 0)
+            $idMenuSelected = array_shift(array_keys($this->_menubase));
         if (is_null($idMenuSelected)) return NULL;
 
         /* En este punto se $m es el nodo seleccionado, el cual puede estar en
@@ -109,8 +107,7 @@ class paloSantoNavigationBase
         $m = &$this->_menunodes[$idMenuSelected];
         array_push($path, $m['id']);
         while (count($m['children']) > 0) {
-            $k = array_keys($m['children']);
-            $m = &$m['children'][array_shift($k)];
+            $m = &$m['children'][array_shift(array_keys($m['children']))];
             array_push($path, $m['id']);
         }
         $m = &$this->_menunodes[$idMenuSelected];
