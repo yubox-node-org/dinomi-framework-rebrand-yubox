@@ -181,6 +181,39 @@ class paloForm
             }
         }
 
+        $arrParsedElements = $this->_parse_elements_into_macros($arrPreFilledValues);
+
+        if($templateName==NULL) {
+            $strHTMLReturn = "<form  method='POST' enctype='multipart/form-data' style='margin-bottom:0;'>";
+            $strHTMLReturn .= "<div style='padding:6px; margin-bottom:4px;border-bottom:1px solid #ccc;'><input class='button' type='submit' name='submit' value='Submit' />&nbsp;&nbsp;";
+            $strHTMLReturn .= "<input class='button' type='submit' name='cancel' value='Cancel' /></div>";
+            foreach($arrParsedElements as $arrElem) {
+                if($arrElem['macro_html']['TYPE']=='TEXTAREA') {
+                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                } else if($arrElem['macro_html']['TYPE']=='TEXT' OR $arrElem['macro_html']['TYPE']=='SELECT') {
+                    $strHTMLReturn .= "<div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text'>" . $arrElem['macro_html']['LABEL'] 
+                                   . "</span></div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                } else {
+                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                }
+            }
+            $strHTMLReturn .= "</form>";
+            return $strHTMLReturn;
+        } else {
+
+            foreach($arrParsedElements as $arrElem) {
+                $this->smarty->assign($arrElem['name'], $arrElem['macro_html']);
+            }
+
+            $this->smarty->assign("title", htmlentities($title, ENT_COMPAT, 'UTF-8'));
+            $this->smarty->assign("mode", $this->modo);
+            return $this->smarty->fetch("file:$templateName");
+        }
+    }
+
+
+    protected function _parse_elements_into_macros($arrPreFilledValues) {
+        $arrParsedElements = "";
         foreach($this->arrFormElements as $varName=>$arrVars) {
             if(!isset($arrPreFilledValues[$varName]))
                 $arrPreFilledValues[$varName] = "";
@@ -217,11 +250,11 @@ class paloForm
             }
             $arrMacro['LABEL'] = _labelName($varName, $arrVars);
             $arrMacro['INPUT'] = $strInput;
-            $this->smarty->assign($varName, $arrMacro);
+            $arrMacro['TYPE'] = $arrVars['INPUT_TYPE'];
+
+            $arrParsedElements[] = array("name" => $varName, "macro_html" => $arrMacro);
         }
-        $this->smarty->assign("title", htmlentities($title, ENT_COMPAT, 'UTF-8'));
-        $this->smarty->assign("mode", $this->modo);
-        return $this->smarty->fetch("file:$templateName");
+        return $arrParsedElements;
     }
 
     protected function _form_widget_TEXTAREA($bIngresoActivo, $varName, $varValue,
@@ -424,7 +457,7 @@ class paloForm
                         array_keys($dateFormatMap),
                         array_values($dateFormatMap),
                         $arrVars['INPUT_EXTRA_PARAM']['FORMAT']);
-            }
+            } 
             if ($arrVars['INPUT_EXTRA_PARAM']['TIMEFORMAT'] != '%H:%M') {
                 $formValues['timeFormat'] = str_replace(
                         array_keys($timeFormatMap),
