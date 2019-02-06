@@ -27,6 +27,10 @@
   +----------------------------------------------------------------------+
   $Id: index.php,v 1.3 2007/07/17 00:03:42 gcarrillo Exp $ */
 
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
 function spl_elastix_class_autoload($sNombreClase)
 {
     if (!preg_match('/^\w+$/', $sNombreClase)) return;
@@ -266,4 +270,3 @@ if (isset($_SESSION['elastix_user']) &&
 		$smarty->display("_common/login.tpl");
 	}
 }
-?>

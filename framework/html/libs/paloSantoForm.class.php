@@ -130,12 +130,18 @@ class paloForm
         if (!function_exists('_inputExtraParam_a_atributos')) {
             function _inputExtraParam_a_atributos(&$arrVars)
             {
-                if (!isset($arrVars['INPUT_EXTRA_PARAM']) ||
-                    !is_array($arrVars['INPUT_EXTRA_PARAM']) ||
-                    count($arrVars['INPUT_EXTRA_PARAM']) <= 0)
+                if ($arrVars['INPUT_TYPE'] == 'SELECT' && is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
+                    $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
+                    unset($arrAttributes['options']);
+                } else {
+                    $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
+                }
+                if (!isset($arrAttributes) ||
+                    !is_array($arrAttributes) ||
+                    count($arrAttributes) <= 0)
                     return '';
                 $listaAttr = array();
-                foreach($arrVars['INPUT_EXTRA_PARAM'] as $key => $value) {
+                foreach($arrAttributes as $key => $value) {
                     $listaAttr[] = sprintf(
                         '%s="%s"',
                         htmlentities($key, ENT_COMPAT, 'UTF-8'),
@@ -175,6 +181,39 @@ class paloForm
             }
         }
 
+        $arrParsedElements = $this->_parse_elements_into_macros($arrPreFilledValues);
+
+        if($templateName==NULL) {
+            $strHTMLReturn = "<form  method='POST' enctype='multipart/form-data' style='margin-bottom:0;'>";
+            $strHTMLReturn .= "<div style='padding:6px; margin-bottom:4px;border-bottom:1px solid #ccc;'><input class='button' type='submit' name='submit' value='Submit' />&nbsp;&nbsp;";
+            $strHTMLReturn .= "<input class='button' type='submit' name='cancel' value='Cancel' /></div>";
+            foreach($arrParsedElements as $arrElem) {
+                if($arrElem['macro_html']['TYPE']=='TEXTAREA') {
+                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                } else if($arrElem['macro_html']['TYPE']=='TEXT' OR $arrElem['macro_html']['TYPE']=='SELECT') {
+                    $strHTMLReturn .= "<div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text'>" . $arrElem['macro_html']['LABEL'] 
+                                   . "</span></div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                } else {
+                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                }
+            }
+            $strHTMLReturn .= "</form>";
+            return $strHTMLReturn;
+        } else {
+
+            foreach($arrParsedElements as $arrElem) {
+                $this->smarty->assign($arrElem['name'], $arrElem['macro_html']);
+            }
+
+            $this->smarty->assign("title", htmlentities($title, ENT_COMPAT, 'UTF-8'));
+            $this->smarty->assign("mode", $this->modo);
+            return $this->smarty->fetch("file:$templateName");
+        }
+    }
+
+
+    protected function _parse_elements_into_macros($arrPreFilledValues) {
+        $arrParsedElements = "";
         foreach($this->arrFormElements as $varName=>$arrVars) {
             if(!isset($arrPreFilledValues[$varName]))
                 $arrPreFilledValues[$varName] = "";
@@ -211,11 +250,11 @@ class paloForm
             }
             $arrMacro['LABEL'] = _labelName($varName, $arrVars);
             $arrMacro['INPUT'] = $strInput;
-            $this->smarty->assign($varName, $arrMacro);
+            $arrMacro['TYPE'] = $arrVars['INPUT_TYPE'];
+
+            $arrParsedElements[] = array("name" => $varName, "macro_html" => $arrMacro);
         }
-        $this->smarty->assign("title", htmlentities($title, ENT_COMPAT, 'UTF-8'));
-        $this->smarty->assign("mode", $this->modo);
-        return $this->smarty->fetch("file:$templateName");
+        return $arrParsedElements;
     }
 
     protected function _form_widget_TEXTAREA($bIngresoActivo, $varName, $varValue,
@@ -300,13 +339,19 @@ class paloForm
     protected function _form_widget_SELECT($bIngresoActivo, $varName, $varValue,
             $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
     {
+        if(is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) { 
+            $arrOptions = $arrVars['INPUT_EXTRA_PARAM']['options'];
+        } else {
+            $arrOptions = $arrVars['INPUT_EXTRA_PARAM'];
+            $attrstring = '';
+        }
         if ($bIngresoActivo) {
             $listaOpts = array();
             $keyVals = is_array($varValue)
                 ? $varValue
                 : array($varValue);
-            if (is_array($arrVars['INPUT_EXTRA_PARAM'])) {
-                foreach($arrVars['INPUT_EXTRA_PARAM'] as $idSeleccion => $nombreSeleccion) {
+            if (is_array($arrOptions)) {
+                foreach($arrOptions as $idSeleccion => $nombreSeleccion) {
                     $listaOpts[] = sprintf(
                         '<option value="%s" %s>%s</option>',
                         htmlentities($idSeleccion, ENT_COMPAT, 'UTF-8'),
@@ -321,13 +366,14 @@ class paloForm
                 $sNombreSelect .= '[]';
             }
             $strInput = sprintf(
-                '<select name="%s" id="%s" %s %s %s>%s</select>',
+                '<select name="%s" id="%s" %s %s %s %s>%s</select>',
                 $sNombreSelect,
                 $sNombreSelect,
                 $sAttrMultiple,
                 (isset($arrVars['SIZE']) && $arrVars['SIZE'] != '')
                     ? sprintf('size="%s"', htmlentities($arrVars['SIZE'], ENT_COMPAT, 'UTF-8'))
                     : '',
+                $attrstring,
                 (isset($arrVars['ONCHANGE']) && $arrVars['ONCHANGE'] != '')
                     ? "onchange='{$arrVars['ONCHANGE']}'"
                     : '',
@@ -337,11 +383,11 @@ class paloForm
                 ? '| '.implode(' | ',
                     array_map('_map_htmlentities',
                         array_intersect_key(
-                            $arrVars['INPUT_EXTRA_PARAM'],
+                            $arrOptions,
                             array_flip($varValue)
                         )))
-                : (isset($arrVars['INPUT_EXTRA_PARAM'][$varValue])
-                    ? htmlentities($arrVars['INPUT_EXTRA_PARAM'][$varValue], ENT_COMPAT, 'UTF-8')
+                : (isset($arrOptions[$varValue])
+                    ? htmlentities($arrOptions[$varValue], ENT_COMPAT, 'UTF-8')
                     : '');
         }
         return $strInput;
@@ -411,7 +457,7 @@ class paloForm
                         array_keys($dateFormatMap),
                         array_values($dateFormatMap),
                         $arrVars['INPUT_EXTRA_PARAM']['FORMAT']);
-            }
+            } 
             if ($arrVars['INPUT_EXTRA_PARAM']['TIMEFORMAT'] != '%H:%M') {
                 $formValues['timeFormat'] = str_replace(
                         array_keys($timeFormatMap),

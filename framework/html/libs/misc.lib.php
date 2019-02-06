@@ -656,16 +656,14 @@ function isPostfixToElastix2(){
 
 function writeLOG($logFILE, $log)
 {
-    $logPATH = "/var/log/elastix";
-    $path_of_file = "$logPATH/".$logFILE;
+    global $arrConf;
 
-    $fp = fopen($path_of_file, 'a+');
-    if ($fp) {
-        fwrite($fp,date("[M d H:i:s]")." $log\n");
-        fclose($fp);
-    }
-    else
+    $logFILE = (isset($arrConf['elastix_logdir'])
+        ? $arrConf['elastix_logdir']
+        : '/var/log/elastix').'/'.$logFILE;
+    if (!file_put_contents($logFILE, date('[M d H:i:s] ').$log."\n", FILE_APPEND)) {
         echo "The file $logFILE couldn't be opened";
+    }
 }
 /*
 function verifyTemplate_vm_email()
@@ -884,19 +882,28 @@ function load_default_timezone()
 // Create a new Smarty object and initialize template directories
 function getSmarty($mainTheme, $basedir = '/var/www/html')
 {
-    $smartyClass = 'Smarty';
-    if (file_exists('/usr/share/php/Smarty/Smarty.class.php')) {
-        require_once('Smarty/Smarty.class.php');
-        if (!method_exists($smartyClass, 'get_template_vars')) {
-            require_once('Smarty/SmartyBC.class.php');
-            $smartyClass = 'SmartyBC';
+    $smartyClass = NULL;
+    if (class_exists('SmartyBC')) {
+        // Clase existe a través de autoloader
+        $smartyClass = 'SmartyBC';
+    } elseif (class_exists('Smarty') && method_exists('Smarty', 'get_template_vars')) {
+        // Clase compatible existe a través de autoloader
+        $smartyClass = 'Smarty';
+    } else {
+        // Clase a cargar desde ubicación conocida en CentOS
+        if (file_exists('/usr/share/php/Smarty/Smarty.class.php')) {
+            require_once('Smarty/Smarty.class.php');
+            if (!method_exists($smartyClass, 'get_template_vars')) {
+                require_once('Smarty/SmartyBC.class.php');
+                $smartyClass = 'SmartyBC';
+            }
+        } else if(file_exists('$basedir/libs/smarty/libs/Smarty.class.php'))
+            require_once("$basedir/libs/smarty/libs/Smarty.class.php");
+        else{
+            global $arrConf;
+            $basedir = $arrConf['basePath'];
+            require_once("$basedir/libs/smarty/libs/Smarty.class.php");
         }
-    } else if(file_exists('$basedir/libs/smarty/libs/Smarty.class.php'))
-        require_once("$basedir/libs/smarty/libs/Smarty.class.php");
-    else{
-        global $arrConf;
-        $basedir = $arrConf['basePath'];
-        require_once("$basedir/libs/smarty/libs/Smarty.class.php");
     }
 
     $smarty = new $smartyClass();
