@@ -226,6 +226,7 @@ function downloadBackup($smarty, $module_name, $local_templates_dir, $dir_backup
             header("Content-Length: ".filesize("$dir_backup/$file_name"));
             header("Content-Disposition: attachment; filename=$file_name");
 
+            @ob_end_flush();
             readfile("$dir_backup/$file_name");
         } else {
             header("HTTP/1.1 404 Not Found");
