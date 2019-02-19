@@ -130,7 +130,9 @@ class paloForm
         if (!function_exists('_inputExtraParam_a_atributos')) {
             function _inputExtraParam_a_atributos(&$arrVars)
             {
-                if ($arrVars['INPUT_TYPE'] == 'SELECT' && is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
+                if (isset($arrVars['INPUT_TYPE']) && $arrVars['INPUT_TYPE'] == 'SELECT' &&
+                    isset($arrVars['INPUT_EXTRA_PARAM']['options']) &&
+                    is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
                     $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
                     unset($arrAttributes['options']);
                 } else {
@@ -339,7 +341,8 @@ class paloForm
     protected function _form_widget_SELECT($bIngresoActivo, $varName, $varValue,
             $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
     {
-        if(is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) { 
+        if (isset($arrVars['INPUT_EXTRA_PARAM']['options']) &&
+            is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
             $arrOptions = $arrVars['INPUT_EXTRA_PARAM']['options'];
         } else {
             $arrOptions = $arrVars['INPUT_EXTRA_PARAM'];
@@ -352,11 +355,59 @@ class paloForm
                 : array($varValue);
             if (is_array($arrOptions)) {
                 foreach($arrOptions as $idSeleccion => $nombreSeleccion) {
-                    $listaOpts[] = sprintf(
-                        '<option value="%s" %s>%s</option>',
-                        htmlentities($idSeleccion, ENT_COMPAT, 'UTF-8'),
-                        in_array((string)$idSeleccion, $keyVals) ? 'selected="selected"' : '',
-                        htmlentities($nombreSeleccion, ENT_COMPAT, 'UTF-8'));
+                    if (!is_array($nombreSeleccion)) {
+                        $optParam = array(
+                            'LABEL' =>  $nombreSeleccion,
+                        );
+                    } else {
+                        $optParam = $nombreSeleccion;
+                    }
+                    if (!isset($optParam['INPUT_EXTRA_PARAM']) || !is_array($optParam['INPUT_EXTRA_PARAM'])) {
+                        $optParam['INPUT_EXTRA_PARAM'] = array();
+                    }
+                    if (!isset($optParam['OPTIONS'])) {
+                        if (isset($optParam['INPUT_EXTRA_PARAM']['options'])) {
+                            $optParam['OPTIONS'] = $optParam['INPUT_EXTRA_PARAM']['options'];
+                        }
+                        unset($optParam['INPUT_EXTRA_PARAM']['options']);
+                    }
+                    if (isset($optParam['OPTIONS'])) {
+                        // $idSeleccion no se usa en este escenario
+                        $optParam['INPUT_EXTRA_PARAM']['label'] = $optParam['LABEL'];
+                        $subListaOpts = array();
+                        foreach ($optParam['OPTIONS'] as $s_idSeleccion => $s_nombreSeleccion) {
+                            if (!is_array($s_nombreSeleccion)) {
+                                $s_optParam = array(
+                                    'LABEL' =>  $s_nombreSeleccion,
+                                );
+                            } else {
+                                $s_optParam = $s_nombreSeleccion;
+                            }
+                            if (!isset($s_optParam['INPUT_EXTRA_PARAM']) || !is_array($s_optParam['INPUT_EXTRA_PARAM'])) {
+                                $s_optParam['INPUT_EXTRA_PARAM'] = array();
+                            }
+                            $s_optParam['INPUT_EXTRA_PARAM']['value'] = $s_idSeleccion;
+                            if (in_array((string)$s_idSeleccion, $keyVals)) {
+                                $s_optParam['INPUT_EXTRA_PARAM']['selected'] = 'selected';
+                            }
+                            $subListaOpts[] = sprintf('<option %s>%s</option>',
+                                _inputExtraParam_a_atributos($s_optParam),
+                                htmlentities($s_optParam['LABEL'], ENT_COMPAT, 'UTF-8'));
+                        }
+                        $listaOpts[] = sprintf(
+                            '<optgroup %s>%s</option>',
+                            _inputExtraParam_a_atributos($optParam),
+                            implode("\n", $subListaOpts));
+                    } else {
+                        $optParam['INPUT_EXTRA_PARAM']['value'] = $idSeleccion;
+                        if (in_array((string)$idSeleccion, $keyVals)) {
+                            $optParam['INPUT_EXTRA_PARAM']['selected'] = 'selected';
+                        }
+                        $listaOpts[] = sprintf(
+                            '<option %s>%s</option>',
+                            _inputExtraParam_a_atributos($optParam),
+                            htmlentities($optParam['LABEL'], ENT_COMPAT, 'UTF-8'));
+                    }
                 }
             }
             $sNombreSelect = $varName_escaped;
