@@ -1,15 +1,17 @@
 [Unit]
 Description=DINOMI Dashboard Monitor
-After=http.target network.target remote-fs.target nss-lookup.target
+After=httpd.service network.target remote-fs.target nss-lookup.target
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
 User=apache
 Group=apache
-ExecStart=/usr/bin/supervisor -w /usr/lib/node_modules/dinomi-monitor/ /usr/lib/node_modules/dinomi-monitor/dashmon_index.js
-ExecStop=/bin/killall -9 node
+Restart=always
+RestartSec=5
 
-KillSignal=SIGCONT
+ExecStart=/usr/bin/node /usr/lib/node_modules/dinomi-monitor/dashmon_index.js
+
 PrivateTmp=true
 
 [Install]

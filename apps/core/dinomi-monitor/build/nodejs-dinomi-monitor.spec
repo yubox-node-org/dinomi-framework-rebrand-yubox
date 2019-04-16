@@ -12,7 +12,6 @@ Requires:	nodejs
 Requires:	nodejs-promise
 Requires: 	nodejs-mysql
 Requires:	nodejs-dinomi-eccp >= 1.0.0-1
-Requires:	nodejs-supervisor
 Requires:   httpd >= 2.4.6-32
 Requires:	dinomi-system >= 1.0.0-2
 Requires(post):	patch, grep
