@@ -1,0 +1,26 @@
+diff -ur admin.bak/modules/dashboard/class.error.inc.php admin/modules/dashboard/class.error.inc.php
+--- admin.bak/modules/dashboard/class.error.inc.php	2019-04-17 12:28:11.520403184 -0500
++++ admin/modules/dashboard/class.error.inc.php	2019-04-17 12:29:04.075406879 -0500
+@@ -3,7 +3,7 @@
+ //	License for all code of this FreePBX module can be found in the license file inside the module directory
+ //	Copyright 2013 Schmooze Com Inc.
+ //
+-class Error {
++class FPBXError {
+ 
+ 	// Array which holds the error messages
+ 	var $arrErrorList 	= array();
+Sólo en admin/modules/dashboard: class.error.inc.php-original
+diff -ur admin.bak/modules/dashboard/page.index.php admin/modules/dashboard/page.index.php
+--- admin.bak/modules/dashboard/page.index.php	2019-04-17 12:28:10.996403239 -0500
++++ admin/modules/dashboard/page.index.php	2019-04-17 12:29:04.060406815 -0500
+@@ -507,7 +507,7 @@
+ include dirname(__FILE__)."/class.procinfo.php";
+ include dirname(__FILE__)."/class.error.inc.php";
+ 
+-$error = new Error;
++$error = new FPBXError;
+ 
+ 
+ $sysinfo = new sysinfo;
+Sólo en admin/modules/dashboard: page.index.php-original
