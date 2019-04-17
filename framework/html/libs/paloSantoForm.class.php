@@ -215,7 +215,7 @@ class paloForm
 
 
     protected function _parse_elements_into_macros($arrPreFilledValues) {
-        $arrParsedElements = "";
+        $arrParsedElements = array();
         foreach($this->arrFormElements as $varName=>$arrVars) {
             if(!isset($arrPreFilledValues[$varName]))
                 $arrPreFilledValues[$varName] = "";
