@@ -2,7 +2,7 @@ Summary: Dinomi is a Web based software to operate and administrate a call cente
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
 Version: 1.0.0
-Release: 9
+Release: 10
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -402,6 +402,18 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
+* Wed Apr 17 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-10
+- CHANGED: Framework: paloForm <optgroup> support in SELECT dropdown lists
+- FIXED: Framework: user icon in tenant theme is now relocatable
+- CHANGED: Framework: allow action log directory to be relocated.
+- CHANGED: Framework: implement a no-template mode for paloForm class to speed
+  up prototyping of forms.
+- CHANGED: Framework: expand paloForm handling of SELECT in order to allow
+  attributes for dropdown lists.
+- CHANGED: Framework: include vendor/autoload.php from web directory, if it
+  exists. Tweak Smarty autoloading to favor autoloading first.
+- CHANGED: Framework: responsive mode experimentally enabled for tenant theme.
+
 * Fri Nov 10 2017 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-9
 - FIXED: Framework: restrict "asteriskuser" translation to remote FreePBX system
   to just the cases where the "asterisk" database is requested. This prevents
