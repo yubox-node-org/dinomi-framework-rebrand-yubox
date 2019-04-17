@@ -127,7 +127,7 @@ class paloTrunk {
         $sPeticionSQL = 
             "SELECT * FROM trunk_bill ";
 
-        $arr_result =& $this->_DB->fetchTable($sPeticionSQL);
+        $arr_result = $this->_DB->fetchTable($sPeticionSQL);
         if (!is_array($arr_result)) {
             $arr_result = FALSE;
             $this->errMsg = $this->_DB->errMsg;
@@ -218,7 +218,7 @@ function getTrunks($oDB)
     $arrResult = false;
     $arrTrunk = array();
 
-	 $arr_result =& $oDB->fetchTable("SHOW TABLES LIKE 'trunks'");
+	 $arr_result = $oDB->fetchTable("SHOW TABLES LIKE 'trunks'");
 	 if (!is_array($arr_result)) {
             //$this->errMsg = $this->_DB->errMsg;
             $arrResult = FALSE;
@@ -226,7 +226,7 @@ function getTrunks($oDB)
 	 else{
 			 if (count($arr_result) > 0) { // si se usa freepbx 2.6
 					$sPeticionSQL = "select trunkid, concat(if(tech='iax','IAX2',upper(tech)),'/',channelid) as value from trunks";
-					$arrResult =& $oDB->fetchTable($sPeticionSQL);
+					$arrResult = $oDB->fetchTable($sPeticionSQL);
 					if (is_array($arrResult) && count($arrResult)>0) {
 						foreach($arrResult as $key => $trunk){
 									$tmpTrunk = str_replace("ZAP","DAHDI",$trunk); //para soportar dahdi, freepbx aun conserva el formato ZAP y esto es para entender q se usa dahdi
@@ -243,7 +243,7 @@ function getTrunks($oDB)
 								"SELECT * FROM globals ".
 								"WHERE variable LIKE 'OUT\\\_%' ".
 								"ORDER BY RIGHT( variable, LENGTH( variable ) - 4 )+0";
-					$arrResult =& $oDB->fetchTable($sPeticionSQL);
+					$arrResult = $oDB->fetchTable($sPeticionSQL);
 					// si se esta usando freepbx 2.5 o menor a 2.5
 					if (is_array($arrResult) && count($arrResult)>0) {
 						foreach($arrResult as $key => $trunk){
