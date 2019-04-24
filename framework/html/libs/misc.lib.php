@@ -39,7 +39,8 @@ function obtener_muestra_actividad_cpu()
     if (!function_exists('_info_sistema_linea_cpu')) {
         function _info_sistema_linea_cpu($s) { return (strpos($s, 'cpu ') === 0); }
     }
-    $muestra = preg_split('/\s+/', array_shift(array_filter(file('/proc/stat', FILE_IGNORE_NEW_LINES), '_info_sistema_linea_cpu')));
+    $cpuline = array_filter(file('/proc/stat', FILE_IGNORE_NEW_LINES), '_info_sistema_linea_cpu');
+    $muestra = preg_split('/\s+/', array_shift($cpuline));
     array_shift($muestra);
     return $muestra;
 }
