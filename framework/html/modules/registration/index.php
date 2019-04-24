@@ -128,7 +128,7 @@ function viewFormRegister($smarty, $module_name, $local_templates_dir, &$pDB, $a
     }
 
     if ($pACL->isUserAdministratorGroup($user))
-        $htmlForm = $oForm->fetchForm($tpl, "", "");
+        $htmlForm = $oForm->fetchForm($tpl, "", array());
     else
         $htmlForm = "<div align='center' style='font-weight: bolder;'>" . _tr("Not user allowed to access this content") . "</div>";
 
