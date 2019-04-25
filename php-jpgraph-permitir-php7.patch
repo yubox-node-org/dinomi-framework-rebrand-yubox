@@ -1,0 +1,12 @@
+--- /usr/share/php/jpgraph/jpgraph.php-original	2015-02-05 12:06:41.000000000 -0500
++++ /usr/share/php/jpgraph/jpgraph.php	2019-04-16 14:24:53.032475815 -0500
+@@ -229,7 +229,7 @@
+     list($majorC, $minorC, $editC) = preg_split('/[\/.-]/', PHP_VERSION);
+     list($majorR, $minorR, $editR) = preg_split('/[\/.-]/', $aMinVersion);
+ 
+-    if ($majorC != $majorR) return false;
++//    if ($majorC != $majorR) return false;
+     if ($majorC < $majorR) return false;
+     // same major - check minor
+     if ($minorC > $minorR) return true;
+

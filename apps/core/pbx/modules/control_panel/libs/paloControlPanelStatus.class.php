@@ -287,8 +287,10 @@ class paloControlPanelStatus extends paloInterfaceSSE
                 'SELECT parkpos, numslots FROM parkplus ORDER BY id LIMIT 0,1',
                 TRUE);
             if (is_array($tupla)) {
-            	$parkpos = $tupla['parkpos'];
+                $parkpos = $tupla['parkpos'];
                 $numslots = (int)$tupla['numslots'];
+
+                if (trim("$parkpos") == '') $parkpos = NULL;
             }
         } else {
             // FreePBX 2.8
