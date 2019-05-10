@@ -8,14 +8,14 @@ License:    ISC
 Group:      System Environment/Libraries
 URL:        http://dinomi.com
 Source0:    dinomi-monitor_%{version}-%{release}.tgz
-Requires:	nodejs
-Requires:	nodejs-promise
-Requires: 	nodejs-mysql
-Requires:	nodejs-dinomi-eccp >= 1.0.0-1
+Requires:   nodejs
+Requires:   nodejs-promise
+Requires:   nodejs-mysql
+Requires:   nodejs-dinomi-eccp >= 1.0.0-1
 Requires:   httpd >= 2.4.6-32
-Requires:	dinomi-system >= 1.0.0-2
-Requires(post):	patch, grep
-Prereq:		mod_ssl
+Requires:   dinomi-system >= 1.0.0-2
+Requires(post): patch, grep
+Prereq:     mod_ssl
 BuildArch:  noarch
 
 %description
@@ -35,8 +35,8 @@ mkdir -p %{buildroot}/etc/httpd/conf.d/
 mkdir -p %{buildroot}/usr/lib/systemd/system/
 mkdir -p %{buildroot}/var/lib/dinomi-monitor/
 
-mv wstunnel-dashmon.conf		%{buildroot}/etc/httpd/conf.d/
-mv dashmon.service 			%{buildroot}/usr/lib/systemd/system/
+mv wstunnel-dashmon.conf    %{buildroot}/etc/httpd/conf.d/
+mv dashmon.service          %{buildroot}/usr/lib/systemd/system/
 
 mkdir -p %{buildroot}%{nodejs_sitelib}/dinomi-monitor
 cp -pr ssl.conf.patch package.json dashmon_index.js node_modules/ \
@@ -48,21 +48,21 @@ cp -pr ssl.conf.patch package.json dashmon_index.js node_modules/ \
 cd /etc/httpd/conf.d/
 grep -R "RewriteCond %{REQUEST_URI}  ^/socket.io" . &> /dev/null
 if [ $? = 0 ]; then
-	echo "Nothing to do here."
+    echo "Nothing to do here."
 else
-	cd /etc/httpd/conf.d/
-	patch -p4 < %{nodejs_sitelib}/dinomi-monitor/ssl.conf.patch
-	rm -rf %{nodejs_sitelib}/dinomi-monitor/ssl.conf.patch
-	systemctl enable dashmon.service
-	service httpd restart
-	systemctl start dashmon.service
+    cd /etc/httpd/conf.d/
+    patch -p4 < %{nodejs_sitelib}/dinomi-monitor/ssl.conf.patch
+    rm -rf %{nodejs_sitelib}/dinomi-monitor/ssl.conf.patch
+    systemctl enable dashmon.service
+    service httpd restart
+    systemctl start dashmon.service
 fi
 
 if [ ! -e /var/lib/dinomi-monitor/myDataBase.json ] ; then
-    if [ -e /usr/lib/node_modules/dinomi-monitor/myDataBase.json ] ; then
+    if [ -e %{nodejs_sitelib}/dinomi-monitor/myDataBase.json ] ; then
         echo "Migrating DINOMI monitor datafile to non-privileged location..."
         systemctl stop dashmon.service
-        mv /usr/lib/node_modules/dinomi-monitor/myDataBase.json /var/lib/dinomi-monitor/
+        mv %{nodejs_sitelib}/dinomi-monitor/myDataBase.json /var/lib/dinomi-monitor/
         chown apache.apache /var/lib/dinomi-monitor/myDataBase.json
         systemctl daemon-reload
         systemctl start dashmon.service
@@ -78,7 +78,7 @@ fi
 /var/lib/dinomi-monitor/
 
 %changelog
-* Fri May 10 2017 Alex Villacís Lasso <a_villacis@palosanto.com> - 1.0.0-6
+* Fri May 10 2019 Alex Villacís Lasso <a_villacis@palosanto.com> - 1.0.0-6
 - Switch to proper ECCP event handling instead of polling with ECCP requests
   every 3 seconds. This reduces load on the dialer process.
 - Use systemd support to restart the application on failure instead of using
