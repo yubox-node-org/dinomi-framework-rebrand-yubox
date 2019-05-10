@@ -2,7 +2,7 @@
 
 Name:       nodejs-dinomi-monitor
 Version: 1.0.0
-Release: 5
+Release: 6
 Summary:    DINOMI dashboard monitor for Node.js
 License:    ISC
 Group:      System Environment/Libraries
@@ -78,6 +78,13 @@ fi
 /var/lib/dinomi-monitor/
 
 %changelog
+* Fri May 10 2017 Alex Villacís Lasso <a_villacis@palosanto.com> - 1.0.0-6
+- Switch to proper ECCP event handling instead of polling with ECCP requests
+  every 3 seconds. This reduces load on the dialer process.
+- Use systemd support to restart the application on failure instead of using
+  supervisor. The supervisor process consumed more CPU time than the dashmon
+  process itself.
+
 * Thu Jul 20 2017 Alex Villacís Lasso <a_villacis@palosanto.com> - 1.0.0-5
 - Switch to user apache for running monitor.
 - Replace use of ostoolbox to calculate CPU load with simpler and more precise
