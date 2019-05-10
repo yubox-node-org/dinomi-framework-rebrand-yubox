@@ -20,6 +20,8 @@ var tasks = null;
 var dbFile = "/var/lib/dinomi-monitor/myDataBase.json";
 var JsonDB = require('node-json-db');
 
+var numAgentesActivos = 0;
+
 function loadKeys(path)
 {
     var readFile = Promise.denodeify(fs.readFile);
@@ -74,7 +76,6 @@ function setupECCP()
 
         dsn.insecureAuth = true;// <--- QUITAR, SOLO PARA PRUEBA
 
-
         // Conexión a MySQL con las claves de DB obtenidas
         var dbconn = mysql.createConnection(dsn);
         dbconn.connect();
@@ -117,6 +118,33 @@ function setupECCP()
         (r) => {
             console.log('Connection established to ECCP');
             eccpconn = eccplocal;
+
+            // Contar número de agentes activos en este momento
+            eccpconn.send_request(
+                'getmultipleagentstatus', {
+                    'agents' : {
+                        'agent_number' : 'all'
+                    },
+                    'loadpauseinfo' : 0
+            }).done(
+                (r) => {
+                    numAgentesActivos = (r.agents[0].agent == undefined)
+                        ? 0
+                        : r.agents[0].agent.filter((a) => { return (a.status != 'offline'); }).length;
+                },
+                (err) => {
+                    console.log('getmultipleagentstatus failed: ');
+                    console.log(err);
+                    eccpconn = null;
+                    setTimeout(() => {
+                        setupECCP();
+                    }, 5000);
+                }
+            );
+
+            // Incrementar o decrementar contador de agentes activos
+            eccpconn.on('agentloggedin', () => { numAgentesActivos++; });
+            eccpconn.on('agentloggedout', () => { numAgentesActivos--; });
         },
         (err) => {
             console.log('ECCP connect failed: ');
@@ -159,28 +187,7 @@ function cpuLoad()
 
 function dinomiLoggedInAgents()
 {
-    if (eccpconn == null) {
-        console.log('No connection, initializing...');
-        setupECCP();
-        return Promise.resolve(0);
-    }
-    return eccpconn.send_request(
-        'getmultipleagentstatus', {
-            'agents' : {
-                'agent_number' : 'all'
-            },
-            'loadpauseinfo' : 0
-    }).then(
-        (r) => {
-            if (r.agents[0].agent == undefined) return 0;
-            return r.agents[0].agent.filter((a) => { return (a.status != 'offline'); }).length;
-        },
-        (err) => {
-            console.log('getmultipleagentstatus failed: ');
-            console.log(err);
-            return 0;
-        }
-    );
+    return Promise.resolve(numAgentesActivos);
 }
 
 function pushTrimmedData()
