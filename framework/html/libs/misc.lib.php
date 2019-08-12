@@ -880,15 +880,16 @@ function getSmarty($mainTheme, $basedir = '/var/www/html')
         $smartyClass = 'Smarty';
     } else {
         // Clase a cargar desde ubicación conocida en CentOS
+        $smartyClass = 'Smarty';
         if (file_exists('/usr/share/php/Smarty/Smarty.class.php')) {
             require_once('Smarty/Smarty.class.php');
             if (!method_exists($smartyClass, 'get_template_vars')) {
                 require_once('Smarty/SmartyBC.class.php');
                 $smartyClass = 'SmartyBC';
             }
-        } else if(file_exists('$basedir/libs/smarty/libs/Smarty.class.php'))
+        } else if(file_exists('$basedir/libs/smarty/libs/Smarty.class.php')) {
             require_once("$basedir/libs/smarty/libs/Smarty.class.php");
-        else{
+        } else{
             global $arrConf;
             $basedir = $arrConf['basePath'];
             require_once("$basedir/libs/smarty/libs/Smarty.class.php");
