@@ -94,169 +94,14 @@ class paloForm
     var $arrErroresValidacion;
     var $modo;
 
-    function paloForm(&$smarty, $arrFormElements)
+    function __construct($smarty, $arrFormElements)
     {
-        $this->smarty = &$smarty;
+        $this->smarty = $smarty;
+
         $this->arrFormElements = $arrFormElements;
         $this->arrErroresValidacion = "";
         $this->modo = 'input'; // Modo puede ser 0 (Modo normal de formulario) o 1 (modo de vista o preview
                                // de datos donde no se puede modificar.
-    }
-
-    /**
-     * Esta función genera una cadena que contiene un formulario HTML. Para hacer
-     * esto, toma una plantilla de formulario e inserta en ella los elementos de
-     * formulario.
-     *
-     * @param   string  $templateName   Ruta al archivo de plantilla Smarty a usar.
-     * @param   string  $title          Texto a usar como título del formulario
-     * @param   array   $arrPreFilledValues Arreglo para asignar variables a mostrar
-     *                                  en el formulario. Este arreglo es idéntico
-     *                                  en formato al arreglo $_POST que se genera
-     *                                  al enviar el formulario lleno, de forma que
-     *                                  se puede usar $_POST directamente para
-     *                                  llenar con valores en caso de que la
-     *                                  validación falle.
-     *
-     * @return  string  Texto HTML del formulario con valores asignados
-     */
-    function fetchForm($templateName, $title, $arrPreFilledValues = array())
-    {
-        /* Función interna para convertir un arreglo especificado en
-           INPUT_EXTRA_PARAM en una cadena de atributos clave=valor adecuada
-           para incluir al final de un widget HTML. Si no existe
-           INPUT_EXTRA_PARAM, o no es un arreglo, se devuelve una cadena vacía
-         */
-        if (!function_exists('_inputExtraParam_a_atributos')) {
-            function _inputExtraParam_a_atributos(&$arrVars)
-            {
-                if (isset($arrVars['INPUT_TYPE']) && $arrVars['INPUT_TYPE'] == 'SELECT' &&
-                    isset($arrVars['INPUT_EXTRA_PARAM']['options']) &&
-                    is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
-                    $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
-                    unset($arrAttributes['options']);
-                } else {
-                    $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
-                }
-                if (!isset($arrAttributes) ||
-                    !is_array($arrAttributes) ||
-                    count($arrAttributes) <= 0)
-                    return '';
-                $listaAttr = array();
-                foreach($arrAttributes as $key => $value) {
-                    $listaAttr[] = sprintf(
-                        '%s="%s"',
-                        htmlentities($key, ENT_COMPAT, 'UTF-8'),
-                        htmlentities($value, ENT_COMPAT, 'UTF-8'));
-                }
-
-                return implode(' ', $listaAttr);
-            }
-        }
-
-        // Función para usar con array_map
-        if (!function_exists('_map_htmlentities')) {
-            function _map_htmlentities($s)
-            {
-                return htmlentities($s, ENT_COMPAT, 'UTF-8');
-            }
-        }
-
-        if (!function_exists('_labelName')) {
-            function _labelName($varName,&$arrVars)
-            {
-                $tooltip="";
-                if(isset($arrVars['DESCRIPTION'])){
-                    if($arrVars['DESCRIPTION']!=false && $arrVars['DESCRIPTION']!=""){
-                        $tooltip='data-tooltip="'.htmlentities($arrVars['DESCRIPTION'], ENT_COMPAT, 'UTF-8').'"';
-                    }
-                }
-                if($tooltip!=""){
-                    return sprintf('<label for="%s" %s>%s</label>',
-                            htmlentities($varName, ENT_COMPAT, 'UTF-8'),
-                            $tooltip,
-                            htmlentities($arrVars['LABEL'], ENT_COMPAT, 'UTF-8')
-                        );
-                }else{
-                    return htmlentities($arrVars['LABEL'], ENT_COMPAT, 'UTF-8');
-                }
-            }
-        }
-
-        $arrParsedElements = $this->_parse_elements_into_macros($arrPreFilledValues);
-
-        if($templateName==NULL) {
-            $strHTMLReturn = "<form  method='POST' enctype='multipart/form-data' style='margin-bottom:0;'>";
-            $strHTMLReturn .= "<div style='padding:6px; margin-bottom:4px;border-bottom:1px solid #ccc;'><input class='button' type='submit' name='submit' value='Submit' />&nbsp;&nbsp;";
-            $strHTMLReturn .= "<input class='button' type='submit' name='cancel' value='Cancel' /></div>";
-            foreach($arrParsedElements as $arrElem) {
-                if($arrElem['macro_html']['TYPE']=='TEXTAREA') {
-                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
-                } else if($arrElem['macro_html']['TYPE']=='TEXT' OR $arrElem['macro_html']['TYPE']=='SELECT') {
-                    $strHTMLReturn .= "<div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text'>" . $arrElem['macro_html']['LABEL'] 
-                                   . "</span></div>" .$arrElem['macro_html']['INPUT'] . "</div>";
-                } else {
-                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
-                }
-            }
-            $strHTMLReturn .= "</form>";
-            return $strHTMLReturn;
-        } else {
-
-            foreach($arrParsedElements as $arrElem) {
-                $this->smarty->assign($arrElem['name'], $arrElem['macro_html']);
-            }
-
-            $this->smarty->assign("title", htmlentities($title, ENT_COMPAT, 'UTF-8'));
-            $this->smarty->assign("mode", $this->modo);
-            return $this->smarty->fetch("file:$templateName");
-        }
-    }
-
-
-    protected function _parse_elements_into_macros($arrPreFilledValues) {
-        $arrParsedElements = array();
-        foreach($this->arrFormElements as $varName=>$arrVars) {
-            if(!isset($arrPreFilledValues[$varName]))
-                $arrPreFilledValues[$varName] = "";
-            $arrMacro = array();
-            $strInput = "";
-            $arrVars['EDITABLE'] = isset($arrVars['EDITABLE'])?$arrVars['EDITABLE']:'';
-
-            // Verificar si se debe mostrar un widget activo para ingreso de valor
-            $bIngresoActivo = ($this->modo == 'input' || ($this->modo == 'edit' && $arrVars['EDITABLE']!='no'));
-
-            /* El indicar ENT_COMPAT escapa las comillas dobles y deja intactas
-               las comillas simples. Por lo tanto, se asume que todos los usos
-               de $varXXX_escaped serán dentro de comillas dobles, o en texto
-               libre. */
-            $varValue = $arrPreFilledValues[$varName];
-            $varName_escaped = htmlentities($varName, ENT_COMPAT, 'UTF-8');
-            $varValue_escaped = is_array($varValue)
-                ? NULL : htmlentities($varValue, ENT_COMPAT, 'UTF-8');
-
-            $widget_method = '_form_widget_'.$arrVars['INPUT_TYPE'];
-            $attrstring = _inputExtraParam_a_atributos($arrVars);
-            if (method_exists($this, $widget_method)) {
-                $strInput = call_user_func_array(array($this, $widget_method),
-                    array(
-                        $bIngresoActivo,
-                        $varName,
-                        $varValue,
-                        $arrVars,
-                        $varName_escaped,
-                        $varValue_escaped,
-                        $attrstring
-                    )
-                );
-            }
-            $arrMacro['LABEL'] = _labelName($varName, $arrVars);
-            $arrMacro['INPUT'] = $strInput;
-            $arrMacro['TYPE'] = $arrVars['INPUT_TYPE'];
-
-            $arrParsedElements[] = array("name" => $varName, "macro_html" => $arrMacro);
-        }
-        return $arrParsedElements;
     }
 
     protected function _form_widget_TEXTAREA($bIngresoActivo, $varName, $varValue,
@@ -391,12 +236,12 @@ class paloForm
                                 $s_optParam['INPUT_EXTRA_PARAM']['selected'] = 'selected';
                             }
                             $subListaOpts[] = sprintf('<option %s>%s</option>',
-                                _inputExtraParam_a_atributos($s_optParam),
+                                $this->_inputExtraParam_a_atributos($s_optParam),
                                 htmlentities($s_optParam['LABEL'], ENT_COMPAT, 'UTF-8'));
                         }
                         $listaOpts[] = sprintf(
                             '<optgroup %s>%s</option>',
-                            _inputExtraParam_a_atributos($optParam),
+                            $this->_inputExtraParam_a_atributos($optParam),
                             implode("\n", $subListaOpts));
                     } else {
                         $optParam['INPUT_EXTRA_PARAM']['value'] = $idSeleccion;
@@ -405,7 +250,7 @@ class paloForm
                         }
                         $listaOpts[] = sprintf(
                             '<option %s>%s</option>',
-                            _inputExtraParam_a_atributos($optParam),
+                            $this->_inputExtraParam_a_atributos($optParam),
                             htmlentities($optParam['LABEL'], ENT_COMPAT, 'UTF-8'));
                     }
                 }
@@ -585,5 +430,157 @@ DATETIME_PICKER_FIELD;
             return true;
         }
     }
+
+    /**
+     * Esta función genera una cadena que contiene un formulario HTML. Para hacer
+     * esto, toma una plantilla de formulario e inserta en ella los elementos de
+     * formulario.
+     *
+     * @param   string  $templateName   Ruta al archivo de plantilla Smarty a usar.
+     * @param   string  $title          Texto a usar como título del formulario
+     * @param   array   $arrPreFilledValues Arreglo para asignar variables a mostrar
+     *                                  en el formulario. Este arreglo es idéntico
+     *                                  en formato al arreglo $_POST que se genera
+     *                                  al enviar el formulario lleno, de forma que
+     *                                  se puede usar $_POST directamente para
+     *                                  llenar con valores en caso de que la
+     *                                  validación falle.
+     *
+     * @return  string  Texto HTML del formulario con valores asignados
+     */
+    function fetchForm($templateName, $title, $arrPreFilledValues = array())
+    {
+        // Función para usar con array_map
+        if (!function_exists('_map_htmlentities')) {
+            function _map_htmlentities($s)
+            {
+                return htmlentities($s, ENT_COMPAT, 'UTF-8');
+            }
+        }
+
+        if (!function_exists('_labelName')) {
+            function _labelName($varName,&$arrVars)
+            {
+                $tooltip="";
+                if(isset($arrVars['DESCRIPTION'])){
+                    if($arrVars['DESCRIPTION']!=false && $arrVars['DESCRIPTION']!=""){
+                        $tooltip='data-tooltip="'.htmlentities($arrVars['DESCRIPTION'], ENT_COMPAT, 'UTF-8').'"';
+                    }
+                }
+                if($tooltip!=""){
+                    return sprintf('<label for="%s" %s>%s</label>',
+                            htmlentities($varName, ENT_COMPAT, 'UTF-8'),
+                            $tooltip,
+                            htmlentities($arrVars['LABEL'], ENT_COMPAT, 'UTF-8')
+                        );
+                }else{
+                    return htmlentities($arrVars['LABEL'], ENT_COMPAT, 'UTF-8');
+                }
+            }
+        }
+
+        $arrParsedElements = $this->_parse_elements_into_macros($arrPreFilledValues);
+
+        if($templateName==NULL) {
+            $strHTMLReturn = "<form  method='POST' enctype='multipart/form-data' style='margin-bottom:0;'>";
+            $strHTMLReturn .= "<div style='padding:6px; margin-bottom:4px;border-bottom:1px solid #ccc;'><input class='button' type='submit' name='submit' value='Submit' />&nbsp;&nbsp;";
+            $strHTMLReturn .= "<input class='button' type='submit' name='cancel' value='Cancel' /></div>";
+            foreach($arrParsedElements as $arrElem) {
+                if($arrElem['macro_html']['TYPE']=='TEXTAREA') {
+                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                } else if($arrElem['macro_html']['TYPE']=='TEXT' OR $arrElem['macro_html']['TYPE']=='SELECT') {
+                    $strHTMLReturn .= "<div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text'>" . $arrElem['macro_html']['LABEL'] 
+                                   . "</span></div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                } else {
+                    $strHTMLReturn .= "<div>" . $arrElem['macro_html']['LABEL'] . "</div><div>" .$arrElem['macro_html']['INPUT'] . "</div>";
+                }
+            }
+            $strHTMLReturn .= "</form>";
+            return $strHTMLReturn;
+        } else {
+
+            foreach($arrParsedElements as $arrElem) {
+                $this->smarty->assign($arrElem['name'], $arrElem['macro_html']);
+            }
+
+            $this->smarty->assign("title", htmlentities($title, ENT_COMPAT, 'UTF-8'));
+            $this->smarty->assign("mode", $this->modo);
+            return $this->smarty->fetch("file:$templateName");
+        }
+    }
+
+    protected function _parse_elements_into_macros($arrPreFilledValues) {
+        $arrParsedElements = array();
+        foreach($this->arrFormElements as $varName=>$arrVars) {
+            if(!isset($arrPreFilledValues[$varName]))
+                $arrPreFilledValues[$varName] = "";
+            $arrMacro = array();
+            $strInput = "";
+            $arrVars['EDITABLE'] = isset($arrVars['EDITABLE'])?$arrVars['EDITABLE']:'';
+
+            // Verificar si se debe mostrar un widget activo para ingreso de valor
+            $bIngresoActivo = ($this->modo == 'input' || ($this->modo == 'edit' && $arrVars['EDITABLE']!='no'));
+
+            /* El indicar ENT_COMPAT escapa las comillas dobles y deja intactas
+               las comillas simples. Por lo tanto, se asume que todos los usos
+               de $varXXX_escaped serán dentro de comillas dobles, o en texto
+               libre. */
+            $varValue = $arrPreFilledValues[$varName];
+            $varName_escaped = htmlentities($varName, ENT_COMPAT, 'UTF-8');
+            $varValue_escaped = is_array($varValue)
+                ? NULL : htmlentities($varValue, ENT_COMPAT, 'UTF-8');
+
+            $widget_method = '_form_widget_'.$arrVars['INPUT_TYPE'];
+            $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
+            if (method_exists($this, $widget_method)) {
+                $strInput = call_user_func_array(array($this, $widget_method),
+                    array(
+                        $bIngresoActivo,
+                        $varName,
+                        $varValue,
+                        $arrVars,
+                        $varName_escaped,
+                        $varValue_escaped,
+                        $attrstring
+                    )
+                );
+            }
+            $arrMacro['LABEL'] = _labelName($varName, $arrVars);
+            $arrMacro['INPUT'] = $strInput;
+            $arrMacro['TYPE'] = $arrVars['INPUT_TYPE'];
+
+            $arrParsedElements[] = array("name" => $varName, "macro_html" => $arrMacro);
+        }
+        return $arrParsedElements;
+    }
+
+    /* Función interna para convertir un arreglo especificado en
+     INPUT_EXTRA_PARAM en una cadena de atributos clave=valor adecuada
+     para incluir al final de un widget HTML. Si no existe
+     INPUT_EXTRA_PARAM, o no es un arreglo, se devuelve una cadena vacía
+     */
+    private function _inputExtraParam_a_atributos(&$arrVars)
+    {
+        if (isset($arrVars['INPUT_TYPE']) && $arrVars['INPUT_TYPE'] == 'SELECT' &&
+            isset($arrVars['INPUT_EXTRA_PARAM']['options']) &&
+            is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
+            $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
+            unset($arrAttributes['options']);
+        } else {
+            $arrAttributes = $arrVars['INPUT_EXTRA_PARAM'];
+        }
+        if (!isset($arrAttributes) ||
+            !is_array($arrAttributes) ||
+            count($arrAttributes) <= 0)
+            return '';
+        $listaAttr = array();
+        foreach($arrAttributes as $key => $value) {
+            $listaAttr[] = sprintf(
+                '%s="%s"',
+                htmlentities($key, ENT_COMPAT, 'UTF-8'),
+                htmlentities($value, ENT_COMPAT, 'UTF-8'));
+        }
+
+        return implode(' ', $listaAttr);
+    }
 }
-?>
