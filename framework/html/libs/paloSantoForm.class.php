@@ -105,8 +105,10 @@ class paloForm
     }
 
     protected function _form_widget_TEXTAREA($bIngresoActivo, $varName, $varValue,
-        $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+        $arrVars, $varName_escaped, $varValue_escaped)
     {
+        $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
+
         return $bIngresoActivo
             ? sprintf(
                 '<textarea name="%s" rows="%s" cols="%s" %s>%s</textarea>',
@@ -119,8 +121,10 @@ class paloForm
     }
 
     protected function _form_widget_TEXT($bIngresoActivo, $varName, $varValue,
-        $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+        $arrVars, $varName_escaped, $varValue_escaped)
     {
+        $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
+
         return $bIngresoActivo
             ? sprintf('<input type="text" name="%s" value="%s" %s />',
                 $varName_escaped, $varValue_escaped, $attrstring)
@@ -128,22 +132,26 @@ class paloForm
     }
 
     protected function _form_widget_CHECKBOX($bIngresoActivo, $varName, $varValue,
-        $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+        $arrVars, $varName_escaped, $varValue_escaped)
     {
         //Funcion definida en misc.lib.php
         return checkbox($varName, ($varValue=='on') ? 'on' : 'off', $bIngresoActivo ? 'off' : 'on');
     }
 
     protected function _form_widget_HIDDEN($bIngresoActivo, $varName, $varValue,
-        $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+        $arrVars, $varName_escaped, $varValue_escaped)
     {
+        $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
+
         return sprintf('<input type="hidden" name="%s" value="%s" %s />',
             $varName_escaped, $varValue_escaped, $attrstring);
     }
 
     protected function _form_widget_PASSWORD($bIngresoActivo, $varName, $varValue,
-        $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+        $arrVars, $varName_escaped, $varValue_escaped)
     {
+        $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
+
         return $bIngresoActivo
             ? sprintf('<input type="password" name="%s" value="%s" %s />',
                 $varName_escaped,
@@ -153,8 +161,10 @@ class paloForm
     }
 
     protected function _form_widget_FILE($bIngresoActivo, $varName, $varValue,
-            $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+            $arrVars, $varName_escaped, $varValue_escaped)
     {
+        $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
+
         return $bIngresoActivo
             ? sprintf('<input type="file" name="%s" %s />',
                 $varName_escaped, $attrstring)
@@ -162,7 +172,7 @@ class paloForm
     }
 
     protected function _form_widget_RADIO($bIngresoActivo, $varName, $varValue,
-            $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+            $arrVars, $varName_escaped, $varValue_escaped)
     {
         if (!$bIngresoActivo) return $varValue_escaped;
         if (!is_array($arrVars['INPUT_EXTRA_PARAM'])) return '';
@@ -184,8 +194,10 @@ class paloForm
     }
 
     protected function _form_widget_SELECT($bIngresoActivo, $varName, $varValue,
-            $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+            $arrVars, $varName_escaped, $varValue_escaped)
     {
+        $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
+
         if (isset($arrVars['INPUT_EXTRA_PARAM']['options']) &&
             is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
             $arrOptions = $arrVars['INPUT_EXTRA_PARAM']['options'];
@@ -290,7 +302,7 @@ class paloForm
     }
 
     protected function _form_widget_DATE($bIngresoActivo, $varName, $varValue,
-            $arrVars, $varName_escaped, $varValue_escaped, $attrstring)
+            $arrVars, $varName_escaped, $varValue_escaped)
     {
         if (!$bIngresoActivo) return $varValue_escaped;
 
@@ -531,7 +543,6 @@ DATETIME_PICKER_FIELD;
                 ? NULL : htmlentities($varValue, ENT_COMPAT, 'UTF-8');
 
             $widget_method = '_form_widget_'.$arrVars['INPUT_TYPE'];
-            $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
             if (method_exists($this, $widget_method)) {
                 $strInput = call_user_func_array(array($this, $widget_method),
                     array(
@@ -540,8 +551,7 @@ DATETIME_PICKER_FIELD;
                         $varValue,
                         $arrVars,
                         $varName_escaped,
-                        $varValue_escaped,
-                        $attrstring
+                        $varValue_escaped
                     )
                 );
             }
@@ -559,7 +569,7 @@ DATETIME_PICKER_FIELD;
      para incluir al final de un widget HTML. Si no existe
      INPUT_EXTRA_PARAM, o no es un arreglo, se devuelve una cadena vacía
      */
-    private function _inputExtraParam_a_atributos(&$arrVars)
+    protected function _inputExtraParam_a_atributos(&$arrVars)
     {
         if (isset($arrVars['INPUT_TYPE']) && $arrVars['INPUT_TYPE'] == 'SELECT' &&
             isset($arrVars['INPUT_EXTRA_PARAM']['options']) &&
