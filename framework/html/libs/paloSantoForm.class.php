@@ -193,6 +193,47 @@ class paloForm
         return "<div class='radio_buttonset_elx'>".implode("\n", $listaRadio)."</div>";
     }
 
+    protected function _form_widget_DRAGLIST($bIngresoActivo, $varName, $varValue,
+        $arrVars, $varName_escaped, $varValue_escaped)
+    {
+        // TODO: implementar representación inactiva
+        if (!$bIngresoActivo) return '';
+
+        $options = '';
+        foreach ($arrVars['INPUT_EXTRA_PARAM'] as $idSeleccion => $nombreSeleccion) {
+            $options .= sprintf(
+                '<option value="%s">%s</option>',
+                htmlentities($idSeleccion, ENT_COMPAT, 'UTF-8'),
+                htmlentities($nombreSeleccion, ENT_COMPAT, 'UTF-8'));
+        }
+
+        $selsize = isset($arrVars['SIZE']) ? $arrVars['SIZE'] : 5;
+        $html = <<<HTML_DRAGLIST
+<table border='0' cellpadding='0' cellspacing='0'><tbody>
+<tr>
+    <td rowspan="2">
+        <select id="{$varName_escaped}_available" multiple="multiple" size="$selsize">
+$options
+        </select>
+    </td>
+    <td><button id="add"><b>&raquo;</b></button></td>
+    <td rowspan="2">
+        <select id="{$varName_escaped}_selected" multiple="multiple" size="$selsize">
+        </select>
+    </td>
+</tr>
+<tr>
+    <td><button id="remove"><b>&laquo;</b></button></td>
+</tr>
+</tbody></table>
+HTML_DRAGLIST;
+        if (is_array($varValue)) foreach ($varValue as $id) {
+            $html .= '<input type="hidden" name="'.$varName_escaped.'[]" value="'.
+                htmlentities($id, ENT_COMPAT, 'UTF-8').'" />';
+        }
+        return '<div class="elxform-draglist elxform-raw">'.$html.'</div>';
+    }
+
     protected function _form_widget_SELECT($bIngresoActivo, $varName, $varValue,
             $arrVars, $varName_escaped, $varValue_escaped)
     {

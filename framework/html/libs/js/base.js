@@ -282,6 +282,54 @@ $(document).ready(function(){
         //if (arrData.auto_popup) $('a.register_link').click();
     });
     //$('a.register_link').click(function() { showPopupCloudLogin('',540,335); });
+
+    // Preparar listas de arrastre de elementos
+    $('div.elxform-draglist.elxform-raw').each(function() {
+        var divdraglist = $(this);
+        divdraglist.removeClass('elxform-raw');
+
+        // Mover selección inicial de disponibles a seleccionados
+        divdraglist.find('button#add, button#remove').button();
+        divdraglist.find('input[type="hidden"]').each(function() {
+            var id = $(this).val();
+            divdraglist.find('select[id$=_available] > option[value="'+id+'"]')
+                .detach()
+                .appendTo(divdraglist.find('select[id$=_selected]'));
+        });
+    });
+    $('div.elxform-draglist button').click(function(ev) {
+        ev.preventDefault();
+
+        var btn = $(this);
+        var divdraglist = btn.parents('div.elxform-draglist').first();
+
+        var sel_source; var sel_target;
+        if (btn.attr('id') == 'add') {
+            sel_source = 'select[id$=_available]';
+            sel_target = 'select[id$=_selected]';
+        } else {
+            sel_source = 'select[id$=_selected]';
+            sel_target = 'select[id$=_available]';
+        }
+        divdraglist.find(sel_source+' > option:selected')
+            .detach()
+            .appendTo(divdraglist.find(sel_target));
+
+        // Nombre base sin corchetes al final
+        var name = divdraglist.find('select[id$="_available"]').attr('id');
+        name = name.substr(0, name.length - 10);
+
+        // Borrar variables hidden y volverlas a agregar
+        divdraglist.find('input[type=hidden]').remove();
+        var optsel = divdraglist.find('select[id$=_selected] > option');
+        if (optsel.length > 0) {
+            optsel.each(function() {
+                divdraglist.append($('<input type="hidden" />').attr('name', name+'[]').val($(this).val()));
+            });
+        } else {
+            divdraglist.append($('<input type="hidden" />').attr('name', name).val(''));
+        }
+    });
 });
 
 //Si se presiona enter se hace un submit al formulario para que se aplica el filtro
