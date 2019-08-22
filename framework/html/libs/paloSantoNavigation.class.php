@@ -185,14 +185,20 @@ class paloSantoNavigation extends paloSantoNavigationBase
 
     function renderMenuTemplates()
     {
-    	if (is_null($this->_selection)) die('FATAL: Unable to render with empty menu!');
+        if (is_null($this->_selection)) {
+            $msg = <<<MSG_NO_MENU
+<p>FATAL: Unable to render with empty menu! Contact your system administrator.</p>
+<a href="?logout=yes">Log Out</a>
+MSG_NO_MENU;
+            die($msg);
+        }
 
         // Generar las listas de items de menú en formato compatible con temas
         $menuItemsForThemes = array();
         $nodeListRef = &$this->_menubase;
         $i = 0;
         foreach ($this->_selection as $menuItem) {
-        	if ($i >= MAX_THEME_LEVEL) break;
+            if ($i >= MAX_THEME_LEVEL) break;
 
             $menuItemsForThemes[$i] = &$nodeListRef;
             $nodeListRef = &$this->_menunodes[$menuItem]['children'];
