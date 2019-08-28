@@ -2,7 +2,7 @@ Summary: Dinomi is a Web based software to operate and administrate a call cente
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
 Version: 1.0.0
-Release: 10
+Release: 11
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -52,7 +52,7 @@ This package provides the Dinomi GUI themes from earlier versions.
 
 
 %prep
-%setup -n dinomi-framework
+%setup -q -n dinomi-framework
 
 %install
 ## ** Step 1: Creation path for the installation ** ##
@@ -144,7 +144,7 @@ mv $RPM_BUILD_DIR/dinomi-framework/framework/menu.xml                           
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-menumerge            $RPM_BUILD_ROOT/usr/bin/
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-menuremove           $RPM_BUILD_ROOT/usr/bin/
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-dbprocess            $RPM_BUILD_ROOT/usr/bin/
-mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/compareVersion		   $RPM_BUILD_ROOT/usr/bin/
+mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/compareVersion               $RPM_BUILD_ROOT/usr/bin/
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/search_ami_admin_pwd             $RPM_BUILD_ROOT/usr/bin/
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-add-yum-exclude             $RPM_BUILD_ROOT/usr/bin/
 mv $RPM_BUILD_DIR/dinomi-framework/additionals/usr/bin/elastix-notification             $RPM_BUILD_ROOT/usr/bin/
@@ -183,15 +183,6 @@ touch /usr/share/elastix/module_installer/%{name}-%{version}-%{release}/preversi
 if [ $1 -eq 2 ]; then
     rpm -q --queryformat='%{VERSION}-%{RELEASE}' %{name} > /usr/share/elastix/module_installer/%{name}-%{version}-%{release}/preversion_dinomi-framework.info
 fi
-
-# if not exist add the asterisk group
-#grep -c "^asterisk:" %{_sysconfdir}/group &> /dev/null
-#if [ $? = 1 ]; then
-#    echo "   0:adding group asterisk..."
-#    /usr/sbin/groupadd -r -f asterisk
-#else
-#    echo "   0:group asterisk already present"
-#fi
 
 # Modifico usuario asterisk para que tenga "/bin/bash" como shell
 #/usr/sbin/usermod -c "Asterisk VoIP PBX" -g asterisk -s /bin/bash -d /var/lib/asterisk asterisk
@@ -238,33 +229,33 @@ if [ $1 -eq 1 ]; then #install
     elastixversion=`rpm -q --queryformat='%{VERSION}-%{RELEASE}' elastix`
     verifyVersion=`echo $elastixversion | grep -oE "^[0-9]+(\.[0-9]+){1,2}-[0-9]+$"`
     if [ "$verifyVersion" == "" ]; then
-	elastix-dbprocess "install" "$pathModule/setup/db"
+        elastix-dbprocess "install" "$pathModule/setup/db"
     else
-	elastix-dbprocess "update"  "$pathModule/setup/db" "$verifyVersion"
+        elastix-dbprocess "update"  "$pathModule/setup/db" "$verifyVersion"
     fi
     /sbin/service httpd status > /dev/null 2>&1
     if [ "$?" == "0" ]; then
-    	echo "Restarting apache..."
-    	/sbin/service httpd restart > /dev/null 2>&1
+        echo "Restarting apache..."
+        /sbin/service httpd restart > /dev/null 2>&1
     fi
 elif [ $1 -eq 2 ]; then #update
     elastix-dbprocess "update"  "$pathModule/setup/db" "$preversion"
     /sbin/service httpd status > /dev/null 2>&1
     if [ "$?" == "0" ]; then
-    	# Para versiones menores a 2.2.0-15 se debe reiniciar el apache debido a cambios en elastix.conf
-    	compareVersion "$preversion" "2.2.0-15"
-    	if [ "$?" == "9" ]; then
-        	echo "Restarting apache..."
-        	/sbin/service httpd restart > /dev/null 2>&1
-    	fi
+        # Para versiones menores a 2.2.0-15 se debe reiniciar el apache debido a cambios en elastix.conf
+        compareVersion "$preversion" "2.2.0-15"
+        if [ "$?" == "9" ]; then
+            echo "Restarting apache..."
+            /sbin/service httpd restart > /dev/null 2>&1
+        fi
     fi
 fi
 
 # Se revisa la clave de ami si esta en /etc/elastix.conf
 search_ami_admin_pwd
 if [ "$?" == "1" ]; then
-	echo "Restarting amportal..."
-        /usr/sbin/amportal restart > /dev/null 2>&1
+    echo "Restarting amportal..."
+    /usr/sbin/amportal restart > /dev/null 2>&1
 fi
 
 # Actualizacion About Version Release
@@ -278,40 +269,6 @@ fi
 
 # Para q se actualice smarty (tpl updates)
 rm -rf /var/www/html/var/templates_c/*
-
-# Patch elastix.ini to work around %config(noreplace) in previous versions
-#sed --in-place "s,/tmp,/var/lib/php/session-asterisk,g" /etc/php.d/elastix.ini
-#if [ $1 -eq 1 ]; then #install
-#    /sbin/service httpd status > /dev/null 2>&1
-#    if [ "$?" == "0" ]; then
-#        echo "Restarting apache..."
-#        /sbin/service httpd restart > /dev/null 2>&1
-#    fi
-#elif [ $1 -eq 2 ]; then #update
-#    /sbin/service httpd status > /dev/null 2>&1
-#    if [ "$?" == "0" ]; then
-#        # Para versiones menores a 2.4.0-11 se debe reiniciar el apache debido a cambios en elastix.ini
-#        # respecto a los archivos de sessiones, por ello tambien hay que reubicarlos
-#        compareVersion "$preversion" "2.4.0-11"
-#        if [ "$?" == "9" ]; then
-#             # Patch elastix.ini, relocate session files to the new path.
-#            echo "Session files in the old directory. Starting relocation process..."
-#            for file_sess in `ls /tmp/sess_*`
-#            do
-#              file_name=`basename $file_sess`
-#              if [ -f /var/lib/php/session-asterisk/$file_name ]; then
-#                rm -rf /var/lib/php/session-asterisk/$file_name
-#              fi
-#
-#              echo "Copying file /tmp/$file_name to /var/lib/php/session-asterisk/$file_name."
-#              cp -p /tmp/$file_name /var/lib/php/session-asterisk/
-#            done
-#
-#            echo "Restarting apache..."
-#            /sbin/service httpd restart > /dev/null 2>&1
-#        fi
-#    fi
-#fi
 
 # Merge current menu.xml for userlist custom privileges
 elastix-menumerge $pathModule/menu.xml
@@ -337,13 +294,11 @@ rm -rf $RPM_BUILD_ROOT
 
 # basic contains some reasonable sane basic tiles
 %files
-#%defattr(-, asterisk, asterisk)
 %defattr(-, apache, apache)
 /var/www/db
 /var/www/backup
 /var/log/elastix
 /var/log/elastix/*
-# %config(noreplace) /var/www/db/
 %defattr(-, root, root)
 /var/www/html/configs
 /var/www/html/configs.d
@@ -380,15 +335,11 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/httpd/conf.d/elastix.conf
 %config(noreplace) /etc/php.d/elastix.ini
 %config(noreplace) /etc/yum.repos.d/dinomi.repo
-#%config(noreplace) /etc/logrotate.d/elastixAccess.logrotate
 %config(noreplace) /etc/logrotate.d/elastixAudit.logrotate
 %config /etc/httpd/conf.d/elastix-htaccess.conf
 /etc/init.d/generic-cloexec
 %defattr(755, root, root)
 /usr/share/elastix/privileged/*
-#%defattr(770, root, asterisk, 770)
-#/var/lib/php/session-asterisk
-#%defattr(-, asterisk, asterisk)
 %defattr(-, apache, apache)
 /var/www/html/var/cache
 /var/www/html/var/templates_c
@@ -402,6 +353,16 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/blackmin
 
 %changelog
+* Wed Aug 28 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-11
+- CHANGED: Framework: add logout link to empty menu error message that appears
+  if the just-logged-in user has not been authorized to any modules.
+- CHANGED: Framework: backport DRAGLIST widget to paloForm.
+- FIXED: Framework: fix incorrect Smarty version validation that caused a fatal
+  error. This only happens when installing dinomi-framework on CentOS 6 or
+  older.
+- FIXED: Framework: fixed some code patterns that raise errors or warnings
+  under PHP 7.x.
+
 * Wed Apr 17 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-10
 - CHANGED: Framework: paloForm <optgroup> support in SELECT dropdown lists
 - FIXED: Framework: user icon in tenant theme is now relocatable
@@ -2848,8 +2809,8 @@ rm -rf $RPM_BUILD_ROOT
   now is no longer necessary to parse the JSON due to the use
   of library JSON.php, also the key for the value of the server
   key is now "server_key"
-	   * Introduced by: Alberto Santos
-	   * Since: Due to the redesign of module addons
+       * Introduced by: Alberto Santos
+       * Since: Due to the redesign of module addons
   SVN Rev[3490]
 - CHANGED: In Spec file move all files privileged to
   /usr/share/elastix/privileged, for the new file privileged
