@@ -12,7 +12,7 @@
     <div class="info_registration" onclick="showInfoRegistration()">?</div>
         <div id='cloud-login-content'>
            <div id="cloud-login-logo">
-                <img src="modules/{$module_name}/images/elastix_logo.gif" alt="elastix logo" />
+                <img src="images/framework-logo.gif" alt="elastix logo" />
             </div>
             <div class="cloud-login-line">
                 <img src="modules/{$module_name}/images/icon_user.png" height="18px" alt="elastix logo" class="cloud-login-img-input"/>
