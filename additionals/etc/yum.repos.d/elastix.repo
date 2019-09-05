@@ -1,31 +1,32 @@
 [elastix-base]
 name=Base RPM Repository for Elastix 
-mirrorlist=http://mirror.elastix.org/?release=4&arch=$basearch&repo=base
-#baseurl=http://repo.elastix.org/elastix/4/base/$basearch/
+mirrorlist=http://mirrorpbx.dinomi.com/?release=4&arch=$basearch&repo=base
+#baseurl=http://repopbx.dinomi.com/elastix/4/base/$basearch/
 gpgcheck=1
 enabled=1
-gpgkey=http://repo.elastix.org/elastix/RPM-GPG-KEY-Elastix
+gpgkey=http://repopbx.dinomi.com/elastix/RPM-GPG-KEY-Elastix
 
 [elastix-updates]
 name=Updates RPM Repository for Elastix 
-mirrorlist=http://mirror.elastix.org/?release=4&arch=$basearch&repo=updates
-#baseurl=http://repo.elastix.org/elastix/4/updates/$basearch/
+mirrorlist=http://mirrorpbx.dinomi.com/?release=4&arch=$basearch&repo=updates
+#baseurl=http://repopbx.dinomi.com/elastix/4/updates/$basearch/
 gpgcheck=1
 enabled=1
-gpgkey=http://repo.elastix.org/elastix/RPM-GPG-KEY-Elastix
+gpgkey=http://repopbx.dinomi.com/elastix/RPM-GPG-KEY-Elastix
 
 [elastix-beta]
 name=Beta RPM Repository for Elastix 
-mirrorlist=http://mirror.elastix.org/?release=4&arch=$basearch&repo=beta
-#baseurl=http://repo.elastix.org/elastix/4/beta/$basearch/
+mirrorlist=http://mirrorpbx.dinomi.com/?release=4&arch=$basearch&repo=beta
+#baseurl=http://repopbx.dinomi.com/elastix/4/beta/$basearch/
 gpgcheck=1
 enabled=0
-gpgkey=http://repo.elastix.org/elastix/RPM-GPG-KEY-Elastix
+gpgkey=http://repopbx.dinomi.com/elastix/RPM-GPG-KEY-Elastix
 
 [elastix-extras]
 name=Extras RPM Repository for Elastix 
-mirrorlist=http://mirror.elastix.org/?release=4&arch=$basearch&repo=extras
-#baseurl=http://repo.elastix.org/elastix/4/extras/$basearch/
+mirrorlist=http://mirrorpbx.dinomi.com/?release=4&arch=$basearch&repo=extras
+#baseurl=http://repopbx.dinomi.com/elastix/4/extras/$basearch/
 gpgcheck=1
 enabled=1
-gpgkey=http://repo.elastix.org/elastix/RPM-GPG-KEY-Elastix
+gpgkey=http://repopbx.dinomi.com/elastix/RPM-GPG-KEY-Elastix
+
