@@ -17,7 +17,7 @@
   <body>
 	<form method="POST">
 	  <div id="neo-login-box">
-		<div id="neo-login-logo"><img src="themes/{$THEMENAME}/images/elastix_logo_mini.png" width="200" height="62" alt="elastix logo" /></div>
+		<div id="neo-login-logo"><img src="images/framework-logo-mini-color.png" width="200" height="62" alt="elastix logo" /></div>
 		<div>
 		  <div>{$USERNAME}:</div>
 		  <div class="inputbox"><input type="text" id="input_user" name="input_user" /></div>

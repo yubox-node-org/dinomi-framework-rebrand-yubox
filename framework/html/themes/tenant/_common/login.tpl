@@ -41,7 +41,7 @@ var baseurl = '';
 
 		<div class="login-content">
 
-			<img src="{$WEBPATH}themes/{$THEMENAME}/images/elastix_logo_mini.png" width="200" height="62" alt="elastix logo" />
+			<img src="{$WEBPATH}images/framework-logo-mini-color.png" width="200" height="62" alt="elastix logo" />
 
 			<p class="description">Dear user, log in to access the admin area!</p>
 

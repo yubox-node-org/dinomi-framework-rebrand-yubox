@@ -104,7 +104,7 @@ function removeNeoDisplayOnMouseOver(ref){
         <!-- logo -->
         <div class="logo">
             <a href="index.php">
-                <img src="{$WEBPATH}themes/{$THEMENAME}/images/elastix_logo_mini2.png" width="120" alt="" />
+                <img src="{$WEBPATH}images/framework-logo-mini-mono.png" width="120" alt="" />
             </a>
         </div>
         <!-- logo collapse icon -->

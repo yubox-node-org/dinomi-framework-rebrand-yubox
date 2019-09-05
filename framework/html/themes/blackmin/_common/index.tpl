@@ -18,7 +18,7 @@
 <div id="elx-blackmin-topnav-toolbar">
     <ul class="elx-blackmin-topnav">
         <li class="elx-blackmin-menu">
-<img align="absmiddle" src="themes/{$THEMENAME}/images/elastix_logo_mini.png" height="36" alt="elastix" longdesc="http://www.elastix.com" />
+<img align="absmiddle" src="images/framework-logo-mini-mono.png" height="36" alt="elastix" longdesc="http://www.elastix.com" />
 {$MENU}
         </li>
         <li id="elx-blackmin-module-title">
