@@ -38,6 +38,8 @@ Requires: php-jpgraph
 Requires: php-tcpdf
 Requires: php-PHPMailer
 
+Requires: elastix-branding >= %{version}-%{release}
+
 # commands: uname df rm cat
 Requires: coreutils
 
@@ -64,13 +66,21 @@ Summary: Elastix GUI themes from 2.4 and earlier
 Group: Applications/System
 BuildArch: noarch
 Requires: elastix-framework = %{version}-%{release}
+Requires: elastix-branding >= %{version}-%{release}
 
 %description themes-extra
 This package provides the Elastix GUI themes from earlier versions.
 
+%package branding
+Summary: Framework brand logos
+Group: Applications/System
+BuildArch: noarch
+
+%description branding
+This package provides image files with brand logos that appear in the web GUI.
 
 %prep
-%setup -n elastix-framework
+%setup -q -n elastix-framework
 
 %install
 ## ** Step 1: Creation path for the installation ** ##
@@ -182,6 +192,9 @@ chmod 644 $RPM_BUILD_ROOT/etc/logrotate.d/*
 mkdir -p    $RPM_BUILD_ROOT/var/log/elastix
 touch       $RPM_BUILD_ROOT/var/log/elastix/audit.log
 touch	    $RPM_BUILD_ROOT/var/log/elastix/postfix_stats.log
+
+mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/cache
+mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/templates_c
 
 %pre
 #Para conocer la version de elastix antes de actualizar o instalar
@@ -356,6 +369,14 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/favicon.ico
 /var/www/html/help
 /var/www/html/images
+%exclude /var/www/html/favicon.ico
+%exclude /var/www/html/images/cloud_logo_login.png
+%exclude /var/www/html/images/elastix.bmp
+%exclude /var/www/html/images/framework-logo-mini-color.png
+%exclude /var/www/html/images/framework-logo-mini-mono.png
+%exclude /var/www/html/images/icon2.png
+%exclude /var/www/html/images/logo_elastix.png
+%exclude /var/www/html/images/logo_elastix_new3.gif
 /var/www/html/lang
 /var/www/html/libs
 /var/www/html/modules
@@ -404,7 +425,23 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/tenant
 %exclude /var/www/html/themes/blackmin
 
+%files branding
+%defattr(-, root, root)
+/var/www/html/favicon.ico
+/var/www/html/images/cloud_logo_login.png
+/var/www/html/images/elastix.bmp
+/var/www/html/images/framework-logo-mini-color.png
+/var/www/html/images/framework-logo-mini-mono.png
+/var/www/html/images/icon2.png
+/var/www/html/images/logo_elastix.png
+/var/www/html/images/logo_elastix_new3.gif
+
 %changelog
+* Thu Sep  5 2019 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: split out elastix-branding to better organize rebranding projects.
+- CHANGED: merge PHP 7.x compatibility patches from dinomi-framework.
+- CHANGED: point RPM repository to new directory
+
 * Thu Nov 24 2016 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: Added Russian translations to some framework modules that missed them.
   SVN Rev[7780]
