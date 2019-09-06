@@ -2,7 +2,7 @@ Summary: Elastix is a Web based software to administrate a PBX based in open sou
 Name: elastix-framework
 Vendor: Palosanto Solutions S.A.
 Version: 4.0.0
-Release: 18
+Release: 19
 License: GPL
 Group: Applications/System
 #Source: elastix-framework_%{version}-%{release}.tgz
@@ -440,7 +440,7 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/images/logo_elastix_new3.gif
 
 %changelog
-* Thu Sep  5 2019 Alex Villacís Lasso <a_villacis@palosanto.com>
+* Fri Sep  6 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 4.0.0-19
 - CHANGED: split out elastix-branding to better organize rebranding projects.
 - CHANGED: merge PHP 7.x compatibility patches from dinomi-framework.
 - CHANGED: point RPM repository to new directory
