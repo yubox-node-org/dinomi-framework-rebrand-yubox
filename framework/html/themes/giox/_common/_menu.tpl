@@ -1,7 +1,7 @@
 <div id="elxneo-topnav-toolbar">
 <input type="hidden" id="userMenuColor" value="{$MENU_COLOR}" />
 
-<div id="logo"><img src="images/logo_elastix_new3.gif" alt="elastix" longdesc="http://www.elastix.com" /></div>
+<div id="logo"><img src="images/logo_elastix_new3.gif" alt="elastix" longdesc="{$ELXFRAMEWORK_WEBSITE}" /></div>
 <div id="mmenubox"> <!-- mostrando contenido del menu principal -->
 {foreach from=$arrMainMenu key=idMenu item=menu name=menuMain}
     <div {if $idMenu eq $idMainMenuSelected}class="selected"{/if}>

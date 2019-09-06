@@ -241,7 +241,7 @@ function removeNeoDisplayOnMouseOver(ref){
                 <!-- Profile sub-links -->
                 <li><a href="#" class="register_link">{$Registered}</a></li>
                 <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
-                <li><a href="http://www.elastix.com" target="_blank"><i class="fa fa-external-link"></i>Elastix Website</a></li>
+                <li><a href="{$ELXFRAMEWORK_WEBSITE}" target="_blank"><i class="fa fa-external-link"></i>{$ELXFRAMEWORK_NAME} Website</a></li>
                 <li><a href="#" id="dialogaboutelastix"><i class="fa fa-info-circle"></i>{$ABOUT_ELASTIX2}</a></li>
             </ul>
         </li>

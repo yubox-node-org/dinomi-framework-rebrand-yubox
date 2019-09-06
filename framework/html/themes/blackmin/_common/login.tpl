@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-  <title>Elastix - {$PAGE_NAME}</title>
+  <title>{$ELXFRAMEWORK_NAME} - {$PAGE_NAME}</title>
   <link rel="stylesheet" href="themes/blackmin/styles.css" /> 
   <link rel="stylesheet" href="themes/blackmin/help.css" /> 
 </head>
@@ -23,7 +23,7 @@
     </div>
 </form>
 <br/>
-<div align="center" class="copyright"><a href="http://www.elastix.com" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+<div align="center" class="copyright"><a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
 <script type="text/javascript">
     document.getElementById("input_user").focus();
 </script>

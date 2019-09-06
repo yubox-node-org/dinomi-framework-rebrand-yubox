@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-	<title>Elastix - {$PAGE_NAME}</title>
+	<title>{$ELXFRAMEWORK_NAME} - {$PAGE_NAME}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="themes/{$THEMENAME}/styles.css">
     {$HEADER_LIBS_JQUERY}
@@ -30,7 +30,7 @@
 		  <div></div>
 		  <div class="inputbox"><input type="submit" name="submit_login" value="{$SUBMIT}" /></div>
 		</div>
-		<div class="neo-footernote"><a href="http://www.elastix.com" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+		<div class="neo-footernote"><a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
 		<br/>
 	  </div>
 	</form>

@@ -1,6 +1,6 @@
 <html>
   <head>
-	<title>Elastix - {$PAGE_NAME}</title>
+	<title>{$ELXFRAMEWORK_NAME} - {$PAGE_NAME}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="themes/{$THEMENAME}/styles.css">
     {$HEADER_LIBS_JQUERY}
@@ -17,7 +17,7 @@
   <table cellspacing="0" cellpadding="0" width="100%" border="0" class="menulogo2" height="74">
     <tr>
        <td class="menulogo" valign="top">
-           <a target="_blank" href="http://www.elastix.com">
+           <a target="_blank" href="{$ELXFRAMEWORK_WEBSITE}">
                <img border="0" src="themes/{$THEMENAME}/images/logo_elastix.gif"/>
            </a>
        </td>
@@ -78,7 +78,7 @@
 </table>
 </form>
 <br>
-<div align="center" class="copyright"><a href="http://www.elastix.com" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+<div align="center" class="copyright"><a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
 <br>
 <script type="text/javascript">
     document.getElementById("input_user").focus();

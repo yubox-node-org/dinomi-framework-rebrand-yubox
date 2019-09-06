@@ -44,6 +44,15 @@ spl_autoload_register('spl_elastix_class_autoload');
 // Agregar directorio libs de script a la lista de rutas a buscar para require()
 ini_set('include_path', dirname($_SERVER['SCRIPT_FILENAME'])."/libs:".ini_get('include_path'));
 
+require_once 'configs/branding.conf.php';
+
+if (!function_exists('_br')) {
+    function _br($s)
+    {
+        return str_replace('Elastix', ELXFRAMEWORK_NAME, $s);
+    }
+}
+
 include_once("libs/misc.lib.php");
 include_once "configs/default.conf.php";
 include_once "libs/paloSantoDB.class.php";
@@ -84,6 +93,11 @@ if(!empty($pACL->errMsg)) {
 
 // Load smarty
 $smarty = getSmarty($arrConf['mainTheme'], $arrConf['basePath']);
+$smarty->assign(array(
+    'ELXFRAMEWORK_NAME'     =>  ELXFRAMEWORK_NAME,
+    'ELXFRAMEWORK_WEBSITE'  =>  ELXFRAMEWORK_WEBSITE,
+    'THEMENAME'             =>  $arrConf['mainTheme'],
+));
 
 //- 1) SUBMIT. Si se hizo submit en el formulario de ingreso
 //-            autentico al usuario y lo ingreso a la sesion
@@ -127,8 +141,6 @@ if (isset($_SESSION['elastix_user']) &&
         $arrMenuFiltered[$idMenu]['Name'] = _tr($arrMenuItem['Name']);
     }
 
-    $smarty->assign("THEMENAME", $arrConf['mainTheme']);
-
     /*agregado para register*/
 
     $smarty->assign("Register", _tr("Register"));
@@ -148,7 +160,7 @@ if (isset($_SESSION['elastix_user']) &&
 	$smarty->assign("MSG_SAVE_NOTE", _tr("Saving Note"));
 	$smarty->assign("MSG_GET_NOTE", _tr("Loading Note"));
 	$smarty->assign("LBL_NO_STICKY", _tr("Click here to leave a note."));
-    $smarty->assign("ABOUT_ELASTIX", _tr('About Elastix')." ".$arrConf['elastix_version']);
+    $smarty->assign("ABOUT_ELASTIX", _br(_tr('About Elastix'))." ".$arrConf['elastix_version']);
 
     $selectedMenu = getParameter('menu');
 
@@ -254,10 +266,9 @@ if (isset($_SESSION['elastix_user']) &&
     else{
         $oPn = new paloSantoNavigation(array(), $smarty);
 		$oPn->putHEAD_JQUERY_HTML();
-		$smarty->assign("THEMENAME", $arrConf['mainTheme']);
 		$smarty->assign("currentyear",date("Y"));
 		$smarty->assign("PAGE_NAME", _tr('Login page'));
-		$smarty->assign("WELCOME", _tr('Welcome to Elastix'));
+		$smarty->assign("WELCOME", _br(_tr('Welcome to Elastix')));
 		$smarty->assign("ENTER_USER_PASSWORD", _tr('Please enter your username and password'));
 		$smarty->assign("USERNAME", _tr('Username'));
 		$smarty->assign("PASSWORD", _tr('Password'));

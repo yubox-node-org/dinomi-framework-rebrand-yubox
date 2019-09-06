@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-  <title>Elastix</title>
+  <title>{$ELXFRAMEWORK_NAME}</title>
   <link rel="stylesheet" href="themes/{$THEMENAME}/styles.css" />
   <link rel="stylesheet" href="themes/{$THEMENAME}/help.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="libs/js/sticky_note/sticky_note.css" />
@@ -46,7 +46,7 @@
                 <ul>
                     <li><a href="#" class="register_link">{$Registered}</a></li>
                     <li><a href="#" id="viewDetailsRPMs">{$VersionDetails}</a></li>
-                    <li><a href="http://www.elastix.com" target="_blank">Elastix Website</a></li>
+                    <li><a href="{$ELXFRAMEWORK_WEBSITE}" target="_blank">{$ELXFRAMEWORK_NAME} Website</a></li>
                     <li><a href="#" id="dialogaboutelastix">{$ABOUT_ELASTIX2}</a></li>
                 </ul>
             </div>
@@ -114,7 +114,7 @@
 
 {* Pie de página con copyright de Elastix *}
 <div id="elx-blackmin-footerbox">
-    <a href="http://www.elastix.com" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.
+    <a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.
 </div>
 
 {if $ELASTIX_PANELS}

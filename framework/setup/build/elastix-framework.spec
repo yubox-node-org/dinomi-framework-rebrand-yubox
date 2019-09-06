@@ -38,7 +38,7 @@ Requires: php-jpgraph
 Requires: php-tcpdf
 Requires: php-PHPMailer
 
-Requires: elastix-branding >= %{version}-%{release}
+Requires: elxframework-branding >= 1.0.0
 
 # commands: uname df rm cat
 Requires: coreutils
@@ -66,7 +66,7 @@ Summary: Elastix GUI themes from 2.4 and earlier
 Group: Applications/System
 BuildArch: noarch
 Requires: elastix-framework = %{version}-%{release}
-Requires: elastix-branding >= %{version}-%{release}
+Requires: elxframework-branding >= 1.0.0
 
 %description themes-extra
 This package provides the Elastix GUI themes from earlier versions.
@@ -75,6 +75,7 @@ This package provides the Elastix GUI themes from earlier versions.
 Summary: Framework brand logos
 Group: Applications/System
 BuildArch: noarch
+Provides: elxframework-branding = 1.0.0
 
 %description branding
 This package provides image files with brand logos that appear in the web GUI.
@@ -366,6 +367,7 @@ rm -rf $RPM_BUILD_ROOT
 # %config(noreplace) /var/www/db/
 %defattr(-, root, root)
 /var/www/html/configs
+%exclude /var/www/html/configs/branding.conf.php
 /var/www/html/favicon.ico
 /var/www/html/help
 /var/www/html/images
@@ -427,6 +429,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files branding
 %defattr(-, root, root)
+/var/www/html/configs/branding.conf.php
 /var/www/html/favicon.ico
 /var/www/html/images/cloud_logo_login.png
 /var/www/html/images/elastix.bmp
