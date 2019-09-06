@@ -30,7 +30,7 @@
 		  <div></div>
 		  <div class="inputbox"><input type="submit" name="submit_login" value="{$SUBMIT}" /></div>
 		</div>
-		<div class="neo-footernote"><a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+		<div class="neo-footernote"><a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'>GPL</a>{if $ELXFOOTER_BYPALOSANTO} by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.{/if}</div>
 		<br/>
 	  </div>
 	</form>

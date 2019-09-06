@@ -55,7 +55,7 @@
 
         <!-- Footer -->
         <footer class="main" style="margin-left:16px;">
-            <a href="{$ELXFRAMEWORK_WEBSITE}" style="color: #444; text-decoration: none;" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank' style="color: #444; text-decoration: none;" >GPL</a> by <a href="http://www.palosanto.com" target='_blank' style="color: #444; text-decoration: none;">PaloSanto Solutions</a>. 2006 - {$currentyear}.
+            <a href="{$ELXFRAMEWORK_WEBSITE}" style="color: #444; text-decoration: none;" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank' style="color: #444; text-decoration: none;" >GPL</a>{if $ELXFOOTER_BYPALOSANTO} by <a href="http://www.palosanto.com" target='_blank' style="color: #444; text-decoration: none;">PaloSanto Solutions</a>. 2006 - {$currentyear}.{/if}
         </footer>
 
         {*<br />*}

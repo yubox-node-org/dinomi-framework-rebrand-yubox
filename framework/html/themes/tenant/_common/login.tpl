@@ -105,7 +105,7 @@ var baseurl = '';
 
 			<div class="login-bottom-links">
 
-				<a href="{$ELXFRAMEWORK_WEBSITE}" style="text-decoration: none;" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+				<a href="{$ELXFRAMEWORK_WEBSITE}" style="text-decoration: none;" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'>GPL</a> {if $ELXFOOTER_BYPALOSANTO}by <a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.{/if}</div>
 
 			</div>
 

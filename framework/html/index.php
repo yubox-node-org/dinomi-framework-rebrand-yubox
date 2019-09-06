@@ -97,6 +97,7 @@ $smarty->assign(array(
     'ELXFRAMEWORK_NAME'     =>  ELXFRAMEWORK_NAME,
     'ELXFRAMEWORK_WEBSITE'  =>  ELXFRAMEWORK_WEBSITE,
     'THEMENAME'             =>  $arrConf['mainTheme'],
+    'ELXFOOTER_BYPALOSANTO' =>  ELXFOOTER_BYPALOSANTO,
 ));
 
 //- 1) SUBMIT. Si se hizo submit en el formulario de ingreso
