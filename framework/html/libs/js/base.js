@@ -168,26 +168,6 @@ function hideModalPopUP()
     $('.neo-modal-elastix-popup-content').html("");
 }
 
-function showPopupCloudLogin(title, width, height)
-{
-    $.get('index.php', {
-        menu:       'registration',
-        action:     'cloudlogin',
-        rawmode:    'yes'
-    }, function(response) {
-        var arrData = response.message;
-        var statusResponse = response.statusResponse;
-        var error = response.error;
-
-        ShowModalPopUP(title,width,height,arrData['form']);
-
-        if(arrData['registered']=="yes-all"){
-            showLoading(arrData['msgloading']);
-            getDataWebServer();
-        }
-    });
-}
-
 function elastix_blockUI(msg)
 {
 	$.blockUI({
@@ -276,25 +256,6 @@ $(document).ready(function(){
     // que tengan un estilo defaulf de jquery, para ello se declara una
     // clase global para que hereden todos los input radio el nuevo estilo.
     $( ".radio_buttonset_elx" ).buttonset();
-
-    // En el index.php del framework se hacía uso de smarty para
-    // setear el estado del registro, ahora se hace desde javascript.
-    $.get('index.php', {
-        menu:       'registration',
-        action:     'isRegistered',
-        rawmode:    'yes'
-    }, function(response) {
-        var arrData = response.message;
-        var statusResponse = response.statusResponse;
-        var error = response.error;
-
-        $('.register_link').css('color',arrData['color']);
-        $('.register_link').text(arrData['label']);
-
-        // Mostrar el popup si no está registrado
-        if (arrData.auto_popup) $('a.register_link').click();
-    });
-    $('a.register_link').click(function() { showPopupCloudLogin('',540,335); });
 });
 
 //Si se presiona enter se hace un submit al formulario para que se aplica el filtro

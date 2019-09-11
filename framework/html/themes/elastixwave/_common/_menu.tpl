@@ -42,7 +42,6 @@
     </div>
     <div><a href="#" id="dialogaboutelastix">{$ABOUT_ELASTIX2}</a></div>
     <div><a href="#" id="viewDetailsRPMs">{$VersionDetails}</a></div>
-    <div><a href="#" class="register_link">{$Registered}</a></div>
 {if $ELASTIX_PANELS}
     <div><a href="#" id="togglesidebar">{$LBL_ELASTIX_PANELS_SIDEBAR|escape:html}</a></div>
 {/if}

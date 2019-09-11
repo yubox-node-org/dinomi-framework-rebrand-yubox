@@ -69,7 +69,6 @@
                 </td>
               {/if}
             {/foreach}
-	    <td class="menuaftertab" align="right"><span><a href="#" class="register_link">{$Registered}</a></span>&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td class="menuaftertab" width="40%" align="right">&nbsp;<a class="logout" id="viewDetailsRPMs">{$VersionDetails}</a></td>
             <td class="menuaftertab" width="40%" align="right">&nbsp;<a href="#" id="dialogaboutelastix">{$ABOUT_ELASTIX}</a></td>
             <td class="menuaftertab" width="20%" align="right">&nbsp;<a href="?logout=yes">{$LOGOUT}</a></td>

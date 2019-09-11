@@ -44,7 +44,6 @@
             <img height="20" align="absmiddle" src="themes/{$THEMENAME}/images/information.png" alt="user" />
             <div>
                 <ul>
-                    <li><a href="#" class="register_link">{$Registered}</a></li>
                     <li><a href="#" id="viewDetailsRPMs">{$VersionDetails}</a></li>
                     <li><a href="{$ELXFRAMEWORK_WEBSITE}" target="_blank">{$ELXFRAMEWORK_NAME} Website</a></li>
                     <li><a href="#" id="dialogaboutelastix">{$ABOUT_ELASTIX2}</a></li>
