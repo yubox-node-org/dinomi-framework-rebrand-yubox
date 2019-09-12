@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="themes/blackmin/help.css" /> 
 </head>
 <body class="elx-blackmin-login">
-<div class="logo"><img src="themes/blackmin/images/elastix_logo_mini.png" /></div>
+<div class="logo"><img src="images/framework-logo-mini-mono.png" /></div>
 <form method="POST">
     <div>
         <div class="title">&nbsp;&raquo;&nbsp;{$WELCOME}</div>

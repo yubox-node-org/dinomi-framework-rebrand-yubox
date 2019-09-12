@@ -11,7 +11,7 @@ switch($theme){
           $image = "/images/logo_elastix.png";
           break;
     case "elastixneo":
-          $image = "/themes/elastixneo/images/elastix_logo_mini2.png";
+          $image = "/images/framework-logo-mini-mono.png";
           $size = "1270px";
           $styleBody = "style='background-image:url(/themes/elastixneo/images/bgbodytest.png);'";
           $styleDiv = "style='background:#FFFFFF; height:100%; width:1270px;'";

@@ -1,6 +1,6 @@
 <input type="hidden" id="userMenuColor" value="{$MENU_COLOR}" />
 
-<div id="logo"><img src="themes/{$THEMENAME}/images/elastix_logo_mini2.png" width="200" height="59" alt="elastix" longdesc="http://www.elastix.com" /></div>
+<div id="logo"><img src="images/framework-logo-mini-mono.png" width="200" height="59" alt="elastix" longdesc="http://www.elastix.com" /></div>
 <div id="mmenubox"> <!-- mostrando contenido del menu principal -->
 {foreach from=$arrMainMenu key=idMenu item=menu name=menuMain}
     <div {if $idMenu eq $idMainMenuSelected}class="selected"{/if}><a href="index.php?menu={$idMenu}">{$menu.Name}</a></div>
