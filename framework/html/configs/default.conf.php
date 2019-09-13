@@ -60,10 +60,3 @@ $arrConf['elx_framework_globalmodules'] = array('_elastixutils', 'registration',
 
 // cadena_dsn es sólo para compatibilidad con versiones de elastix-callcenter < 2.2.0-6 (Elastix bug #1795)
 $arrConf['cadena_dsn'] = "mysql://asterisk:asterisk@localhost/call_center";
-
-if (file_exists('/usr/share/elastix/privileged/ccpdaemon')) {
-    define('UUID', '108F9FE6-F6CB-4DA4-A16D-E7B5BE21D935');
-    define('MAX_AGENTS', 200);
-}
-
-?>
