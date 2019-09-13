@@ -440,7 +440,11 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/images/logo_elastix_new3.gif
 
 %changelog
-* Fri Sep  6 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 4.0.0-19
+* Fri Sep 13 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 4.0.0-19
+- FIXED: remove licensing hack that breaks DINOMI when installed with this
+  version of elastix-framework.
+
+* Fri Sep  6 2019 Alex Villacís Lasso <a_villacis@palosanto.com>
 - CHANGED: split out elastix-branding to better organize rebranding projects.
 - CHANGED: merge PHP 7.x compatibility patches from dinomi-framework.
 - CHANGED: point RPM repository to new directory
