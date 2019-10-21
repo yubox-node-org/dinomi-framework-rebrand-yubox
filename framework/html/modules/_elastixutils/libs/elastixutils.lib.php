@@ -37,15 +37,11 @@ function obtenerDetallesRPMS()
 {
     $packageClass = array(
         'Kernel'    =>  NULL,
-        'Dinomi'   =>  array('dinomi*'),
-        'RoundCubeMail'  =>  array('RoundCubeMail'),
+        'Dinomi'   =>  array('dinomi-framework', 'dinomi-system', 'dinomi-firstboot',
+            'dinomi-callcenterPRO', 'nodejs-dinomi-eccp', 'nodejs-dinomi-monitor'),
         'Mail'          =>  array('postfix', 'cyrus-imapd'),
-        'IM'            =>  array('openfire'),
-        'FreePBX'       =>  array('freePBX'),
-        'Asterisk'      =>  array('asterisk', 'asterisk-perl', 'asterisk-addons'),
-        'FAX'           =>  array('hylafax', 'iaxmodem'),
-        'DRIVERS'       =>  array('dahdi', 'rhino', 'wanpipe-util'),
-
+        'Dinomi Anywhere'   =>  array('dinomianywhere-supercharged-contacts',
+            'dinomianywhere-webphone-panel', 'dinomianywhere-ldapsearch'),
     );
     $sCommand = 'rpm -qa  --queryformat "%{name} %{version} %{release}\n"';
     foreach ($packageClass as $packageLists) {
@@ -62,20 +58,12 @@ function obtenerDetallesRPMS()
 
     $result = array();
     foreach ($packageClass as $sTag => $packageLists) {
-    	if (!isset($result[$sTag])) $result[$sTag] = array();
+        if (!isset($result[$sTag])) $result[$sTag] = array();
         if ($sTag == 'Kernel') {
-    		// Caso especial
+            // Caso especial
             $result[$sTag][] = explode(' ', trim(`uname -s -r -i`));
-    	} elseif ($sTag == 'Elastix') {
-    		// El paquete elastix debe ir primero
-            if (isset($packageVersions['elastix']))
-                $result[$sTag][] = $packageVersions['elastix'];
-            foreach ($packageVersions as $packageName => $fields) {
-            	if (substr($packageName, 0, 8) == 'elastix-')
-                    $result[$sTag][] = $fields;
-            }
-    	} else {
-    		foreach ($packageLists as $packageName)
+        } else {
+            foreach ($packageLists as $packageName)
                 $result[$sTag][] = isset($packageVersions[$packageName])
                     ? $packageVersions[$packageName]
                     : array($packageName, '(not installed)', ' ');
