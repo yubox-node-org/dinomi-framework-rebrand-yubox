@@ -1,7 +1,7 @@
 <div id="elxneo-topnav-toolbar">
 <input type="hidden" id="userMenuColor" value="{$MENU_COLOR}" />
 
-<div id="logo"><img src="images/logo_elastix_new3.gif" alt="elastix" longdesc="http://www.elastix.com" /></div>
+<div id="logo"><img src="images/logo_elastix_new3.gif" alt="elastix" longdesc="{$ELXFRAMEWORK_WEBSITE}" /></div>
 <div id="mmenubox"> <!-- mostrando contenido del menu principal -->
 {foreach from=$arrMainMenu key=idMenu item=menu name=menuMain}
     <div {if $idMenu eq $idMainMenuSelected}class="selected"{/if}>
@@ -54,7 +54,6 @@
     </div>
     <div><a href="#" id="dialogaboutelastix">{$ABOUT_ELASTIX2}</a></div>
     <div><a href="#" id="viewDetailsRPMs">{$VersionDetails}</a></div>
-    <div><a href="#" class="register_link">{$Registered}</a></div>
 {if $ELASTIX_PANELS}
     <div><a href="#" id="togglesidebar">{$LBL_ELASTIX_PANELS_SIDEBAR|escape:html}</a></div>
 {/if}

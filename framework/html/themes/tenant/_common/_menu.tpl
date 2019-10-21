@@ -242,9 +242,8 @@ function removeNeoDisplayOnMouseOver(ref){
                 <li class="caret"></li>
 
                 <!-- Profile sub-links -->
-                <!--<li><a href="#" class="register_link">{$Registered}</a></li>-->
                 <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
-                <li><a href="http://www.dinomi.com" target="_blank"><i class="fa fa-external-link"></i>Dinomi Website</a></li>
+                <li><a href="{$ELXFRAMEWORK_WEBSITE}" target="_blank"><i class="fa fa-external-link"></i>{$ELXFRAMEWORK_NAME} Website</a></li>
             </ul>
         </li>
 

@@ -76,11 +76,11 @@ function themeSetup(&$smarty, $selectedMenu, $pdbACL, $pACL, $idUser)
     $smarty->assign('arrMainMenu', $arrMainMenu);
     $smarty->assign("LANG", $lang);
     $smarty->assign(array(
-        "ABOUT_ELASTIX2"            =>  _tr('About Elastix2'),
+        "ABOUT_ELASTIX2"            =>  _br(_tr('About Elastix2')),
         "HELP"                      =>  _tr('HELP'),
         "USER_LOGIN"                =>  $_SESSION['elastix_user'],
         "USER_ID"                   =>  $idUser,
-        "CHANGE_PASSWORD"           =>  _tr("Change Dinomi Password"),
+        "CHANGE_PASSWORD"           =>  _br(_tr("Change Dinomi Password")),
         "MODULES_SEARCH"            =>  _tr("Search modules"),
         "ADD_BOOKMARK"              =>  _tr("Add Bookmark"),
         "REMOVE_BOOKMARK"           =>  _tr("Remove Bookmark"),

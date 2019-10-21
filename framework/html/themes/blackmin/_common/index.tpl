@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-  <title>Dinomi</title>
+  <title>{$ELXFRAMEWORK_NAME}</title>
   <link rel="stylesheet" href="themes/{$THEMENAME}/styles.css" />
   <link rel="stylesheet" href="themes/{$THEMENAME}/help.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="libs/js/sticky_note/sticky_note.css" />
@@ -44,9 +44,8 @@
             <img height="20" align="absmiddle" src="themes/{$THEMENAME}/images/information.png" alt="user" />
             <div>
                 <ul>
-                    <!--<li><a href="#" class="register_link">{$Registered}</a></li>-->
                     <li><a href="#" id="viewDetailsRPMs">{$VersionDetails}</a></li>
-                    <li><a href="http://www.dinomi.com" target="_blank">Dinomi Website</a></li>
+                    <li><a href="{$ELXFRAMEWORK_WEBSITE}" target="_blank">{$ELXFRAMEWORK_NAME} Website</a></li>
                     <li><a href="#" id="dialogaboutelastix">{$ABOUT_ELASTIX2}</a></li>
                 </ul>
             </div>
@@ -114,7 +113,7 @@
 
 {* Pie de página con copyright de Elastix *}
 <div id="elx-blackmin-footerbox">
-            Copyright by <a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.
+            {if $ELXFOOTER_BYPALOSANTO}Copyright by <a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.{/if}
 </div>
 
 {if $ELASTIX_PANELS}

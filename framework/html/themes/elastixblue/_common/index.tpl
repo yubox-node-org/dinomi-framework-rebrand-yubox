@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-        <title>Elastix</title>
+        <title>{$ELXFRAMEWORK_NAME}</title>
         <link rel="stylesheet" href="themes/{$THEMENAME}/styles.css" />
         <link rel="stylesheet" href="themes/{$THEMENAME}/help.css" />
 		<link rel="stylesheet" media="screen" type="text/css" href="libs/js/sticky_note/sticky_note.css" />
@@ -39,7 +39,7 @@
                             </td>
                         </tr>
                     </table><br />
-                    <div align="center" class="copyright"><a href="http://www.elastix.com" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+                    <div align="center" class="copyright"><a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a>{if $ELXFOOTER_BYPALOSANTO} by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.{/if}</div>
                     <br>
                 </td>
             </tr>

@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Dinomi</title>
+        <title>{$ELXFRAMEWORK_NAME}</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/bootstrap.css">
@@ -56,7 +56,7 @@
 
         <!-- Footer -->
         <footer class="main" style="margin-left:16px;">
-            Copyright by <a href="http://www.dinomi.com" style="text-decoration: none;" target='_blank'>Dinomi</a>. 2006 - {$currentyear}.
+            Copyright by <a href="{$ELXFRAMEWORK_WEBSITE}" style="text-decoration: none;" target='_blank'>{$ELXFRAMEWORK_NAME}</a>. 2006 - {$currentyear}.
         </footer>
 
         {*<br />*}

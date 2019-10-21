@@ -2,7 +2,7 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>Elastix - {$PAGE_NAME}</title>
+<title>{$ELXFRAMEWORK_NAME} - {$PAGE_NAME}</title>
 <!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">-->
 <link rel="stylesheet" href="themes/{$THEMENAME}/styles.css">
 </head>
@@ -74,7 +74,7 @@
 </table>
 </form>
 <br>
-    <div align="center" class="copyright"><a href="http://www.elastix.com" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.</div>
+    <div align="center" class="copyright"><a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a>{if $ELXFOOTER_BYPALOSANTO} by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.{/if}</div>
 <br>
 <script type="text/javascript">
     document.getElementById("input_user").focus();

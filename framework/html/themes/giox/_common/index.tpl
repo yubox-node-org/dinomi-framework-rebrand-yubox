@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-  <title>Elastix</title>
+  <title>{$ELXFRAMEWORK_NAME}</title>
   <link rel="stylesheet" href="themes/{$THEMENAME}/styles.css" />
   <link rel="stylesheet" href="themes/{$THEMENAME}/help.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="libs/js/sticky_note/sticky_note.css" />
@@ -33,9 +33,9 @@
 <div id="neo-lengueta-minimized" {if $isThirdLevel eq 'on' and $viewMenuTab ne 'true'}style="display: none;"{/if}></div>
 </div>{* #elxneo-wrap *}
 
-{* Pie de página con copyright de Elastix *}
+{* Pie de página con copyright de {$ELXFRAMEWORK_NAME} *}
 <div id="elxneo-footerbox">
-    <a href="http://www.elastix.org" target='_blank'>Elastix</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a> by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.
+    <a href="{$ELXFRAMEWORK_WEBSITE}" target='_blank'>{$ELXFRAMEWORK_NAME}</a> is licensed under <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a>{if $ELXFOOTER_BYPALOSANTO} by <a href="http://www.palosanto.com" target='_blank'>PaloSanto Solutions</a>. 2006 - {$currentyear}.{/if}
 </div>
 
 {if $ELASTIX_PANELS}

@@ -8,7 +8,7 @@
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 
-	<title>Dinomi - {$PAGE_NAME}</title>
+	<title>{$ELXFRAMEWORK_NAME} - {$PAGE_NAME}</title>
 
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
@@ -110,7 +110,7 @@ var baseurl = '';
 
 			<div class="login-bottom-links">
 
-				Copyright by <a href="http://www.dinomi.com" style="text-decoration: none;" target='_blank'>Dinomi</a>. 2006 - {$currentyear}.</div>
+				Copyright by <a href="{$ELXFRAMEWORK_WEBSITE}" style="text-decoration: none;" target='_blank'>{$ELXFRAMEWORK_NAME}</a>. 2006 - {$currentyear}.</div>
 
 			</div>
 

@@ -94,7 +94,7 @@ function handleJSON_dialogPasswordElastix($smarty, $local_templates_dir, $module
     ));
     $jsonObject = new PaloSantoJSON();
     $jsonObject->set_message(array(
-        'title' =>  _tr('Change Dinomi Password'),
+        'title' =>  _br(_tr('Change Dinomi Password')),
         'html'  =>  $smarty->fetch("$local_templates_dir/_change_password.tpl"),
     ));
     return $jsonObject->createJSON();
@@ -207,11 +207,11 @@ function handleJSON_showAboutUs($smarty, $local_templates_dir, $module_name)
     global $arrConf;
 
     $jsonObject = new PaloSantoJSON();
-    $smarty->assign('ABOUT_ELASTIX_CONTENT', _tr('About Elastix Content'));
+    $smarty->assign('ABOUT_ELASTIX_CONTENT', _br(_tr('About Elastix Content')));
     $jsonObject->set_message(array(
         'title' =>  (in_array($arrConf['mainTheme'], array('elastixwave', 'elastixneo'))
-                ? _tr('About Elastix2')
-                : _tr('About Elastix') . " " . $arrConf['elastix_version']),
+                ? _br(_tr('About Elastix2'))
+                : _br(_tr('About Elastix')) . " " . $arrConf['elastix_version']),
         'html'  =>  $smarty->fetch("$local_templates_dir/_aboutus.tpl"),
     ));
     return $jsonObject->createJSON();

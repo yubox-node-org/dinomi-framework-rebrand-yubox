@@ -20,6 +20,8 @@ Requires: php-Smarty
 Requires: php-jpgraph
 Requires: php-tcpdf
 
+Requires: elxframework-branding >= 1.0.0
+
 # commands: uname df rm cat
 Requires: coreutils
 
@@ -46,10 +48,19 @@ Summary: Dinomi GUI themes from 2.4 and earlier
 Group: Applications/System
 BuildArch: noarch
 Requires: dinomi-framework = %{version}-%{release}
+Requires: dinomiframework-branding >= 1.0.0
 
 %description themes-extra
 This package provides the Dinomi GUI themes from earlier versions.
 
+%package branding
+Summary: Framework brand logos
+Group: Applications/System
+BuildArch: noarch
+Provides: dinomiframework-branding = 1.0.0
+
+%description branding
+This package provides image files with brand logos that appear in the web GUI.
 
 %prep
 %setup -q -n dinomi-framework
@@ -172,6 +183,9 @@ chmod 644 $RPM_BUILD_ROOT/etc/logrotate.d/*
 # File Elastix Access Audit log
 mkdir -p    $RPM_BUILD_ROOT/var/log/elastix
 touch       $RPM_BUILD_ROOT/var/log/elastix/audit.log
+
+mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/cache
+mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/templates_c
 
 mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/cache
 mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/templates_c
@@ -301,10 +315,19 @@ rm -rf $RPM_BUILD_ROOT
 /var/log/elastix/*
 %defattr(-, root, root)
 /var/www/html/configs
+%exclude /var/www/html/configs/branding.conf.php
 /var/www/html/configs.d
 /var/www/html/favicon.ico
 /var/www/html/help
 /var/www/html/images
+%exclude /var/www/html/favicon.ico
+%exclude /var/www/html/images/cloud_logo_login.png
+%exclude /var/www/html/images/elastix.bmp
+%exclude /var/www/html/images/framework-logo-mini-color.png
+%exclude /var/www/html/images/framework-logo-mini-mono.png
+%exclude /var/www/html/images/icon2.png
+%exclude /var/www/html/images/logo_elastix.png
+%exclude /var/www/html/images/logo_elastix_new3.gif
 /var/www/html/lang
 /var/www/html/libs
 /var/www/html/modules
@@ -352,7 +375,28 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/themes/tenant
 %exclude /var/www/html/themes/blackmin
 
+%files branding
+%defattr(-, root, root)
+/var/www/html/configs/branding.conf.php
+/var/www/html/favicon.ico
+/var/www/html/images/cloud_logo_login.png
+/var/www/html/images/elastix.bmp
+/var/www/html/images/framework-logo-mini-color.png
+/var/www/html/images/framework-logo-mini-mono.png
+/var/www/html/images/icon2.png
+/var/www/html/images/logo_elastix.png
+/var/www/html/images/logo_elastix_new3.gif
+
 %changelog
+* Fri Sep 13 2019 Alex Villacís Lasso <a_villacis@palosanto.com>
+- FIXED: remove licensing hack that breaks DINOMI when installed with this
+  version of elastix-framework.
+
+* Fri Sep  6 2019 Alex Villacís Lasso <a_villacis@palosanto.com>
+- CHANGED: split out elastix-branding to better organize rebranding projects.
+- CHANGED: merge PHP 7.x compatibility patches from dinomi-framework.
+- CHANGED: point RPM repository to new directory
+
 * Wed Aug 28 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 1.0.0-11
 - CHANGED: Framework: add logout link to empty menu error message that appears
   if the just-logged-in user has not been authorized to any modules.
