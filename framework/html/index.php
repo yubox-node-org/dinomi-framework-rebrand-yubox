@@ -53,6 +53,7 @@ require_once 'configs/branding.conf.php';
 if (!function_exists('_br')) {
     function _br($s)
     {
+        $s = str_replace('Elastix', 'Dinomi', $s);
         return str_replace('Dinomi', ELXFRAMEWORK_NAME, $s);
     }
 }
