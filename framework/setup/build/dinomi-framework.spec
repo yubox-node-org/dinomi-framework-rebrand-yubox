@@ -323,8 +323,11 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /var/www/html/favicon.ico
 %exclude /var/www/html/images/cloud_logo_login.png
 %exclude /var/www/html/images/elastix.bmp
+%exclude /var/www/html/images/framework-icon.png
+%exclude /var/www/html/images/framework-logo-big.png
 %exclude /var/www/html/images/framework-logo-mini-color.png
 %exclude /var/www/html/images/framework-logo-mini-mono.png
+%exclude /var/www/html/images/framework-logo-mini3.png
 %exclude /var/www/html/images/icon2.png
 %exclude /var/www/html/images/logo_elastix.png
 %exclude /var/www/html/images/logo_elastix_new3.gif
@@ -381,8 +384,11 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/favicon.ico
 /var/www/html/images/cloud_logo_login.png
 /var/www/html/images/elastix.bmp
+/var/www/html/images/framework-icon.png
+/var/www/html/images/framework-logo-big.png
 /var/www/html/images/framework-logo-mini-color.png
 /var/www/html/images/framework-logo-mini-mono.png
+/var/www/html/images/framework-logo-mini3.png
 /var/www/html/images/icon2.png
 /var/www/html/images/logo_elastix.png
 /var/www/html/images/logo_elastix_new3.gif

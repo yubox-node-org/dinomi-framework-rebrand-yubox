@@ -48,7 +48,7 @@ var baseurl = '';
 		<canvas id=loginanimation width="800" height="320" style="position: absolute; top: 0px; padding: 0px;"></canvas>
 		<div class="login-content">
 
-			<img src="{$WEBPATH}themes/{$THEMENAME}/images/dinomilogobig.png" width="280" height="80" alt="elastix logo" />
+			<img src="images/framework-logo-big.png" width="280" height="80" alt="elastix logo" />
 
 			<!-- progress bar indicator -->
 			<div class="login-progressbar-indicator">

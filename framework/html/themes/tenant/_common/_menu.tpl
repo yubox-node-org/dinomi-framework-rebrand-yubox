@@ -103,7 +103,7 @@ function removeNeoDisplayOnMouseOver(ref){
         <!-- logo -->
         <div class="logo">
             <a href="index.php">
-                <img src="{$WEBPATH}themes/{$THEMENAME}/images/dinomi_logo_mini3.png" width="140px" height="40" alt="" />
+                <img src="images/framework-logo-mini3.png" width="140px" height="40" alt="" />
             </a>
         </div>
         <!-- logo collapse icon -->
@@ -120,7 +120,7 @@ function removeNeoDisplayOnMouseOver(ref){
         </div>
     </header>
     <div class="menulogo-min">
-        <img src="{$WEBPATH}themes/{$THEMENAME}/images/dinomi_icon.png" width="58" height="58" alt="" />
+        <img src="images/framework-icon.png" width="58" height="58" alt="" />
     </div>
 
     <ul id="main-menu" class="">
