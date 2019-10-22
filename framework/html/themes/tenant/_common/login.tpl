@@ -28,9 +28,9 @@
 
 	<!--script src="//d3js.org/d3-timer.v0.3.min.js"></script>
 	<script src="//d3js.org/d3-ease.v0.7.min.js"></script-->
-	<script src="/themes/tenant/js/d3-timer.v0.3.min.js"></script>
-	<script src="/themes/tenant/js/d3-ease.v0.7.min.js"></script>
-	<script src="/themes/tenant/js/isometric.js"></script>
+	<script src="themes/tenant/js/d3-timer.v0.3.min.js"></script>
+	<script src="themes/tenant/js/d3-ease.v0.7.min.js"></script>
+	<script src="themes/tenant/js/isometric.js"></script>
 	
 
     {$HEADER_LIBS_JQUERY}
@@ -131,7 +131,7 @@ var baseurl = '';
 	<script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-login.js"></script>
 	<script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-custom.js"></script>
 	<script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-demo.js"></script>
-	<script src="/themes/tenant/js/loginanimation.js"></script>
+	<script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/loginanimation.js"></script>
 
 </body>
 </html>
