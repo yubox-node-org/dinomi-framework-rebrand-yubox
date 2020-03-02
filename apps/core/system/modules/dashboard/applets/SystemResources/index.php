@@ -123,7 +123,7 @@ class Applet_SystemResources
 
         $meminfo = $this->getMemInfo();
         $fraction_mem_used = ($meminfo['MemTotal'] - $meminfo['MemFree'] - $meminfo['Cached'] - $meminfo['MemBuffers']) / $meminfo['MemTotal'];
-        $fraction_swap_used = ($meminfo['SwapTotal'] - $meminfo['SwapFree']) / $meminfo['SwapTotal'];
+        $fraction_swap_used = ($meminfo['SwapTotal'] > 0) ? ($meminfo['SwapTotal'] - $meminfo['SwapFree']) / $meminfo['SwapTotal'] : 0.0;
 
         return array(
             'cpugauge'  =>  $fraction_cpu_used,
