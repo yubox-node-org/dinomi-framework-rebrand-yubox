@@ -1,5 +1,5 @@
 <?php
 
-define('ELXFRAMEWORK_NAME', 'Dinomi');
-define('ELXFRAMEWORK_WEBSITE', 'http://www.dinomi.com');
-define('ELXFOOTER_BYPALOSANTO', TRUE);
+define('ELXFRAMEWORK_NAME', 'YUBOX');
+define('ELXFRAMEWORK_WEBSITE', 'https://yubox.com');
+define('ELXFOOTER_BYPALOSANTO', FALSE);
