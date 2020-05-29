@@ -106,9 +106,6 @@ mkdir -p $RPM_BUILD_ROOT/var/www/html/modules/userlist/plugins
 mkdir -p $RPM_BUILD_ROOT/var/www/html/configs.d
 mkdir -p $RPM_BUILD_ROOT/etc/dinomi-dsn
 
-mkdir -p $RPM_BUILD_ROOT/var/www/html/configs.d
-mkdir -p $RPM_BUILD_ROOT/etc/dinomi-dsn
-
 # ** Installating modules elastix webinterface ** #
 #mv $RPM_BUILD_DIR/elastix/modules-core/*                                $RPM_BUILD_ROOT/var/www/html/modules/
 
