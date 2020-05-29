@@ -578,12 +578,14 @@ function generarDSNSistema($sNombreUsuario, $sNombreDB, $ruta_base='')
         if (is_null($sClave)) return NULL;
         return 'mysql://root:'.$sClave.'@localhost/'.$sNombreDB;
     case 'asteriskuser':
-        $pConfig = new paloConfig("/etc", "amportal.conf", "=", "[[:space:]]*=[[:space:]]*");
-        $listaParam = $pConfig->leer_configuracion(FALSE);
-        return $listaParam['AMPDBENGINE']['valor']."://".
-               $listaParam['AMPDBUSER']['valor']. ":".
-               $listaParam['AMPDBPASS']['valor']. "@".
-               $listaParam['AMPDBHOST']['valor']. "/".$sNombreDB;
+        if (is_readable('/etc/amportal.conf')) {
+            $pConfig = new paloConfig("/etc", "amportal.conf", "=", "[[:space:]]*=[[:space:]]*");
+            $listaParam = $pConfig->leer_configuracion(FALSE);
+            return $listaParam['AMPDBENGINE']['valor']."://".
+                $listaParam['AMPDBUSER']['valor']. ":".
+                $listaParam['AMPDBPASS']['valor']. "@".
+                $listaParam['AMPDBHOST']['valor']. "/".$sNombreDB;
+        }
     }
     return NULL;
 }
