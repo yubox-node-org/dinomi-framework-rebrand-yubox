@@ -46,35 +46,28 @@ class paloDB {
      *
      * @param string    $dsn    cadena de conexión, de la forma "mysql://user:password@dbhost/baseomision"
      */
-    function paloDB($dsn) // Creo que aqui debo pasar el dsn
+    function __construct($dsn) // Creo que aqui debo pasar el dsn
     {
         $this->_forceintcast = (explode(".", phpversion()) >= array(5, 3, 0));
 
         // Creo una conexion y hago login en la base de datos
         $this->conn = NULL;
-        $this->errMsg = "";
-        if (is_object($dsn)) {
+        $this->errMsg = '';
+        $this->connStatus = FALSE;
+
+        if (is_a($dsn, 'PDO')) {
             $this->conn = $dsn;
-            $this->connStatus = FALSE;
-        } else {
+        } elseif (is_string($dsn)) {
             $dsninfo = $this->parseDSN($dsn);
-            $engine  = $dsninfo['dbsyntax'];
-
-            if($engine=='sqlite3'){
-                $dsn = "sqlite:".$dsninfo['database'];
-                $this->engine = $engine;
+            $_cb_build_dsn = array($this, '_build_dsn_'.$dsninfo['dbsyntax']);
+            if (!is_callable($_cb_build_dsn)) {
+                throw new Exception(__METHOD__.': unimplemented DSN setup - '.$dsninfo['dbsyntax']);
             }
-            else if($engine=='mysql' || $engine=='pgsql'){
-                $dsn = "$engine:dbname=".$dsninfo['database'].";host=".$dsninfo['hostspec'];
-                $this->engine = $engine;
-            }
-
-            $user       = $dsninfo['username'];
-            $password   = $dsninfo['password'];
+            list($dsn, $dbopts) = call_user_func($_cb_build_dsn, $dsninfo);
 
             try {
-                $this->connStatus = false;  //logica negativa
-                $this->conn = new PDO($dsn, $user, $password);
+                $this->conn = new PDO($dsn, $dsninfo['username'], $dsninfo['password'], $dbopts);
+                $this->engine = $dsninfo['dbsyntax'];
             } catch (PDOException $e) {
                 $this->errMsg = "Error de conexion a la base de datos - " . $e->getMessage();
                 $this->connStatus = true;
@@ -83,13 +76,58 @@ class paloDB {
         }
     }
 
+    protected function _build_dsn_sqlite3($dsninfo)
+    {
+        return array(
+            'sqlite:'.$dsninfo['database'],
+            NULL,
+        );
+    }
+
+    protected function _build_dsn_pgsql($dsninfo)
+    {
+        $opts = array();
+        if ($dsninfo['database'] !== FALSE) $opts[] = 'dbname='.$dsninfo['database'];
+        if ($dsninfo['hostspec'] !== FALSE) $opts[] = 'host='.$dsninfo['hostspec'];
+        if ($dsninfo['port'] !== FALSE) $opts[] = 'port='.$dsninfo['port'];
+        return array(
+            $dsninfo['dbsyntax'].':'.implode(';', $opts),
+            NULL,
+        );
+    }
+
+    protected function _build_dsn_mysql($dsninfo)
+    {
+        $opts = array();
+        if ($dsninfo['database'] !== FALSE) $opts[] = 'dbname='.$dsninfo['database'];
+        if ($dsninfo['protocol'] == 'unix') {
+            if ($dsninfo['socket'] !== FALSE) $opts[] = 'unix_socket='.$dsninfo['socket'];
+        } else {
+            if ($dsninfo['hostspec'] !== FALSE) $opts[] = 'host='.$dsninfo['hostspec'];
+            if ($dsninfo['port'] !== FALSE) $opts[] = 'port='.$dsninfo['port'];
+        }
+        $extra = NULL;
+        if (isset($dsninfo['charset'])) {
+            if (explode(".", phpversion()) >= array(5, 3, 6)) {
+                $opts[] = 'charset='.$dsninfo['charset'];
+            } else {
+                $extra = array(
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+                );
+            }
+        }
+        return array(
+            $dsninfo['dbsyntax'].':'.implode(';', $opts),
+            $extra,
+        );
+    }
+
     /**
      * Procedimiento para indicar la desconexión de la base de datos a PEAR
      */
     function disconnect()
     {
-        //Esta funcion deberia ser borrada pues se cambio de PEAR A PDO
-        //if (!is_null($this->conn)) $this->conn->disconnect();
+        $this->conn = NULL;
     }
 
     private function _bindParameters(&$sth, &$param)

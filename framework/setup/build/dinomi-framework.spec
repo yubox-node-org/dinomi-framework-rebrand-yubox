@@ -106,6 +106,9 @@ mkdir -p $RPM_BUILD_ROOT/var/www/html/modules/userlist/plugins
 mkdir -p $RPM_BUILD_ROOT/var/www/html/configs.d
 mkdir -p $RPM_BUILD_ROOT/etc/dinomi-dsn
 
+mkdir -p $RPM_BUILD_ROOT/var/www/html/configs.d
+mkdir -p $RPM_BUILD_ROOT/etc/dinomi-dsn
+
 # ** Installating modules elastix webinterface ** #
 #mv $RPM_BUILD_DIR/elastix/modules-core/*                                $RPM_BUILD_ROOT/var/www/html/modules/
 
@@ -315,6 +318,7 @@ rm -rf $RPM_BUILD_ROOT
 /var/log/elastix/*
 %defattr(-, root, root)
 /var/www/html/configs
+/var/www/html/configs.d
 %exclude /var/www/html/configs/branding.conf.php
 /var/www/html/configs.d
 /var/www/html/favicon.ico
