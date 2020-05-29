@@ -315,6 +315,7 @@ rm -rf $RPM_BUILD_ROOT
 /var/log/elastix/*
 %defattr(-, root, root)
 /var/www/html/configs
+/var/www/html/configs.d
 %exclude /var/www/html/configs/branding.conf.php
 /var/www/html/configs.d
 /var/www/html/favicon.ico
