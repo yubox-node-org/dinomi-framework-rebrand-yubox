@@ -607,10 +607,16 @@ function generarDSNSistema($sNombreUsuario, $sNombreDB, $ruta_base='')
         foreach (array('DBUSER', 'DBPASSWORD', 'DBHOST') as $k) {
             if (!isset($dsn[$k])) return NULL;
         }
+        $optlist = array();
+        foreach ($dsn as $k => $v) if (!in_array($k, array('DBUSER', 'DBPASSWORD', 'DBHOST', 'DBENGINE'))) {
+            $optlist[$k] = $v;
+        }
+        $optlist = (count($optlist) > 0) ? '?'.http_build_query($optlist, '', '&',  PHP_QUERY_RFC3986) : '';
         return $dbengine."://".
             $dsn['DBUSER']. ":".
             $dsn['DBPASSWORD']. "@".
-            $dsn['DBHOST']. "/".$sNombreDB;
+            $dsn['DBHOST']. "/".$sNombreDB.
+            $optlist;
     }
 }
 
