@@ -1,0 +1,66 @@
+#!/usr/bin/php
+<?php
+global $arrConf;
+global $arrLang;
+if (!($documentRoot = getenv('ELASTIX_ROOT'))) $documentRoot="/var/www/html";
+require_once("$documentRoot/libs/paloSantoDB.class.php");
+require_once("$documentRoot/libs/misc.lib.php");
+require_once("$documentRoot/configs/default.conf.php");
+load_default_timezone();
+
+$dbs = array(
+    'menu.db'   =>  array(
+        'menu',
+    ),
+    'settings.db' => array(
+        'settings',
+    ),
+    'acl.db' => array(
+        'acl_action',
+        'acl_resource',
+        'acl_module_privileges',
+        'acl_user',
+        'acl_user_permission',
+        'acl_module_user_permissions',
+        'acl_user_shortcut',
+        'sticky_note',
+        'acl_notification',
+        'acl_group',
+        'acl_group_permission',
+        'acl_module_group_permissions',
+        'acl_membership',
+        'acl_user_profile',
+        'acl_profile_properties',
+    ),
+);
+
+$dsn = generarDSNSistema('elx4', 'elxframework', $documentRoot.'/');
+$pDB = new paloDB($dsn);
+if ($pDB->connStatus) die("FATAL: al conectar a DB: {$pDB->errMsg}\n");
+
+foreach ($dbs as $sqlite => $tbls) {
+    print "$sqlite ...\n";
+    $pDB_src = new paloDB("sqlite3:///{$arrConf['elastix_dbdir']}/{$sqlite}");
+    if ($pDB_src->connStatus) die("FATAL: al conectar a DB: {$pDB_src->errMsg}\n");
+    
+    foreach ($tbls as $tbl) {
+        $sql = 'SELECT * FROM '.$tbl;
+        $rs = $pDB_src->fetchTable($sql, TRUE);
+        if (!is_array($rs)) die("FATAL: al leer $sqlite / $tbl: {$pDB_src->errMsg}\n");
+        
+        $sql = 'DELETE FROM '.$tbl.' WHERE 1';
+        if (!$pDB->genQuery($sql)) {
+            die("FATAL: al borrar $tbl en destino: {$pDB->errMsg}\n");
+        }
+        foreach ($rs as $row) {
+            $ks = array_keys($row);
+            $vs = array_values($row);
+            $sql = 'INSERT INTO '.$tbl.' (`'.implode('`, `', $ks).'`) VALUES ('.implode(', ', array_fill(0, count($vs), '?')).')';
+            if (!$pDB->genQuery($sql, $vs)) {
+                die("FATAL: al insertar $tbl en destino: {$pDB->errMsg}\n");
+            }
+        }
+        
+    }
+}
+
