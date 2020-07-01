@@ -1,0 +1,19 @@
+1) apt-get install php mysql-server net-tools rsync sqlite3 php-sqlite3 php-xml smarty3 libphp-jpgraph
+2) Crear los siguientes enlaces simbólicos:
+  /usr/share/php/jpgraph --> /usr/share/jpgraph
+  /usr/share/php/Smarty --> /usr/share/php/smarty3
+3) Asegurar que apache2 y mysql arranquen al arrancar sistema
+4) En MySQL: CREATE USER elxframework@localhost identified by 'elxframework.2o2o'
+5) En MySQL: subir y ejecutar en el orden indicado, los siguiente archivos:
+  additionals/dinomi-acls-mysql/elx4-elastixframework-mysql.sql
+  additionals/dinomi-acls-mysql/elx4-elastixframework-mysql-initdata.sql
+6) Crear el directorio /usr/share/elastix/privileged/
+7) Ejecutar las siguiente operaciones con rsync:
+rsync -avr --no-owner --no-group --exclude=.svn framework/html/ "root@SRV:/var/www/html/"
+rsync -avr --no-owner --no-group --exclude=.svn framework/setup/usr/share/elastix/privileged/ "root@SRV:/usr/share/elastix/privileged/"
+rsync -avr --no-owner --no-group --exclude=.svn additionals/usr/bin/ "root@SRV:/usr/bin/"
+rsync -avr additionals/usr/sbin/ root@SRV:/usr/sbin/
+rsync -avr additionals/dinomi-acls-mysql/etc/ root@SRV:/etc/
+rsync -avr additionals/dinomi-acls-mysql/var/ root@SRV:/var
+8) elastix-menumerge /usr/share/elastix/module_installer/dinomi-framework/menu.xml
+
