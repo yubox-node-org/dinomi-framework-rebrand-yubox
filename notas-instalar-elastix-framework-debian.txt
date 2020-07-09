@@ -8,12 +8,18 @@
   additionals/dinomi-acls-mysql/elx4-elastixframework-mysql.sql
   additionals/dinomi-acls-mysql/elx4-elastixframework-mysql-initdata.sql
 6) Crear el directorio /usr/share/elastix/privileged/
-7) Ejecutar las siguiente operaciones con rsync:
+7) Crear el directorio /usr/share/elastix/module_installer/dinomi-framework/
+8) Ejecutar las siguiente operaciones con rsync:
 rsync -avr --no-owner --no-group --exclude=.svn framework/html/ "root@SRV:/var/www/html/"
 rsync -avr --no-owner --no-group --exclude=.svn framework/setup/usr/share/elastix/privileged/ "root@SRV:/usr/share/elastix/privileged/"
 rsync -avr --no-owner --no-group --exclude=.svn additionals/usr/bin/ "root@SRV:/usr/bin/"
+rsync -avr framework/menu.xml root@SRV:/usr/share/elastix/module_installer/dinomi-framework/
 rsync -avr additionals/usr/sbin/ root@SRV:/usr/sbin/
 rsync -avr additionals/dinomi-acls-mysql/etc/ root@SRV:/etc/
 rsync -avr additionals/dinomi-acls-mysql/var/ root@SRV:/var
-8) elastix-menumerge /usr/share/elastix/module_installer/dinomi-framework/menu.xml
+9) elastix-menumerge /usr/share/elastix/module_installer/dinomi-framework/menu.xml
+10) Crear y dar permisos al directorio de logs de Elastix así:
+mkdir /var/log/elastix
+chgrp www-data /var/log/elastix
+chmod g+w /var/log/elastix
 
