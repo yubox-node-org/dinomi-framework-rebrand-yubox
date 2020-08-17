@@ -3,7 +3,7 @@
 <tr>
   <td>
     <table width="100%" cellpadding="4" cellspacing="0" border="0">
-      <tr>z
+      <tr>
         <td align="left">
           {if $mode eq 'input'}
           <input class="button" type="submit" name="submit_save_tenant_group" value="{$SAVE}" >
@@ -24,8 +24,8 @@
   <td>
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
       <tr>
-	<td>{$tenant_group.LABEL}:{if $mode ne 'view'} <span  class="required">*</span>{/if}</td>
-	<td>{$tenant_group.INPUT}</td>
+	<td>{$group.LABEL}:{if $mode ne 'view'} <span  class="required">*</span>{/if}</td>
+	<td>{$group.INPUT}</td>
         <td width="50%"></td>
       </tr>
       <tr>
@@ -37,5 +37,5 @@
   </td>
 </tr>
 </table>
-<input type="hidden" name="id_tenantgroup" value="{$id_tenantgroup}">
+<input type="hidden" name="id_group" value="{$id_group}">
 </form>

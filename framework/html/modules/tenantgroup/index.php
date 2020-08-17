@@ -39,86 +39,91 @@ function _moduleContent(&$smarty, $module_name)
     //global variables
     global $arrConf;
     global $arrConfModule;
-    $arrConf = array_merge($arrConf,$arrConfModule);
+    $arrConf = array_merge($arrConf, $arrConfModule);
 
 
     /////conexion a php
     $pDB = new paloDB($arrConf['elastix_dsn']['acl']);
 
     //folder path for custom templates
-    $base_dir=dirname($_SERVER['SCRIPT_FILENAME']);
-    $templates_dir=(isset($arrConf['templates_dir']))?$arrConf['templates_dir']:'themes';
-    $local_templates_dir="$base_dir/modules/$module_name/".$templates_dir.'/'.$arrConf['theme'];
+    $base_dir = dirname($_SERVER['SCRIPT_FILENAME']);
+    $templates_dir = (isset($arrConf['templates_dir'])) ? $arrConf['templates_dir'] : 'themes';
+    $local_templates_dir = "$base_dir/modules/$module_name/" . $templates_dir . '/' . $arrConf['theme'];
 
 
-    if(!empty($pDB->errMsg)) {
+    if (!empty($pDB->errMsg)) {
         echo "ERROR DE DB: $pDB->errMsg <br>";
     }
 
     $arrData = array();
     $pACL = new paloACL($pDB);
-    if(!empty($pACL->errMsg)) {
+    if (!empty($pACL->errMsg)) {
         echo "ERROR DE ACL: $pACL->errMsg <br>";
     }
 
-    $arrFormElements = array("description" => array("LABEL"                  => _tr("Description"),
-                                                    "REQUIRED"               => "yes",
-                                                    "INPUT_TYPE"             => "TEXT",
-                                                    "INPUT_EXTRA_PARAM"      => "",
-                                                    "VALIDATION_TYPE"        => "text",
-                                                    "VALIDATION_EXTRA_PARAM" => ""),
-                             "tenat group"       => array("LABEL"                  => _tr("Tenant Group"),
-                                                    "REQUIRED"               => "yes",
-                                                    "INPUT_TYPE"             => "TEXT",
-                                                    "INPUT_EXTRA_PARAM"      => "",
-                                                    "VALIDATION_TYPE"        => "text",
-                                                    "VALIDATION_EXTRA_PARAM" => "")
+    $arrFormElements = array(
+        "description" => array(
+            "LABEL"                  => _tr("Description"),
+            "REQUIRED"               => "yes",
+            "INPUT_TYPE"             => "TEXT",
+            "INPUT_EXTRA_PARAM"      => "",
+            "VALIDATION_TYPE"        => "text",
+            "VALIDATION_EXTRA_PARAM" => ""
+        ),
+        "group"       => array(
+            "LABEL"                  => _tr("Group"),
+            "REQUIRED"               => "yes",
+            "INPUT_TYPE"             => "TEXT",
+            "INPUT_EXTRA_PARAM"      => "",
+            "VALIDATION_TYPE"        => "text",
+            "VALIDATION_EXTRA_PARAM" => ""
+        )
     );
 
-//description  id  name
+    //description  id  name
 
-    $contenidoModulo="";
+    $contenidoModulo = "";
     $smarty->assign("REQUIRED_FIELD", _tr("Required field"));
     $smarty->assign("CANCEL", _tr("Cancel"));
     $smarty->assign("APPLY_CHANGES", _tr("Apply changes"));
     $smarty->assign("SAVE", _tr("Save"));
     $smarty->assign("EDIT", _tr("Edit"));
     $smarty->assign("DELETE", _tr("Delete"));
-    $smarty->assign("icon","modules/$module_name/images/system_groups.png");
+    $smarty->assign("icon", "modules/$module_name/images/system_groups.png");
     $smarty->assign("CONFIRM_CONTINUE", _tr("Are you sure you wish to continue?"));
-    if(isset($_POST['submit_create_tenant_group'])) {
+    if (isset($_POST['submit_create_tenant_group'])) {
         // Implementar
         include_once("libs/paloSantoForm.class.php");
-        $arrFillGroup['tenantgroup']       = '';
+        $arrFillGroup['group']       = '';
         $arrFillGroup['description'] = '';
         $oForm = new paloForm($smarty, $arrFormElements);
-        $contenidoModulo=$oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("New Tenant Group"),$arrFillGroup);
-    } else if(isset($_POST['edit'])) {
+        $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("New Group"), $arrFillGroup);
+    } else if (isset($_POST['edit'])) {
 
         // Tengo que recuperar la data del usuario
         $pACL = new paloACL($pDB);
 
-        $arrGroup = $pACL->getGroups($_POST['id_tenantgroup']);
+        $arrGroup = $pACL->getGroups($_POST['id_group']);
         if (!is_array($arrGroup)) {
             $contenidoModulo = '';
             Header("Location: ?menu=$module_name");
         } else {
-            if($arrGroup[0][1]=='administrator')
+            if ($arrGroup[0][1] == 'administrator')
                 $arrGroup[0][1] = _tr('administrator');
-            else if($arrGroup[0][1]=='operator')
+            else if ($arrGroup[0][1] == 'operator')
                 $arrGroup[0][1] = _tr('operator');
-            else if($arrGroup[0][1]=='extension')
+            else if ($arrGroup[0][1] == 'extension')
                 $arrGroup[0][1] = _tr('extension');
 
-            if($arrGroup[0][2]=='total access')
+            if ($arrGroup[0][2] == 'total access')
                 $arrGroup[0][2] = _tr('total access');
-            else if($arrGroup[0][2]=='operator')
+            else if ($arrGroup[0][2] == 'operator')
                 $arrGroup[0][2] = _tr('operator');
-            else if($arrGroup[0][2]=='extension user')
+            else if ($arrGroup[0][2] == 'extension user')
                 $arrGroup[0][2] = _tr('extension user');
 
 
-            $arrFillGroup['tenantgroup'] = $arrGroup[0][1];
+            $arrFillGroup['group'] = $arrGroup[0][1];
             $arrFillGroup['description'] = $arrGroup[0][2];
 
             // Implementar
@@ -126,45 +131,46 @@ function _moduleContent(&$smarty, $module_name)
             $oForm = new paloForm($smarty, $arrFormElements);
 
             $oForm->setEditMode();
-            $smarty->assign("id_group", htmlspecialchars($_POST['id_tenantgroup'], ENT_COMPAT, 'UTF-8'));
-            $contenidoModulo=$oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr('Edit Tenant Group')." \"" . $arrFillGroup['tenantgroup'] . "\"", $arrFillGroup);
+            $smarty->assign("id_group", htmlspecialchars($_POST['id_group'], ENT_COMPAT, 'UTF-8'));
+            $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr('Edit Group') . " \"" . $arrFillGroup['group'] . "\"", $arrFillGroup);
         }
-    } else if(isset($_POST['submit_save_tenant_group'])) {
+    } else if (isset($_POST['submit_save_tenant_group'])) {
 
         include_once("libs/paloSantoForm.class.php");
 
         $oForm = new paloForm($smarty, $arrFormElements);
 
-        if($oForm->validateForm($_POST)) {
+        if ($oForm->validateForm($_POST)) {
             // Exito, puedo procesar los datos ahora.
             $pACL = new paloACL($pDB);
 
             // Creo el Grupo
-            $pACL->createGroup($_POST['tenantgroup'], $_POST['description']);
+            $arrUser = $pACL->getUsers($id_user);
 
-            if(!empty($pACL->errMsg)) {
+            $pACL->createGroup($_SESSION['elastix_user'] . " " . $_POST['group'], $_POST['description']);
+
+            if (!empty($pACL->errMsg)) {
                 // Ocurrio algun error aqui
                 $smarty->assign("mb_message", "ERROR: $pACL->errMsg");
-                $contenidoModulo=$oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("New Tenant Group"), $_POST);
+                $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("New Group"), $_POST);
             } else {
                 header("Location: ?menu=tenantgroup");
             }
         } else {
             // Error
             $smarty->assign("mb_title", _tr("Validation Error"));
-            $arrErrores=$oForm->arrErroresValidacion;
-            $strErrorMsg = "<b>"._tr('The following fields contain errors').":</b><br>";
-            foreach($arrErrores as $k=>$v) {
+            $arrErrores = $oForm->arrErroresValidacion;
+            $strErrorMsg = "<b>" . _tr('The following fields contain errors') . ":</b><br>";
+            foreach ($arrErrores as $k => $v) {
                 $strErrorMsg .= "$k, ";
             }
             $strErrorMsg .= "";
             $smarty->assign("mb_message", $strErrorMsg);
-            $contenidoModulo=$oForm->fetchForm("$local_templates_dir/grouplist.tpl", _tr("New Group"), $_POST);
+            $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("New Group"), $_POST);
         }
+    } else if (isset($_POST['submit_apply_changes'])) {
 
-    } else if(isset($_POST['submit_apply_changes'])) {
-
-        $arrGroup = $pACL->getGroups($_POST['id_tenantgroup']);
+        $arrGroup = $pACL->getGroups($_POST['id_group']);
         if (!is_array($arrGroup)) {
             $contenidoModulo = '';
             Header("Location: ?menu=$module_name");
@@ -176,37 +182,36 @@ function _moduleContent(&$smarty, $module_name)
             $oForm = new paloForm($smarty, $arrFormElements);
 
             $oForm->setEditMode();
-            if($oForm->validateForm($_POST)) {
+            if ($oForm->validateForm($_POST)) {
 
                 // Exito, puedo procesar los datos ahora.
                 $pACL = new paloACL($pDB);
 
-                if(!$pACL->updateGroup($_POST['id_tenantgroup'], $_POST['tenantgroup'],$_POST['description']))
-                {
+                if (!$pACL->updateGroup($_POST['id_group'], $_POST['group'], $_POST['description'])) {
                     // Ocurrio algun error aqui
                     $smarty->assign("mb_message", "ERROR: $pACL->errMsg");
-                    $contenidoModulo=$oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("Edit Tenant Group"), $_POST);
+                    $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("Edit Group"), $_POST);
                 } else {
                     header("Location: ?menu=tenantgroup");
                 }
             } else {
                 // Manejo de Error
                 $smarty->assign("mb_title", _tr("Validation Error"));
-                $arrErrores=$oForm->arrErroresValidacion;
-                $strErrorMsg = "<b>"._tr('The following fields contain errors').":</b><br>";
-                foreach($arrErrores as $k=>$v) {
+                $arrErrores = $oForm->arrErroresValidacion;
+                $strErrorMsg = "<b>" . _tr('The following fields contain errors') . ":</b><br>";
+                foreach ($arrErrores as $k => $v) {
                     $strErrorMsg .= "$k, ";
                 }
                 $strErrorMsg .= "";
                 $smarty->assign("mb_message", $strErrorMsg);
 
-                $arrFillGroup['tenantgroup']       = $_POST['tenantgroup'];
+                $arrFillGroup['group']       = $_POST['group'];
                 $arrFillGroup['description'] = $_POST['description'];
-                $smarty->assign("id_tenantgroup", htmlspecialchars($_POST['id_tenantgroup'], ENT_COMPAT, 'UTF-8'));
-                $contenidoModulo=$oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("Edit Tenant Group"), $arrFillGroup);
+                $smarty->assign("id_group", htmlspecialchars($_POST['id_group'], ENT_COMPAT, 'UTF-8'));
+                $contenidoModulo = $oForm->fetchForm("$local_templates_dir/group.tpl", _tr("Edit Group"), $arrFillGroup);
             }
         }
-    } else if(isset($_GET['action']) && $_GET['action']=="view") {
+    } else if (isset($_GET['action']) && $_GET['action'] == "view") {
 
         include_once("libs/paloSantoForm.class.php");
 
@@ -222,94 +227,101 @@ function _moduleContent(&$smarty, $module_name)
             Header("Location: ?menu=$module_name");
         } else {
             // Conversion de formato
-            if($arrGroup[0][1]=='administrator')
+            if ($arrGroup[0][1] == 'administrator')
                 $arrGroup[0][1] = _tr('administrator');
-            else if($arrGroup[0][1]=='operator')
+            else if ($arrGroup[0][1] == 'operator')
                 $arrGroup[0][1] = _tr('operator');
-            else if($arrGroup[0][1]=='extension')
+            else if ($arrGroup[0][1] == 'extension')
                 $arrGroup[0][1] = _tr('extension');
 
-            if($arrGroup[0][2]=='total access')
+            if ($arrGroup[0][2] == 'total access')
                 $arrGroup[0][2] = _tr('total access');
-            else if($arrGroup[0][2]=='operator')
+            else if ($arrGroup[0][2] == 'operator')
                 $arrGroup[0][2] = _tr('operator');
-            else if($arrGroup[0][2]=='extension user')
+            else if ($arrGroup[0][2] == 'extension user')
                 $arrGroup[0][2] = _tr('extension user');
 
             $arrTmp['group']        = $arrGroup[0][1];
             $arrTmp['description']  = $arrGroup[0][2];
 
-            $smarty->assign("id_tenantgroup", htmlspecialchars($_GET['id'], ENT_COMPAT, 'UTF-8'));
-            $contenidoModulo=$oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("View Tenant Group"), $arrTmp); // hay que pasar el arreglo
+            $smarty->assign("id_group", htmlspecialchars($_GET['id'], ENT_COMPAT, 'UTF-8'));
+            $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("View Group"), $arrTmp); // hay que pasar el arreglo
         }
     } else {
         if (isset($_POST['delete'])) {
-           //- TODO: Validar el id de tenantgroup
-            if(isset($_POST['id_tenantgroup']) && $_POST['id_tenantgroup']=='1') {
+            //- TODO: Validar el id de tenantgroup
+            if (isset($_POST['id_group']) && $_POST['id_group'] == '1') {
                 // No se puede eliminar al grupo admin
                 $smarty->assign("mb_message", _tr("The administrator group cannot be deleted because is the default Elastix Group. You can delete any other group."));
-            } else if ($pACL->HaveUsersTheGroup($_POST['id_tenantgroup'])==TRUE){
+            } else if ($pACL->HaveUsersTheGroup($_POST['id_group']) == TRUE) {
                 $smarty->assign("mb_message", _tr("The Group have users assigned. You can delete any group that does not have any users assigned in it."));
             } else {
-                $pACL->deleteGroup($_POST['id_tenantgroup']);
+                $pACL->deleteGroup($_POST['id_group']);
             }
         }
 
         $nav   = getParameter("nav");
-    $start = getParameter("start");
+        $start = getParameter("start");
 
-    $total = $pACL->getNumGroups();
-    $total = ($total == NULL)?0:$total;
+        $total = $pACL->getNumGroups();
+        $total = ($total == NULL) ? 0 : $total;
 
-    $limit  = 20;
-    $oGrid  = new paloSantoGrid($smarty);
-    $oGrid->setLimit($limit);
-    $oGrid->setTotal($total);
-    $oGrid->pagingShow(true);
-    $oGrid->setURL("?menu=tenantgroup");
-    $offset = $oGrid->calculateOffset();
-    $end = $oGrid->getEnd();
+        $limit  = 20;
+        $oGrid  = new paloSantoGrid($smarty);
+        $oGrid->setLimit($limit);
+        $oGrid->setTotal($total);
+        $oGrid->pagingShow(true);
+        $oGrid->setURL("?menu=tenantgroup");
+        $offset = $oGrid->calculateOffset();
+        $end = $oGrid->getEnd();
 
-   $arrGroups = $pACL->getGroupsPaging($limit, $offset);
+        $arrGroups = $pACL->getGroupsPaging($limit, $offset);
 
 
         $end = count($arrGroups);
         $arrData = array();
-        foreach($arrGroups as $group) {
+        foreach ($arrGroups as $group) {
             $arrTmp    = array();
 
-            if($group[1]=='administrator')
+            if ($group[1] == 'administrator')
                 $group[1] = _tr('administrator');
-            else if($group[1]=='operator')
+            else if ($group[1] == 'operator')
                 $group[1] = _tr('operator');
-            else if($group[1]=='extension')
+            else if ($group[1] == 'extension')
                 $group[1] = _tr('extension');
 
-            if($group[2]=='total access')
+            if ($group[2] == 'total access')
                 $group[2] = _tr('total access');
-            else if($group[2]=='operator')
+            else if ($group[2] == 'operator')
                 $group[2] = _tr('operator');
-            else if($group[2]=='extension user')
+            else if ($group[2] == 'extension user')
                 $group[2] = _tr('extension user');
 
-            $arrTmp[0] = "&nbsp;<a href='?menu=tenatgroup&action=view&id=" . $group[0] . "'>" . $group[1] . "</a>";//id_tenantgroup   name
-            $arrTmp[1] = $group[2];//description
-            $arrData[] = $arrTmp;
+            if (substr($group[1], 0, strlen($_SESSION['elastix_user'])) == $_SESSION['elastix_user']) {
+                $arrTmp[0] = "&nbsp;<a href='?menu=tenatgroup&action=view&id=" . $group[0] . "'>" . $group[1] . "</a>"; //id_tenantgroup   name
+                $arrTmp[1] = $group[2]; //description
+                $arrData[] = $arrTmp;
+            }
         }
 
-        $arrGrid = array("title"    => _tr("Tenant Group"),
-                         "icon"     => "/modules/$module_name/images/system_groups.png",
-                         "columns"  => array(0 => array("name"      => _tr("Tenant Group"),
-                                                        "property1" => ""),
-                                             1 => array("name"      => _tr("Description"),
-                                                       "property1" => "")
-                                            )
-                        );
+        $arrGrid = array(
+            "title"    => _tr("Group"),
+            "icon"     => "/modules/$module_name/images/system_groups.png",
+            "columns"  => array(
+                0 => array(
+                    "name"      => _tr("Group"),
+                    "property1" => ""
+                ),
+                1 => array(
+                    "name"      => _tr("Description"),
+                    "property1" => ""
+                )
+            )
+        );
 
 
-        $oGrid->addNew("submit_create_tenant_group",_tr("Create New Tenant Group"));
+        $oGrid->addNew("submit_create_tenant_group", _tr("Create New Group"));
         $contenidoModulo = $oGrid->fetchGrid($arrGrid, $arrData);
     }
     return $contenidoModulo;
 }
-?>

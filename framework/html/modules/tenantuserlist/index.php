@@ -44,7 +44,7 @@ function _moduleContent(&$smarty, $module_name)
     // folder path for custom templates
     $base_dir = dirname($_SERVER['SCRIPT_FILENAME']);
     $templates_dir = (isset($arrConf['templates_dir'])) ? $arrConf['templates_dir'] : 'themes';
-    $local_templates_dir = "$base_dir/modules/$module_name/".$templates_dir.'/'.$arrConf['theme'];
+    $local_templates_dir = "$base_dir/modules/$module_name/" . $templates_dir . '/' . $arrConf['theme'];
 
     $pDB = new paloDB($arrConf['elastix_dsn']['acl']);
     if (!empty($pDB->errMsg)) {
@@ -58,25 +58,27 @@ function _moduleContent(&$smarty, $module_name)
     // Enumerar los plugines de datos de usuario
     $plugins = array();
     foreach (scandir("modules/$module_name/plugins") as $p) {
-        if (!in_array($p, array('.', '..')) && is_dir("modules/$module_name/plugins/$p") &&
-            file_exists("modules/$module_name/plugins/$p/index.php")) {
+        if (
+            !in_array($p, array('.', '..')) && is_dir("modules/$module_name/plugins/$p") &&
+            file_exists("modules/$module_name/plugins/$p/index.php")
+        ) {
             if (file_exists("modules/$module_name/plugins/$p/lang/en.lang"))
                 load_language_module("$module_name/plugins/$p");
-            $plugins['paloUserPlugin_'.$p] = "modules/$module_name/plugins/$p/index.php";
+            $plugins['paloUserPlugin_' . $p] = "modules/$module_name/plugins/$p/index.php";
         }
     }
 
     $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'list';
     switch ($action) {
-    case 'new':
-        return createUser($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
-    case 'edit':
-        return editUser($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
-    case 'edit_userExtension': // <-- editar info de usuario logoneado en ventana independiente
-        return editUser_userExtension($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
-    case 'list':
-    default:
-        return listUsers($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
+        case 'new':
+            return createUser($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
+        case 'edit':
+            return editUser($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
+        case 'edit_userExtension': // <-- editar info de usuario logoneado en ventana independiente
+            return editUser_userExtension($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
+        case 'list':
+        default:
+            return listUsers($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
     }
 }
 
@@ -116,7 +118,7 @@ function listUsers($pACL, $smarty, $module_name, $local_templates_dir, $plugins)
         } else if (!$pACL->deleteUser($_POST['id_user'])) {
             $smarty->assign(array(
                 'mb_title'      =>  _tr('ERROR'),
-                'mb_message'    =>  _tr('(internal) Failed to delete user').': '.$pACL->errMsg,
+                'mb_message'    =>  _tr('(internal) Failed to delete user') . ': ' . $pACL->errMsg,
             ));
         }
     }
@@ -143,7 +145,9 @@ function listUsers($pACL, $smarty, $module_name, $local_templates_dir, $plugins)
 
     // Columnas para reporte base y todos los plugins
     $arrColumns = array('', _tr("Login"), _tr("Real Name"), _tr("Group"));
-    foreach ($pobj as $p) $arrColumns = array_merge($arrColumns, $p->userReport_labels());
+    foreach ($pobj as $p) {
+            $arrColumns = array_merge($arrColumns, $p->userReport_labels());
+    }
     $oGrid->setColumns($arrColumns);
 
     if ($bViewAllUsers) {
@@ -158,18 +162,20 @@ function listUsers($pACL, $smarty, $module_name, $local_templates_dir, $plugins)
 
         // FIXME: es correcto ucfirst() con internacionalización no-latin?
         $grouplist = is_array($arrMembership) ? implode(' ', array_map('ucfirst', array_map('_tr', array_keys($arrMembership)))) : '';
-        $arrTmp = array(
-            "<input type=\"radio\" name=\"id_user\" value=\"{$user[0]}\" ".(($bDeleteAnyUser && $user[0] != $id_user_session) ? '' : ' disabled="disabled"')." />",
-            ($bEditAnyUser || $user[1] == $_SESSION['elastix_user'])
-                ? "<a href='?menu={$module_name}&action=edit&id_user=".$user[0]."'>".htmlentities($user[1], ENT_COMPAT, 'UTF-8')."</a>"
-                : htmlentities($user[1], ENT_COMPAT, 'UTF-8'),
-            htmlentities($user[2], ENT_COMPAT, 'UTF-8'),
-            htmlentities($grouplist, ENT_COMPAT, 'UTF-8'),
-        );
-
+        if (substr(array_keys($arrMembership)[0], 0, strlen($_SESSION['elastix_user'])) == $_SESSION['elastix_user']) {
+            $arrTmp = array(
+                "<input type=\"radio\" name=\"id_user\" value=\"{$user[0]}\" " . (($bDeleteAnyUser && $user[0] != $id_user_session) ? '' : ' disabled="disabled"') . " />",
+                ($bEditAnyUser || $user[1] == $_SESSION['elastix_user'])
+                    ? "<a href='?menu={$module_name}&action=edit&id_user=" . $user[0] . "'>" . htmlentities($user[1], ENT_COMPAT, 'UTF-8') . "</a>"
+                    : htmlentities($user[1], ENT_COMPAT, 'UTF-8'),
+                htmlentities($user[2], ENT_COMPAT, 'UTF-8'),
+                htmlentities($grouplist, ENT_COMPAT, 'UTF-8'),
+            );
+        
         foreach ($pobj as $p) $arrTmp = array_merge($arrTmp, $p->userReport_data($user[1], $user[0]));
 
         $arrData[] = $arrTmp;
+        }
     }
     $oGrid->setData($arrData);
 
@@ -199,7 +205,7 @@ function editUser($pACL, $smarty, $module_name, $local_templates_dir, $plugins)
 {
     $id_user = (isset($_REQUEST['id_user']) && ctype_digit($_REQUEST['id_user'])) ? (int)$_REQUEST['id_user'] : NULL;
     if (is_null($id_user)) {
-        Header('Location: ?menu='.$module_name);
+        Header('Location: ?menu=' . $module_name);
         return '';
     }
 
@@ -233,9 +239,15 @@ function editUser_userExtension($pACL, $smarty, $module_name, $local_templates_d
     return $c;
 }
 
-function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_user,
-    $privileged, $plugins)
-{
+function createEditUser(
+    $pACL,
+    $smarty,
+    $module_name,
+    $local_templates_dir,
+    $id_user,
+    $privileged,
+    $plugins
+) {
     require_once("libs/paloSantoForm.class.php");
 
     $smarty->assign(array(
@@ -260,8 +272,10 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
     $arrMembership = is_null($id_user) ? NULL : $pACL->getMembership($id_user);
     $arrGrupos = array();
     foreach ($arrGruposACL as $groupinfo) {
-        if ($privileged || is_null($arrMembership) || in_array($groupinfo[0], $arrMembership)) {
-            $arrGrupos[$groupinfo[0]] = ucfirst(_tr($groupinfo[1]));
+        if (substr($groupinfo[1], 0, strlen($_SESSION['elastix_user'])) == $_SESSION['elastix_user']) {
+            if ($privileged || is_null($arrMembership) || in_array($groupinfo[0], $arrMembership)) {
+                $arrGrupos[$groupinfo[0]] = ucfirst(_tr($groupinfo[1]));
+            }
         }
     }
 
@@ -269,7 +283,7 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
     if (!is_null($id_user)) {
         $arrUser = $pACL->getUsers($id_user);
         if (count($arrUser) <= 0) {
-            Header('Location: ?menu='.$module_name);
+            Header('Location: ?menu=' . $module_name);
             return '';
         }
         $smarty->assign('id_user', $id_user);
@@ -289,8 +303,10 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
     }
 
     // Colocar aquí elementos adicionales en $arrFormElements para plugins
-    foreach ($pobj as $p) $arrFormElements = array_merge($arrFormElements,
-        $p->addFormElements($privileged));
+    foreach ($pobj as $p) $arrFormElements = array_merge(
+        $arrFormElements,
+        $p->addFormElements($privileged)
+    );
 
     $oForm = new paloForm($smarty, $arrFormElements);
     if (!is_null($id_user)) $oForm->setEditMode();
@@ -299,22 +315,26 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
         if (!$oForm->validateForm($_POST)) {
             $smarty->assign(array(
                 "mb_title"  =>  _tr("Validation Error"),
-                "mb_message"=>  "<b>"._tr('The following fields contain errors').":</b><br/>".
+                "mb_message" =>  "<b>" . _tr('The following fields contain errors') . ":</b><br/>" .
                     implode(', ', array_keys($oForm->arrErroresValidacion)),
             ));
         } elseif ((is_null($id_user) && empty($_POST['password1'])) ||
-            ($_POST['password1'] != $_POST['password2'])) {
+            ($_POST['password1'] != $_POST['password2'])
+        ) {
             $smarty->assign(array(
                 "mb_title"  =>  _tr("Validation Error"),
-                "mb_message"=>  _tr("The passwords are empty or don't match"),
+                "mb_message" =>  _tr("The passwords are empty or don't match"),
             ));
         } else {
             $bPluginError = FALSE;
 
             // TODO: beginTransaction
             if (is_null($id_user)) {
-                $r = $pACL->createUser($_POST['name'], $_POST['description'],
-                    md5($_POST['password1']));
+                $r = $pACL->createUser(
+                    $_POST['name'],
+                    $_POST['description'],
+                    md5($_POST['password1'])
+                );
                 if ($r) $id_user = $pACL->getIdUser($_POST['name']);
                 if (!is_null($id_user)) {
                     /* Versiones viejas del archivo acl.db tienen una fila con
@@ -371,7 +391,7 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
             if (!$r) {
                 if (!$bPluginError) $smarty->assign(array(
                     'mb_title'  =>  'ERROR',
-                    'mb_message'=>  $pACL->errMsg,
+                    'mb_message' =>  $pACL->errMsg,
                 ));
                 // TODO: rollback
             } else {
@@ -379,7 +399,7 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
                 if ($_REQUEST['action'] == 'edit_userExtension') {
                     $smarty->assign('userExtension_success', 1);
                 } else {
-                    Header('Location: ?menu='.$module_name);
+                    Header('Location: ?menu=' . $module_name);
                     return '';
                 }
             }
@@ -389,26 +409,29 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
     $plug_content = '';
     $base_dir = dirname($_SERVER['SCRIPT_FILENAME']);
     foreach ($pobj as $classname => $p) {
-        $plugin_templates_dir = $base_dir.'/'.str_replace('index.php', 'tpl', $plugins[$classname]);
+        $plugin_templates_dir = $base_dir . '/' . str_replace('index.php', 'tpl', $plugins[$classname]);
         $plug_content .= $p->fetchForm($smarty, $oForm, $plugin_templates_dir, $_POST);
     }
     $smarty->assign('PLUGIN_CONTENT', $plug_content);
 
-    return $oForm->fetchForm("$local_templates_dir/new.tpl",
-        is_null($id_user) ? _tr('New User') : _tr('Edit User').' "'.$userinfo['name'].'"',
-        $_POST);
+    return $oForm->fetchForm(
+        "$local_templates_dir/new.tpl",
+        is_null($id_user) ? _tr('New User') : _tr('Edit User') . ' "' . $userinfo['name'] . '"',
+        $_POST
+    );
 }
 
 function createFormFields($arrGrupos)
 {
     return array(
         "description" => array(
-            "LABEL"                  => ""._tr('Name')." "._tr('(Ex. John Doe)')."",
+            "LABEL"                  => "" . _tr('Name') . " " . _tr('(Ex. John Doe)') . "",
             "REQUIRED"               => "no",
             "INPUT_TYPE"             => "TEXT",
             "INPUT_EXTRA_PARAM"      => "",
             "VALIDATION_TYPE"        => "text",
-            "VALIDATION_EXTRA_PARAM" => ""),
+            "VALIDATION_EXTRA_PARAM" => ""
+        ),
         "name"       => array(
             "LABEL"                   => _tr("Login"),
             "REQUIRED"               => "yes",
@@ -416,28 +439,32 @@ function createFormFields($arrGrupos)
             "INPUT_EXTRA_PARAM"      => "",
             "VALIDATION_TYPE"        => "text",
             "VALIDATION_EXTRA_PARAM" => "",
-            "EDITABLE"               => "no"),
+            "EDITABLE"               => "no"
+        ),
         "password1"   => array(
             "LABEL"                  => _tr("Password"),
             "REQUIRED"               => "yes",
             "INPUT_TYPE"             => "PASSWORD",
             "INPUT_EXTRA_PARAM"      => "",
             "VALIDATION_TYPE"        => "text",
-            "VALIDATION_EXTRA_PARAM" => ""),
+            "VALIDATION_EXTRA_PARAM" => ""
+        ),
         "password2"   => array(
             "LABEL"                  => _tr("Retype password"),
             "REQUIRED"               => "yes",
             "INPUT_TYPE"             => "PASSWORD",
             "INPUT_EXTRA_PARAM"      => "",
             "VALIDATION_TYPE"        => "text",
-            "VALIDATION_EXTRA_PARAM" => ""),
-         "group"       => array(
+            "VALIDATION_EXTRA_PARAM" => ""
+        ),
+        "group"       => array(
             "LABEL"                  => _tr("Group"),
             "REQUIRED"               => "no",
             "INPUT_TYPE"             => "SELECT",
             "INPUT_EXTRA_PARAM"      => $arrGrupos,
             "VALIDATION_TYPE"        => "text",
-            "VALIDATION_EXTRA_PARAM" => ""),
+            "VALIDATION_EXTRA_PARAM" => ""
+        ),
     );
 }
 
@@ -458,6 +485,6 @@ function hasModulePrivilege($user, $module, $privilege)
         'viewany',  // ¿Está autorizado el usuario a ver la información de todos los demás?
         'create',   // ¿Está autorizado el usuario a crear nuevos usuarios?
         'editany',  // ¿Está autorizado el usuario a modificar la información de otro usuario?
-        'deleteany',// ¿Está autorizado el usuario a borrar otro usuario?
+        'deleteany', // ¿Está autorizado el usuario a borrar otro usuario?
     )));
 }
