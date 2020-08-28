@@ -80,7 +80,7 @@ class paloSantoNavGrid extends paloSantoNavigationBase
             $idcheck = 'resource-access-'.$key;
             $disabledattr = ($admin && in_array($key, array('usermgr', 'grouplist', 'userlist', 'group_permission')))
                 ? 'disabled="disabled"' : '';
-            $disabledattr = ($is_self && in_array($key, array('usermgr', 'grouplist', 'userlist', 'group_permission')))
+            $disabledattr = ($is_self && in_array($key, array('tenant', 'tenantgroup', 'tenantuserlist', 'tenantpermission')))
                 ? 'disabled="disabled"' : '';
             $checktag = '<input '.
                 'type="checkbox" '.
@@ -187,22 +187,21 @@ function reportGroupPermission($smarty, $module_name, $local_templates_dir)
 
     $smarty->assign("SHOW", _tr("Show"));
 
-    // ¿Es este grupo el que hace la solicitud?
-    $idUser = $pACL->getIdUser($_SESSION['elastix_user']);
-    //$bIsItSelf = ($id_group == $idUser);
-
     // Seleccionar grupo a asignar permisos
-    $id_admin = 1;
     $id_group = getParameter('filter_group');
-    if (empty($id_group)) $id_group = $idUser;
-    $_POST['filter_group'] = $id_group;
+    $_POST['filter_group'] = getParameter('filter_group');
+
+    // ¿Es este el mismo grupo que hace la solicitud?
+    $idUser = $pACL->getIdUser($_SESSION['elastix_user']);
+    $bIsItSelf = ($id_group == $idUser);
 
     // ¿Es este grupo el grupo administrador?
     $bIsAdminGroup = ($id_group == 1);
 
     // Cargar el menú completo
     $oMenu = new paloMenu($arrConf['elastix_dsn']['menu']);
-    $fullmenu = $oMenu->cargar_menu();
+    $fullmenu = $oMenu->filterAuthorizedMenus($idUser);   //cargar_menu();
+    //$arrMenuFiltered = $pMenu->filterAuthorizedMenus($idUser);
     foreach (array_keys($fullmenu) as $k) $fullmenu[$k]['actions'] = array();
 
     if (isset($_POST['apply']) && isset($_POST['resource_access']) && is_array($_POST['resource_access'])) {
@@ -250,8 +249,10 @@ function createFieldFilter()
 
     $gruposTrad = array('administrator', 'operator', 'extension');
     for ($i = 0; $i < count($arrGruposACL); $i++ ) {
-        $arrGrupos[$arrGruposACL[$i][0]] = in_array($arrGruposACL[$i][1], $gruposTrad)
-            ? _tr($arrGruposACL[$i][1]) : $arrGruposACL[$i][1];
+        if (substr($arrGruposACL[$i][1], 0, strlen($_SESSION['elastix_user']) + 1) == $_SESSION['elastix_user']." "){
+            $group_name = substr($arrGruposACL[$i][1], strlen($_SESSION['elastix_user']));
+            $arrGrupos[$arrGruposACL[$i][0]] = $group_name;
+        }
     }
     $arrGrupos = array_diff($arrGrupos,array('Administrator', 'Tenant'));
     return array(

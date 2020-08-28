@@ -2,6 +2,11 @@
 <module>
   <menulist>
     <menuitem menuid="system" desc="System" order="0"/>
+    <menuitem menuid="plugs" desc="Plugs" parent="system" order="8">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
     <menuitem menuid="usermgr" desc="Users" parent="system" order="4">
       <permissions>
         <group id="1" name="administrator" desc="total access"/>
@@ -30,6 +35,90 @@
       </permissions>
     </menuitem>
     <menuitem menuid="group_permission" desc="Group Permission" parent="usermgr" order="43">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="tenant" desc="Tenant" parent="system" order="5">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="tenantuserlist" desc="Tenant Users" parent="tenant" order="51">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+      <privilege name="viewown" desc="View information for just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+      <privilege name="createown" desc="Create just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+      <privilege name="editown" desc="Update information for just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+      <privilege name="deleteown" desc="Delete just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+    </menuitem>
+    <menuitem menuid="tenantgroup" desc="Tenant Groups" parent="tenant" order="52">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="tenantpermission" desc="Tenant Group Permission" parent="tenant" order="53">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="organization" desc="Organization" parent="system" order="6">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="organizationuserlist" desc="Organization Users" parent="organization" order="61">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+      <privilege name="viewown" desc="View information for all just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+      <privilege name="createown" desc="Create just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+      <privilege name="editown" desc="Update information for just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+      <privilege name="deleteown" desc="Delete just their own users">
+        <grant2group name="administrator" />
+      </privilege>
+    </menuitem>
+    <menuitem menuid="organizationgroup" desc="Organization Groups" parent="organization" order="62">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="organizationpermission" desc="Organization Group Permission" parent="organization" order="63">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="services" desc="Services" parent="system" order="7">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="grafana" desc="Grafana" parent="services" order="71">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="nodered" desc="Nodered" parent="services" order="73">
+      <permissions>
+        <group id="1" name="administrator" desc="total access"/>
+      </permissions>
+    </menuitem>
+    <menuitem menuid="theia_ide" desc="Theia ide" parent="services" order="74">
       <permissions>
         <group id="1" name="administrator" desc="total access"/>
       </permissions>

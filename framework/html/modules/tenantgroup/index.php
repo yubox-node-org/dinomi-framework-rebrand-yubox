@@ -186,8 +186,11 @@ function _moduleContent(&$smarty, $module_name)
 
                 // Exito, puedo procesar los datos ahora.
                 $pACL = new paloACL($pDB);
-
-                if (!$pACL->updateGroup($_POST['id_group'], $_POST['group'], $_POST['description'])) {
+                $groupName =  $_POST['group'];
+                /*if (!(substr($_POST['group'], 0, strlen($_SESSION['elastix_user'])) == $_SESSION['elastix_user'])){
+                    $groupName =  $_SESSION['elastix_user'] . " " . $_POST['group'];
+                }*/
+                if (!$pACL->updateGroup($_POST['id_group'], $groupName, $_POST['description'])) {
                     // Ocurrio algun error aqui
                     $smarty->assign("mb_message", "ERROR: $pACL->errMsg");
                     $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("Edit Group"), $_POST);
@@ -208,10 +211,10 @@ function _moduleContent(&$smarty, $module_name)
                 $arrFillGroup['group']       = $_POST['group'];
                 $arrFillGroup['description'] = $_POST['description'];
                 $smarty->assign("id_group", htmlspecialchars($_POST['id_group'], ENT_COMPAT, 'UTF-8'));
-                $contenidoModulo = $oForm->fetchForm("$local_templates_dir/group.tpl", _tr("Edit Group"), $arrFillGroup);
+                $contenidoModulo = $oForm->fetchForm("$local_templates_dir/tenantgroup.tpl", _tr("Edit Group"), $arrFillGroup);
             }
         }
-    } else if (isset($_GET['action']) && $_GET['action'] == "view") {
+    } else if (isset($_GET['action']) && $_GET['action'] == "tenant_view") {
 
         include_once("libs/paloSantoForm.class.php");
 
@@ -255,8 +258,10 @@ function _moduleContent(&$smarty, $module_name)
                 $smarty->assign("mb_message", _tr("The administrator group cannot be deleted because is the default Elastix Group. You can delete any other group."));
             } else if ($pACL->HaveUsersTheGroup($_POST['id_group']) == TRUE) {
                 $smarty->assign("mb_message", _tr("The Group have users assigned. You can delete any group that does not have any users assigned in it."));
-            } else {
+            } else if (substr($group[1], 0, strlen($_SESSION['elastix_user'])) == $_SESSION['elastix_user']) {
                 $pACL->deleteGroup($_POST['id_group']);
+            } else {
+                $smarty->assign("mb_message", _tr("The Group does not belong to you. You can delete any group that you own."));
             }
         }
 
@@ -298,7 +303,7 @@ function _moduleContent(&$smarty, $module_name)
                 $group[2] = _tr('extension user');
 
             if (substr($group[1], 0, strlen($_SESSION['elastix_user'])) == $_SESSION['elastix_user']) {
-                $arrTmp[0] = "&nbsp;<a href='?menu=tenatgroup&action=view&id=" . $group[0] . "'>" . $group[1] . "</a>"; //id_tenantgroup   name
+                $arrTmp[0] = "&nbsp;<a href='?menu=tenantgroup&action=tenant_view&id=" . $group[0] . "'>" . substr($group[1], strlen($_SESSION['elastix_user'])) . "</a>"; //id_tenantgroup   name
                 $arrTmp[1] = $group[2]; //description
                 $arrData[] = $arrTmp;
             }
