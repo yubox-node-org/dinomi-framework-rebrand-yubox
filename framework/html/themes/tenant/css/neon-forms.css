@@ -6335,7 +6335,7 @@ hr + .mail-env {
 }
 
 .login-page .login-container {
-  width: 800px;
+  max-width: 800px;
   margin: 40px auto;
   background-color: #474e5a;
 }
