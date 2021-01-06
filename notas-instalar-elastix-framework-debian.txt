@@ -1,5 +1,6 @@
-1) apt-get install php net-tools rsync sqlite3 php-sqlite3 php-xml smarty3 libphp-jpgraph
+1) apt-get install php sqlite3 php-sqlite3 php-xml smarty3 libphp-jpgraph
             (mysql-server) mariadb-server
+            net-tools rsync
 2) Crear los siguientes enlaces simbólicos:
   /usr/share/php/jpgraph --> /usr/share/jpgraph
   /usr/share/php/Smarty --> /usr/share/php/smarty3
