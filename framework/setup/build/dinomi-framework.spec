@@ -20,7 +20,7 @@ Requires: php-Smarty
 Requires: php-jpgraph
 Requires: php-tcpdf
 
-Requires: elxframework-branding >= 1.0.0
+Requires: dinomiframework-branding >= 1.0.0
 
 # commands: uname df rm cat
 Requires: coreutils
