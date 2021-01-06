@@ -1,0 +1,82 @@
+#!/usr/bin/make -f
+
+dpkg_late_eval ?= $(or $(value DPKG_CACHE_$(1)),$(eval DPKG_CACHE_$(1) := $(shell $(2)))$(value DPKG_CACHE_$(1)))
+DEB_SOURCE = $(call dpkg_late_eval,DEB_SOURCE,dpkg-parsechangelog -SSource)
+DEB_VERSION = $(call dpkg_late_eval,DEB_VERSION,dpkg-parsechangelog -SVersion)
+DEB_VERSION_UPSTREAM_REVISION = $(call dpkg_late_eval,DEB_VERSION_UPSTREAM_REVISION,echo '$(DEB_VERSION)' | sed -e 's/^[0-9]*://')
+
+DEB_BUILD_ROOT=$$(pwd)/debian/dinomi-framework/
+DEB_BUILD_THEMES_EXTRA=$$(pwd)/debian/dinomi-framework-themes-extra/
+DEB_BUILD_BRANDING=$$(pwd)/debian/dinomi-framework-branding/
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	cp -r framework/html/* $(DEB_BUILD_ROOT)/var/www/html/
+	mkdir -p $(DEB_BUILD_ROOT)/var/www/html/modules/userlist/plugins
+	mkdir -p $(DEB_BUILD_ROOT)/var/www/html/configs.d
+	mkdir -p $(DEB_BUILD_ROOT)/usr/share/elastix/module_installer/$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM_REVISION)
+	cp additionals/etc/httpd/conf.d/elastix.conf $(DEB_BUILD_ROOT)/etc/apache2/conf-available
+	sed --in-place "s,User\sapache,#User apache,g" $(DEB_BUILD_ROOT)/etc/apache2/conf-available/elastix.conf
+	sed --in-place "s,Group\sapache,#Group apache,g" $(DEB_BUILD_ROOT)/etc/apache2/conf-available/elastix.conf
+	cp additionals/etc/httpd/conf.d/elastix-htaccess.conf $(DEB_BUILD_ROOT)/etc/apache2/conf-available
+	cp additionals/etc/php.d/elastix.ini $(DEB_BUILD_ROOT)/etc/php/7.3/mods-available
+	cp additionals/etc/sudoers.d/dinomi-framework $(DEB_BUILD_ROOT)/etc/sudoers.d/
+	cp additionals/etc/cron.d/elastix.cron $(DEB_BUILD_ROOT)/etc/cron.d/
+	# TODO: instalar rc.local
+	cp additionals/usr/local/elastix/sampler.php $(DEB_BUILD_ROOT)/usr/local/elastix
+	cp additionals/usr/local/sbin/motd.sh $(DEB_BUILD_ROOT)/usr/local/sbin
+	# TODO: es todavía necesario /usr/share/pear/DB/sqlite3.php ?
+	cp framework/setup/usr/share/elastix/privileged/* $(DEB_BUILD_ROOT)/usr/share/elastix/privileged/
+	mkdir -p $(DEB_BUILD_ROOT)/usr/share/elastix/module_installer/$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM_REVISION)/setup
+	cp -r framework/setup/db framework/menu.xml $(DEB_BUILD_ROOT)/usr/share/elastix/module_installer/$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM_REVISION)/setup/
+	cp -r framework/menu.xml $(DEB_BUILD_ROOT)/usr/share/elastix/module_installer/$(DEB_SOURCE)-$(DEB_VERSION_UPSTREAM_REVISION)/
+	cp -r additionals/usr/bin/elastix-menumerge $(DEB_BUILD_ROOT)/usr/bin/
+	cp -r additionals/usr/bin/elastix-menuremove $(DEB_BUILD_ROOT)/usr/bin/
+	cp -r additionals/usr/bin/elastix-dbprocess $(DEB_BUILD_ROOT)/usr/bin/
+	cp -r additionals/usr/bin/compareVersion $(DEB_BUILD_ROOT)/usr/bin/
+	cp -r additionals/usr/bin/search_ami_admin_pwd $(DEB_BUILD_ROOT)/usr/bin/
+	cp -r additionals/usr/bin/elastix-notification $(DEB_BUILD_ROOT)/usr/bin/
+	cp -r additionals/usr/bin/elastix-helper $(DEB_BUILD_ROOT)/usr/bin/
+	cp -r additionals/usr/sbin/elastix-helper $(DEB_BUILD_ROOT)/usr/sbin/
+	cp -r additionals/usr/sbin/close-on-exec.pl $(DEB_BUILD_ROOT)/usr/sbin/
+	cp -r additionals/etc/init.d/generic-cloexec $(DEB_BUILD_ROOT)/etc/init.d/
+	cp -r additionals/etc/logrotate.d/* $(DEB_BUILD_ROOT)/etc/logrotate.d/
+	touch $(DEB_BUILD_ROOT)/var/log/elastix/audit.log
+	# Se mueven archivos de paquete themes-extra
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/al $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/default $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/elastixblue $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/elastixneo $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/elastixwave $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/elastixwine $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/giox $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	mv $(DEB_BUILD_ROOT)/var/www/html/themes/slashdot $(DEB_BUILD_THEMES_EXTRA)/var/www/html/themes/
+	# Se mueven archivos de paquete branding
+	mv $(DEB_BUILD_ROOT)/var/www/html/configs/branding.conf.php $(DEB_BUILD_BRANDING)/var/www/html/configs/
+	mv $(DEB_BUILD_ROOT)/var/www/html/favicon.ico $(DEB_BUILD_BRANDING)/var/www/html/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/cloud_logo_login.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/elastix.bmp $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/framework-icon.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/framework-logo-big.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/framework-logo-mini-color.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/framework-logo-mini-mono.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/framework-logo-mini3.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/icon2.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/logo_elastix.png $(DEB_BUILD_BRANDING)/var/www/html/images/
+	mv $(DEB_BUILD_ROOT)/var/www/html/images/logo_elastix_new3.gif $(DEB_BUILD_BRANDING)/var/www/html/images/
+
+override_dh_usrlocal:
+	# No hacer nada en este lugar para impedir que construcción se queje con /usr/local/elastix/sampler.php
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 777 $(DEB_BUILD_ROOT)/var/www/db/
+	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/db/
+	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/backup/
+	chown www-data.www-data $(DEB_BUILD_ROOT)/var/log/elastix/
+	chown www-data.www-data $(DEB_BUILD_ROOT)/var/log/elastix/*
+	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/html/var/cache
+	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/html/var/templates_c
+	
