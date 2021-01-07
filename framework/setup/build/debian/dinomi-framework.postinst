@@ -1,4 +1,62 @@
 #!/bin/bash
 
-echo "Ejecutando dinomi-framework.postinst" $@
+PKGNAME=__PACKAGE_NAME__
+PATHMODULE=/usr/share/elastix/module_installer/$PKG_NAME-__PACKAGE_VERSION__
+PKGACTION=$1
+OLDVERSION=
+CURRVERSION=__PACKAGE_VERSION__
+echo "EJECUTANDO $PKGNAME.postinst" $@
+
+if [ "$PKGACTION" == "configure" ] ; then
+    if [ -e "$PATHMODULE/$PKGNAME-oldversion.txt" ] ; then
+        OLDVERSION=`cat "$PATHMODULE/$PKGNAME-oldversion.txt"`
+        rm -f "$PATHMODULE/$PKGNAME-oldversion.txt"
+    fi
+    if [ "$OLDVERSION" != "$CURRVERSION" ] ; then
+        PKG_OP="update"
+    else
+        PKG_OP="install"
+    fi
+    echo "Haciendo $PKGACTION de $PKGNAME en modo $PKG_OP ( $OLDVERSION a $CURRVERSION )..."
+
+    # The installer database
+    if [ "$PKG_OP" == "install" ] ; then
+        elastix-dbprocess $PKG_OP "$PATHMODULE/setup/db"
+    else
+        elastix-dbprocess $PKG_OP "$PATHMODULE/setup/db" $OLDVERSION
+    fi
+
+    # Merge current menu.xml for userlist custom privileges
+    elastix-menumerge "$PATHMODULE/menu.xml"
+
+    # Habilitar inicio automático de servicios necesarios
+    systemctl enable mariadb.service
+    systemctl enable apache2.service
+    
+    # Activar SSL con certificados autofirmados
+    a2ensite default-ssl
+    a2enmod ssl
+    a2enmod rewrite
+    systemctl status apache2.service > /dev/null 2>&1
+    if [ "$?" == "0" ]; then
+        echo "Restarting apache..."
+        systemctl restart apache2.service > /dev/null 2>&1
+    fi
+
+    # TODO: mostrar salida de motd.sh al arrancar con rc.local
+    # TODO: agregar repo Debian de DINOMI
+
+    # Actualizacion About Version Release
+    # Verificar si en la base ya existe algo
+    if [ "`sqlite3 /var/www/db/settings.db "select count(key) from settings where key='elastix_version_release';"`" = "0" ]; then
+        `sqlite3 /var/www/db/settings.db "insert into settings (key, value) values('elastix_version_release','$CURRVERSION');"`
+    else
+        #Actualizar
+        `sqlite3 /var/www/db/settings.db "update settings set value='$CURRVERSION' where key='elastix_version_release';"`
+    fi
+
+    # Para q se actualice smarty (tpl updates)
+    rm -rf /var/www/html/var/templates_c/*
+
+fi
 

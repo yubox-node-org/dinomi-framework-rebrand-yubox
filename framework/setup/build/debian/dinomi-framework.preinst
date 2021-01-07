@@ -1,4 +1,14 @@
 #!/bin/bash
 
-echo "Ejecutando dinomi-framework.preinst" $@
+PKGNAME=__PACKAGE_NAME__
+PATHMODULE=/usr/share/elastix/module_installer/$PKG_NAME-__PACKAGE_VERSION__
+PKGACTION=$1
+echo "EJECUTANDO $PKGNAME.preinst" $@
+
+if [ "$PKGACTION" == "upgrade" ] ; then
+    mkdir -p $PATHMODULE
+    echo $OLDVERSION  > "$MODINSTALLDIR/$PKGNAME-oldversion.txt"
+fi
+
+
 

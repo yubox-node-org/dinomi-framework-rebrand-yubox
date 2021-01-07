@@ -1,4 +1,12 @@
 #!/bin/bash
 
-echo "Ejecutando dinomi-framework.prerm" $@
+PKGNAME=__PACKAGE_NAME__
+PATHMODULE=/usr/share/elastix/module_installer/$PKG_NAME-__PACKAGE_VERSION__
+PKGACTION=$1
+CURRVERSION=__PACKAGE_VERSION__
+echo "EJECUTANDO $PKGNAME.prerm" $@
 
+if [ "$PKGACTION" == "remove" ] ; then
+    echo "Dump and delete %{name} databases from $PATHMODULE"
+    elastix-dbprocess "delete" "$PATHMODULE/setup/db"
+fi

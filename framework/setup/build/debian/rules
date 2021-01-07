@@ -5,9 +5,10 @@ DEB_SOURCE = $(call dpkg_late_eval,DEB_SOURCE,dpkg-parsechangelog -SSource)
 DEB_VERSION = $(call dpkg_late_eval,DEB_VERSION,dpkg-parsechangelog -SVersion)
 DEB_VERSION_UPSTREAM_REVISION = $(call dpkg_late_eval,DEB_VERSION_UPSTREAM_REVISION,echo '$(DEB_VERSION)' | sed -e 's/^[0-9]*://')
 
-DEB_BUILD_ROOT=$$(pwd)/debian/dinomi-framework/
-DEB_BUILD_THEMES_EXTRA=$$(pwd)/debian/dinomi-framework-themes-extra/
-DEB_BUILD_BRANDING=$$(pwd)/debian/dinomi-framework-branding/
+DEB_PACKAGENAME=dinomi-framework
+DEB_BUILD_ROOT=$$(pwd)/debian/$(DEB_PACKAGENAME)/
+DEB_BUILD_THEMES_EXTRA=$$(pwd)/debian/$(DEB_PACKAGENAME)-themes-extra/
+DEB_BUILD_BRANDING=$$(pwd)/debian/$(DEB_PACKAGENAME)-branding/
 
 %:
 	dh $@
@@ -79,4 +80,9 @@ override_dh_fixperms:
 	chown www-data.www-data $(DEB_BUILD_ROOT)/var/log/elastix/*
 	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/html/var/cache
 	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/html/var/templates_c
-	
+
+override_dh_builddeb:
+	sed -i -e 's/__PACKAGE_VERSION__/$(DEB_VERSION_UPSTREAM_REVISION)/' $$(pwd)/debian/$(DEB_PACKAGENAME)*.preinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.postinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.prerm
+	sed -i -e 's/__PACKAGE_NAME__/$(DEB_PACKAGENAME)/' $$(pwd)/debian/$(DEB_PACKAGENAME)*.preinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.postinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.prerm
+	dh_builddeb
+
