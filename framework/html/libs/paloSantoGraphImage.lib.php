@@ -27,13 +27,30 @@
   +----------------------------------------------------------------------+
 */
 
-require_once("jpgraph/jpgraph.php");
-require_once("jpgraph/jpgraph_line.php");
-require_once("jpgraph/jpgraph_pie.php");
-require_once("jpgraph/jpgraph_pie3d.php");
-require_once("jpgraph/jpgraph_bar.php");
-require_once("jpgraph/jpgraph_canvas.php");
-require_once("jpgraph/jpgraph_canvtools.php");
+// Lista de bibliotecas a localizar
+$jpgraph_libs = array(
+    'jpgraph.php',
+    'jpgraph_line.php',
+    'jpgraph_pie.php',
+    //'jpgraph_pie3d.php',  // <-- Biblioteca rota en jpgraph en Debian, no se usa
+    'jpgraph_bar.php',
+    'jpgraph_canvas.php',
+    'jpgraph_canvtools.php',
+);
+// Directorios candidatos para biblioteca jpgraph
+$jpgraph_testdirs = array(
+    '/usr/share/php/jpgraph/',  // <-- ubicación en CentOS/Fedora
+    '/usr/share/jpgraph/',      // <-- ubicación en Debian
+);
+foreach ($jpgraph_testdirs as $jpgraph_dir) {
+    if (file_exists($jpgraph_dir.$jpgraph_libs[0])) {
+        foreach ($jpgraph_libs as $jpgraph_lib) {
+            if (file_exists($jpgraph_dir.$jpgraph_lib))
+                require_once ($jpgraph_dir.$jpgraph_lib);
+        }
+        break;
+    }
+}
 
 /**
  * Método que sirve de reemplazo al mecanismo de paloSantoGraph y paloSantoGraphLib
