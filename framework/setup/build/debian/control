@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9)
 
 Package: dinomi-framework
 Architecture: all
-Pre-Depends: sudo (>= 1.7.0), php, php-gd, php-pear, php-xml, php-mysql, php-imap, php-soap, php-sqlite3, apache2, mysql-server|mariadb-server, perl, sysvinit-utils, init-system-helpers
+Pre-Depends: sudo (>= 1.7.0), php, php-gd, php-pear, php-xml, php-mysql, php-imap, php-soap, php-sqlite3, apache2, ssl-cert, mysql-server|mariadb-server, perl, sysvinit-utils, init-system-helpers
 Depends: ${shlibs:Depends}, ${misc:Depends}, smarty3, libphp-jpgraph, coreutils, procps, mysql-client|mariadb-client, sqlite3, dinomiframework-branding (= 1.0.0)
 Description: Web framework infrastructure for DINOMI
  Dinomi is a Web based software to operate and administrate a call center system
