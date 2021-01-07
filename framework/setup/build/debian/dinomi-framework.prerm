@@ -7,6 +7,6 @@ CURRVERSION=__PACKAGE_VERSION__
 echo "EJECUTANDO $PKGNAME.prerm" $@
 
 if [ "$PKGACTION" == "remove" ] ; then
-    echo "Dump and delete %{name} databases from $PATHMODULE"
+    echo "Dump and delete $PKGNAME databases from $PATHMODULE"
     elastix-dbprocess "delete" "$PATHMODULE/setup/db"
 fi
