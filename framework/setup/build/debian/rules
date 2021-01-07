@@ -81,8 +81,8 @@ override_dh_fixperms:
 	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/html/var/cache
 	chown www-data.www-data $(DEB_BUILD_ROOT)/var/www/html/var/templates_c
 
-override_dh_builddeb:
+override_dh_installdeb:
 	sed -i -e 's/__PACKAGE_VERSION__/$(DEB_VERSION_UPSTREAM_REVISION)/' $$(pwd)/debian/$(DEB_PACKAGENAME)*.preinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.postinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.prerm
 	sed -i -e 's/__PACKAGE_NAME__/$(DEB_PACKAGENAME)/' $$(pwd)/debian/$(DEB_PACKAGENAME)*.preinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.postinst $$(pwd)/debian/$(DEB_PACKAGENAME)*.prerm
-	dh_builddeb
+	dh_installdeb
 

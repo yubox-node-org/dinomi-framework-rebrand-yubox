@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PKGNAME=__PACKAGE_NAME__
-PATHMODULE=/usr/share/elastix/module_installer/$PKG_NAME-__PACKAGE_VERSION__
+PATHMODULE=/usr/share/elastix/module_installer/$PKGNAME-__PACKAGE_VERSION__
 PKGACTION=$1
 CURRVERSION=__PACKAGE_VERSION__
 echo "EJECUTANDO $PKGNAME.prerm" $@
