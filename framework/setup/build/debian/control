@@ -1,0 +1,29 @@
+Source: dinomi-framework
+Maintainer: Alex Villacís Lasso <a_villacis@palosanto.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+
+Package: dinomi-framework
+Architecture: all
+Pre-Depends: sudo (>= 1.7.0), php, php-gd, php-pear, php-xml, php-mysql, php-imap, php-soap, php-sqlite3, apache2, ssl-cert, mysql-server|mariadb-server, perl, sysvinit-utils, init-system-helpers
+Depends: ${shlibs:Depends}, ${misc:Depends}, smarty3, libphp-jpgraph, coreutils, procps, mysql-client|mariadb-client, sqlite3, dinomiframework-branding (= 1.0.0)
+Description: Web framework infrastructure for DINOMI
+ Dinomi is a Web based software to operate and administrate a call center system
+ based in open source programs. This package provides the standard L&F and APIs
+ inherited from El@stix that allow DINOMI CallCenter to work.
+ TODO: agregar dependencia: dinomi-firstboot
+
+Package: dinomi-framework-themes-extra
+Architecture: all
+Depends: dinomi-framework (>= 1.0.0), dinomiframework-branding (= 1.0.0)
+Description: Dinomi GUI themes from 2.4 and earlier
+ This package provides the Dinomi GUI themes from earlier versions.
+
+Package: dinomi-framework-branding
+Architecture: all
+Provides: dinomiframework-branding (= 1.0.0)
+Description: Framework brand logos
+ This package provides image files with brand logos that appear in the web GUI.
+
