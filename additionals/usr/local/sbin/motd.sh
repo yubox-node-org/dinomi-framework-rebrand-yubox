@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check for existence of /etc/init.d/wanrouter
 if [ -e /usr/sbin/asterisk ]; then
