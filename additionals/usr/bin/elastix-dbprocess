@@ -365,7 +365,13 @@ class SchemaUpdater_mysql extends SchemaUpdater
     function isRunning()
     {
         // CentOS 7 ISO install runs in chroot which messes up /sbin/service.
-        return (strlen(trim(`/sbin/pidof mysqld`)) > 0);
+        // Debian places pidof in /usr/bin/pidof not /sbin/pidof
+        $pidof = NULL;
+        foreach (array('/sbin/pidof', '/usr/bin/pidof') as $s) if (is_executable($s)) {
+            $pidof = $s;
+            break;
+        }
+        return is_null($pidof) ? FALSE : (strlen(trim(`$pidof mysqld`)) > 0);
     }
 
     protected function _existsDatabase()
