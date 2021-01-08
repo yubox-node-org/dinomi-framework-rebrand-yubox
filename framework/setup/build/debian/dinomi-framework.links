@@ -2,4 +2,4 @@ etc/php/7.3/mods-available/elastix.ini etc/php/7.3/apache2/conf.d/elastix.ini
 etc/php/7.3/mods-available/elastix.ini etc/php/7.3/cli/conf.d/elastix.ini
 etc/apache2/conf-available/elastix.conf etc/apache2/conf-enabled/elastix.conf
 etc/apache2/conf-available/elastix-htaccess.conf etc/apache2/conf-enabled/elastix-htaccess.conf
-
+usr/local/sbin/motd.sh etc/update-motd.d/99-dinomi
