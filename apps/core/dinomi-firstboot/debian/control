@@ -1,0 +1,18 @@
+Source: dinomi-firstboot
+Maintainer: Alex Villacís Lasso <a_villacis@palosanto.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+
+Package: dinomi-firstboot
+Architecture: all
+Pre-Depends: coreutils
+Depends: ${shlibs:Depends}, ${misc:Depends}, php, mysql-server|mariadb-server, mysql-client|mariadb-client, dialog, sed, grep, kbd
+Description:  Dinomi First Boot Setup
+ This module contains (or should contain) utilities and configurations that
+ cannot be prepared at install time from the ISO image, and are therefore
+ delayed until the first boot of the newly installed system. The main aim of
+ this script is to replace elastix-mysqldbdata until all RPMS are able to
+ either prepare their databases on their own, or delegate this task to this
+ package.
