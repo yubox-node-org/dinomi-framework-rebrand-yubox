@@ -1,0 +1,3 @@
+usr/lib/systemd/system
+var/spool/elastix-mysqldbscripts
+usr/bin

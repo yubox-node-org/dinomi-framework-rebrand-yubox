@@ -22,4 +22,4 @@ etc/apache2/conf-enabled
 etc/init.d
 etc/sudoers.d
 etc/logrotate.d
-
+etc/update-motd.d
