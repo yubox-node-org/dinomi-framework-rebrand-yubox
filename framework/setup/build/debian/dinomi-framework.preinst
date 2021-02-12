@@ -7,5 +7,5 @@ echo "EJECUTANDO $PKGNAME.preinst" $@
 
 if [ "$PKGACTION" == "upgrade" ] ; then
     mkdir -p $PATHMODULE
-    dpkg-query --show --showformat='${Version}' $PKGNAME  > "$MODINSTALLDIR/$PKGNAME-oldversion.txt"
+    dpkg-query --show --showformat='${Version}' $PKGNAME  > "$PATHMODULE/$PKGNAME-oldversion.txt"
 fi
