@@ -339,6 +339,14 @@ class paloACL {
         return $bExito;
     }
 
+    // Revisar si la tabla acl_user_profile existe. Necesario porque la tabla
+    // sólo existe si se ha instalado elastix-system o dinomi-system
+    private function _hasACL_UserProfile()
+    {
+        $rs = $this->_DB->getFirstRowQuery('SELECT 1 FROM acl_user_profile LIMIT 1');
+        return is_array($rs);
+    }
+
     /**
      * Procedimiento para borrar un usuario ACL, dado su ID numérico de usuario
      *
@@ -358,14 +366,14 @@ class paloACL {
                 "DELETE FROM acl_notification WHERE id_user = ?",
                 "DELETE FROM acl_user_permission WHERE id_user = ?",
                 "DELETE FROM acl_membership WHERE id_user = ?",
-                "DELETE FROM acl_user_profile WHERE id_user = ?",
+                ($this->_hasACL_UserProfile() ? "DELETE FROM acl_user_profile WHERE id_user = ?" : ''),
                 "DELETE FROM acl_user_shortcut WHERE id_user = ?",
                 "DELETE FROM sticky_note WHERE id_user = ?",
                 "DELETE FROM acl_user WHERE id = ?",
             );
             $bExito = TRUE;
 
-            foreach ($listaSQL as $sPeticionSQL) {
+            foreach ($listaSQL as $sPeticionSQL) if ($sPeticionSQL != '') {
                 $bExito = $this->_DB->genQuery($sPeticionSQL, array($id_user));
                 if (!$bExito) {
                     $this->errMsg = $this->_DB->errMsg;
@@ -1259,14 +1267,14 @@ class paloACL {
             "DELETE FROM acl_notification WHERE id_resource = ?",
             "DELETE FROM acl_group_permission WHERE id_resource = ?",
             "DELETE FROM acl_user_permission WHERE id_resource = ?",
-            "DELETE FROM acl_user_profile WHERE id_resource = ?",
+            ($this->_hasACL_UserProfile() ? "DELETE FROM acl_user_profile WHERE id_resource = ?" : ''),
             "DELETE FROM acl_user_shortcut WHERE id_resource = ?",
             "DELETE FROM sticky_note WHERE id_resource = ?",
             "DELETE FROM acl_resource WHERE id = ?",
         );
         $bExito = TRUE;
 
-        foreach ($listaSQL as $sPeticionSQL) {
+        foreach ($listaSQL as $sPeticionSQL) if ($sPeticionSQL != '') {
             $bExito = $this->_DB->genQuery($sPeticionSQL, array($idresource));
             if (!$bExito) {
                 $this->errMsg = $this->_DB->errMsg;
