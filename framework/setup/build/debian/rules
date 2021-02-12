@@ -24,6 +24,7 @@ override_dh_auto_install:
 	cp additionals/etc/httpd/conf.d/elastix-htaccess.conf $(DEB_BUILD_ROOT)/etc/apache2/conf-available
 	cp additionals/etc/php.d/elastix.ini $(DEB_BUILD_ROOT)/etc/php/7.3/mods-available
 	cp additionals/etc/sudoers.d/dinomi-framework $(DEB_BUILD_ROOT)/etc/sudoers.d/
+	sed -i 's/apache/www-data/g' $(DEB_BUILD_ROOT)/etc/sudoers.d/dinomi-framework
 	cp additionals/etc/cron.d/elastix.cron $(DEB_BUILD_ROOT)/etc/cron.d/
 	# TODO: instalar rc.local
 	cp additionals/usr/local/elastix/sampler.php $(DEB_BUILD_ROOT)/usr/local/elastix
