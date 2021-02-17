@@ -14,9 +14,9 @@ usr/share/elastix/privileged
 usr/share/elastix/module_installer
 etc/cron.d
 etc/dinomi-dsn
-etc/php/7.3/apache2/conf.d
-etc/php/7.3/cli/conf.d
-etc/php/7.3/mods-available
+etc/php/__PHPVER__/apache2/conf.d
+etc/php/__PHPVER__/cli/conf.d
+etc/php/__PHPVER__/mods-available
 etc/apache2/conf-available
 etc/apache2/conf-enabled
 etc/init.d
