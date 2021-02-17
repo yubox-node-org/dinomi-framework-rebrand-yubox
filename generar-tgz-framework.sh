@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GIT_PREFIX=elastix-framework
-TREE_ISH=4.0.0
+GIT_PREFIX=dinomi-framework
+TREE_ISH=DINOMI_ISO
 
 if [ "$1" != "" ] ; then
     TREE_ISH=$1
