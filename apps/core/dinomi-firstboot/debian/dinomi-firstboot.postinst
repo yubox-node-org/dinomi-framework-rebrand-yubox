@@ -4,9 +4,4 @@ PKGACTION=$1
 
 if [ "$PKGACTION" == "configure" ] ; then
     systemctl enable dinomi-firstboot.service
-
-    if [ ! -e /etc/elastix.conf ] ; then
-        echo "Installing/Updating in active system - legacy password written to /etc/elastix.conf"
-        echo "mysqlrootpwd=eLaStIx.2oo7" >> /etc/elastix.conf
-    fi
 fi
