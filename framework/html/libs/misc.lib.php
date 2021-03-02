@@ -636,11 +636,11 @@ function isPostfixToElastix2(){
     return $band;
 }
 
-// Esta función revisa las bases de datos del framework (acl.db, menu.db, register.db, settings.db, samples.db) en caso de que no existan y se encuentre su equivalente pero con extensión .rpmsave entonces se las renombra.
+// Esta función revisa las bases de datos del framework (acl.db, menu.db, settings.db, samples.db) en caso de que no existan y se encuentre su equivalente pero con extensión .rpmsave entonces se las renombra.
 // Esto se lo hace exclusivamente debido a la migración de las bases de datos .db del framework a archivos .sql ya que el último rpm generado que contenía las bases como .db las renombra a .rpmsave
 function checkFrameworkDatabases($dbdir)
 {
-    $arrFrameWorkDatabases = array("acl.db","menu.db","register.db","samples.db","settings.db");
+    $arrFrameWorkDatabases = array("acl.db","menu.db","samples.db","settings.db");
     foreach($arrFrameWorkDatabases as $database){
         if(!file_exists("$dbdir/$database") || filesize("$dbdir/$database")==0){
             if(file_exists("$dbdir/$database.rpmsave"))
