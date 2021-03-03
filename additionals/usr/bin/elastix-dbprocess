@@ -371,7 +371,17 @@ class SchemaUpdater_mysql extends SchemaUpdater
             $pidof = $s;
             break;
         }
-        return is_null($pidof) ? FALSE : (strlen(trim(`$pidof mysqld`)) > 0);
+        if (is_null($pidof)) return FALSE;
+
+        // Try to work around unreliability of pidof on Debian Buster (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=926896)
+        $mysql_running = FALSE;
+        $t1 = microtime(TRUE); $t2 = $t1; $retries = 0;
+        do {
+            $mysql_running = (strlen(trim(`$pidof mysqld`)) > 0);
+            $t2 = microtime(TRUE);
+            $retries++;
+        } while (!$mysql_running && ($t2 - $t1) < 2);
+        return $mysql_running;
     }
 
     protected function _existsDatabase()
