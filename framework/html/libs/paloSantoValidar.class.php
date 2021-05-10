@@ -47,7 +47,7 @@ class PaloValidar
 
     function clear()
     {
-        $this->arrErrores = '';
+        $this->arrErrores = array();
     }
 
     function validar($nombre_variable, $variable, $tipo_validacion, $parametro_extra='')
