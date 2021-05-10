@@ -73,7 +73,7 @@ class AGI_AsteriskManager2 extends AGI_AsteriskManager
     function procesarPaquetes()
     {
         $bHayProcesados = FALSE;
-        if ($this->hayPaquetes()) {
+        while ($this->hayPaquetes()) {
             $bHayProcesados = TRUE;
             $this->procesarPaquete();
             //$this->vaciarBuferesEscritura();
