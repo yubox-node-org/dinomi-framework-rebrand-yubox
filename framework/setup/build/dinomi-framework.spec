@@ -395,6 +395,23 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/images/logo_elastix_new3.gif
 
 %changelog
+* Wed May 26 2021 Alex Villacís Lasso <a_villacis@palosanto.com>
+- FIXED: more PHP7 fixes.
+- FIXED: allow absence of acl_user_profile table, since the table only exists
+  if elastix-system or dinomi-system is installed.
+- CHANGED: allow serving from Apache webserver without SSL or rewrite support
+- CHANGED: preliminary Debian support
+- CHANGED: replace elastix-dbprocess implementation with the one developed for
+  DINOMI CallCenter, which is cleaner, more compact, and fixes some bugs.
+- CHANGED: tweaks for visualization in cellphones
+- CHANGED: update and modernize paloDB to add charset support, generalize
+  specific database driver support (PostgreSQL support added), add Unix
+  socket support for MySQL.
+- FIXED: changed some absolute web paths to relative in order to not break
+  when relocating the framework.
+- CHANGED: integrate DINOMI ISO images into branding.
+- CHANGED: change RPM list for Installed check to include DINOMI ISO RPMs.
+
 * Fri Sep 13 2019 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: remove licensing hack that breaks DINOMI when installed with this
   version of elastix-framework.
