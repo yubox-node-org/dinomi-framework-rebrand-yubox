@@ -14,8 +14,8 @@ CREATE TABLE `settings`
 
 CREATE TABLE `menu`
 (
-    `id`        VARCHAR(40),
-    `IdParent`  VARCHAR(40),
+    `id`        VARCHAR(64),
+    `IdParent`  VARCHAR(64),
     `Link`      VARCHAR(250),
     `Name`      VARCHAR(250),
     `Type`      VARCHAR(20),
@@ -29,14 +29,14 @@ CREATE TABLE `acl_action`
     `description`   VARCHAR(200)    NOT NULL,
     `id`            INT             NOT NULL    AUTO_INCREMENT,
     `name`          VARCHAR(10)     NOT NULL,
-    
+
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `acl_resource`
 (
     `id`            INT             NOT NULL    AUTO_INCREMENT,
-    `name`          VARCHAR(50)     NOT NULL,
+    `name`          VARCHAR(64)     NOT NULL,
     `description`   VARCHAR(180)    NOT NULL,
 
     PRIMARY KEY (`id`)

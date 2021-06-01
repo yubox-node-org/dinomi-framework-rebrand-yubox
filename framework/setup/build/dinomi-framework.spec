@@ -1,8 +1,8 @@
-Summary: Dinomi is a Web based software to operate and administrate a call center system based in open source programs
+Summary: Base Web framework for DINOMI CallCenter and other web modules
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
-Version: 1.0.0
-Release: 11
+Version: 1.1.0
+Release: 1
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -41,17 +41,21 @@ Requires: sqlite
 # elastix-framework should stand by itself without an asterisk dependency.
 
 %description
-Dinomi is a Web based software to operate and administrate a call center system based in open source programs.
+DINOMI is a Web based software to operate and administrate a call center system
+based in open source programs. This package contains the web framework libraries
+on which the application depends, including ACL authorization, routing, and
+unified L&F for all hosted application modules. Also contains basic helpers for
+database access.
 
 %package themes-extra
-Summary: Dinomi GUI themes from 2.4 and earlier
+Summary: DINOMI GUI themes from 2.4 and earlier
 Group: Applications/System
 BuildArch: noarch
 Requires: dinomi-framework = %{version}-%{release}
 Requires: dinomiframework-branding >= 1.0.0
 
 %description themes-extra
-This package provides the Dinomi GUI themes from earlier versions.
+This package provides the DINOMI GUI themes from earlier versions.
 
 %package branding
 Summary: Framework brand logos
@@ -183,9 +187,6 @@ chmod 644 $RPM_BUILD_ROOT/etc/logrotate.d/*
 # File Elastix Access Audit log
 mkdir -p    $RPM_BUILD_ROOT/var/log/elastix
 touch       $RPM_BUILD_ROOT/var/log/elastix/audit.log
-
-mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/cache
-mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/templates_c
 
 mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/cache
 mkdir -p    $RPM_BUILD_ROOT/var/www/html/var/templates_c
@@ -395,6 +396,23 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/images/logo_elastix_new3.gif
 
 %changelog
+* Wed May 26 2021 Alex Villacís Lasso <a_villacis@palosanto.com> 1.1.0-1
+- FIXED: more PHP7 fixes.
+- FIXED: allow absence of acl_user_profile table, since the table only exists
+  if elastix-system or dinomi-system is installed.
+- CHANGED: allow serving from Apache webserver without SSL or rewrite support
+- CHANGED: preliminary Debian support
+- CHANGED: replace elastix-dbprocess implementation with the one developed for
+  DINOMI CallCenter, which is cleaner, more compact, and fixes some bugs.
+- CHANGED: tweaks for visualization in cellphones
+- CHANGED: update and modernize paloDB to add charset support, generalize
+  specific database driver support (PostgreSQL support added), add Unix
+  socket support for MySQL.
+- FIXED: changed some absolute web paths to relative in order to not break
+  when relocating the framework.
+- CHANGED: integrate DINOMI ISO images into branding.
+- CHANGED: change RPM list for Installed check to include DINOMI ISO RPMs.
+
 * Fri Sep 13 2019 Alex Villacís Lasso <a_villacis@palosanto.com>
 - FIXED: remove licensing hack that breaks DINOMI when installed with this
   version of elastix-framework.

@@ -1,5 +1,7 @@
 #!/usr/bin/php
 <?php
+require_once('Console/Getopt.php');     // Parseo de opciones de línea de comando
+
 global $arrConf;
 global $arrLang;
 if (!($documentRoot = getenv('ELASTIX_ROOT'))) $documentRoot="/var/www/html";
@@ -7,6 +9,46 @@ require_once("$documentRoot/libs/paloSantoDB.class.php");
 require_once("$documentRoot/libs/misc.lib.php");
 require_once("$documentRoot/configs/default.conf.php");
 load_default_timezone();
+
+$help = FALSE;
+$sqlout = NULL;
+$removedb = FALSE;
+
+$opt = Console_Getopt::getopt($argv, 'o:Rh');
+if (PEAR::isError($opt)) {
+    // Se ha especificado una operación no reconocida
+    fwrite(STDERR, $opt->getMessage()."\n");
+    $help = TRUE;
+} else foreach ($opt[0] as $op) switch ($op[0]) {
+case 'h':
+    $help = TRUE;
+    break;
+case 'o':
+    $sqlout = $op[1];
+    break;
+case 'R':
+    $removedb = TRUE;
+    break;
+}
+
+if ($help) {
+    $help_msg = <<<HELP_MSG
+Uso: {$argv[0]} [OPCION]
+
+  -h        Mostrar esta ayuda
+  -o FILE   En lugar de ingresar directamente, generar SQL de ingreso al
+            archivo indicado.
+  -R        REMOVER los archivos SQLite leídos luego de migrar
+
+HELP_MSG;
+    fwrite (STDERR, $help_msg);
+    exit(0);
+}
+
+function q($s) {
+    if (is_null($s)) return 'NULL';
+    return '"'.addslashes($s).'"';
+}
 
 $dbs = array(
     'menu.db'   =>  array(
@@ -33,34 +75,81 @@ $dbs = array(
         'acl_profile_properties',
     ),
 );
+$dbsremove = array();
 
-$dsn = generarDSNSistema('elx4', 'elxframework', $documentRoot.'/');
-$pDB = new paloDB($dsn);
-if ($pDB->connStatus) die("FATAL: al conectar a DB: {$pDB->errMsg}\n");
+if (is_null($sqlout)) {
+    $fout = NULL;
+    $dsn = generarDSNSistema('elx4', 'elxframework', $documentRoot.'/');
+    $pDB = new paloDB($dsn);
+    if ($pDB->connStatus) die("FATAL: al conectar a DB: {$pDB->errMsg}\n");
+} else {
+    $pDB = NULL;
+    $fout = ($sqlout == '-') ? STDOUT : fopen($sqlout, 'wt');
+    if (!$fout) die("FATAL: no se puede abrir archivo $sqlout\n");
+
+    fwrite($fout, "USE `elxframework`;\n\n");
+}
 
 foreach ($dbs as $sqlite => $tbls) {
-    print "$sqlite ...\n";
+    fwrite(STDERR, "$sqlite ...\n");
     $pDB_src = new paloDB("sqlite3:///{$arrConf['elastix_dbdir']}/{$sqlite}");
     if ($pDB_src->connStatus) die("FATAL: al conectar a DB: {$pDB_src->errMsg}\n");
-    
+
     foreach ($tbls as $tbl) {
+        $rs = $pDB_src->getFirstRowQuery('SELECT 1 FROM '.$tbl.' LIMIT 1');
+        if (!is_array($rs)) {
+            fputs(STDERR, "WARN: tabla $tbl parece que no existe ({$pDB_src->errMsg}), se salta...\n");
+            continue;
+        }
+
         $sql = 'SELECT * FROM '.$tbl;
         $rs = $pDB_src->fetchTable($sql, TRUE);
         if (!is_array($rs)) die("FATAL: al leer $sqlite / $tbl: {$pDB_src->errMsg}\n");
-        
+
         $sql = 'DELETE FROM '.$tbl.' WHERE 1';
-        if (!$pDB->genQuery($sql)) {
-            die("FATAL: al borrar $tbl en destino: {$pDB->errMsg}\n");
-        }
-        foreach ($rs as $row) {
-            $ks = array_keys($row);
-            $vs = array_values($row);
-            $sql = 'INSERT INTO '.$tbl.' (`'.implode('`, `', $ks).'`) VALUES ('.implode(', ', array_fill(0, count($vs), '?')).')';
-            if (!$pDB->genQuery($sql, $vs)) {
-                die("FATAL: al insertar $tbl en destino: {$pDB->errMsg}\n");
+        if (!is_null($pDB)) {
+            if (!$pDB->genQuery($sql)) {
+                die("FATAL: al borrar $tbl en destino: {$pDB->errMsg}\n");
             }
         }
-        
+        if (!is_null($fout)) {
+            fwrite($fout, "\n$sql ;\n");
+        }
+        foreach ($rs as $row) {
+
+            // HACK 1: tabla menu columna order_no debería ser entero pero puede tener
+            // una cadena vacía - se fuerza a NULL
+            if ($tbl == 'menu') {
+                if (isset($row['order_no']) && trim($row['order_no']) == '') {
+                    $row['order_no'] = NULL;
+                }
+            }
+
+            $ks = array_keys($row);
+            $vs = array_values($row);
+
+            if (!is_null($pDB)) {
+                $sql = 'INSERT INTO '.$tbl.' (`'.implode('`, `', $ks).'`) VALUES ('.implode(', ', array_fill(0, count($vs), '?')).')';
+                if (!$pDB->genQuery($sql, $vs)) {
+                    die("FATAL: al insertar $tbl en destino: {$pDB->errMsg}\n");
+                }
+            }
+
+            if (!is_null($fout)) {
+                $sql = 'INSERT INTO '.$tbl.' (`'.implode('`, `', $ks).'`) VALUES ('.implode(', ', array_map("q", $vs)).')';
+                fwrite($fout, "$sql ;\n");
+            }
+        }
     }
+
+    $dbsremove[] = $sqlite;
 }
 
+if (!is_null($fout) && $sqlout != '-') fclose($fout);
+
+if ($removedb) foreach ($dbsremove as $sqlite) {
+    fwrite(STDERR, "BORRANDO $sqlite ...\n");
+    if (!unlink($arrConf['elastix_dbdir'].'/'.$sqlite)) {
+        fwrite(STDERR, "WARN: no se pudo borrar $sqlite !\n");
+    }
+}
