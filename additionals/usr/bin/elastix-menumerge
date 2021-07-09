@@ -85,7 +85,8 @@ foreach ($xml->menulist->menuitem as $xml_menuitem) {
     if (isset($xml_menuitem->permissions) && isset($xml_menuitem->permissions->group)) {
         foreach ($xml_menuitem->permissions->group as $xml_group) {
             $group = array();
-            foreach (array('id', 'name', 'desc') as $k) $group[$k] = (string)$xml_group[$k];
+            foreach (array('id') as $k) if (isset($xml_group[$k])) $group[$k] = (string)$xml_group[$k];
+            foreach (array('name', 'desc') as $k) $group[$k] = (string)$xml_group[$k];
             $groups[] = $group;
         }
     }
@@ -108,7 +109,7 @@ foreach ($xml->menulist->menuitem as $xml_menuitem) {
             error_exit("ERR: failed to update menuitem {$menuitem['menuid']} - {$oInstaller->_errMsg}\n");
         }
         
-        // TODO: updateResourceMembership crea el recurso ACL pero no modifica grupos, heredado de implementación anterior
+        // updateResourceMembership crea el recurso ACL y agrega grupos pero no quita grupos existenes adicionales
         if ($menuitem['parent'] != '' && !$oInstaller->updateResourceMembership($oACL, $menuitem, $groups)) {
             error_exit("ERR: failed to update group permissions for menuitem {$menuitem['menuid']} - {$oInstaller->_errMsg}\n");
         }
