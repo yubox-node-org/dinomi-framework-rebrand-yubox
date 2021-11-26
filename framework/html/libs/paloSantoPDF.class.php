@@ -89,8 +89,8 @@ class paloSantoPDF extends TCPDF
             $this->_switchElxRenderStyle('TableHeader');
             $this->_anchoCols = array_map(array($this, '_elxAnchoTexto'), $header);
             $this->_switchElxRenderStyle('TableData');
-            for ($i = 0; $i < count($data); $i++) {
-                $this->_anchoCols = array_map('max', $this->_anchoCols, array_map(array($this, '_elxAnchoTexto'), $data[$i]));
+            foreach ($data as &$row) {
+                $this->_anchoCols = array_map('max', $this->_anchoCols, array_map(array($this, '_elxAnchoTexto'), $row));
             }
 
             // Se verifica si el ancho total excede el ancho de la página

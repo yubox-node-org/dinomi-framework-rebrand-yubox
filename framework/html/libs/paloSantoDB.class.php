@@ -232,42 +232,32 @@ class paloDB {
      */
     function fetchTable($query, $arr_colnames = FALSE, $param = NULL)
     {
-        if ($this->connStatus) {
-            return FALSE;
-        } else {
-            $this->errMsg = "";
-            try{
-                if (is_array($param)) {
-                    $result = $this->conn->prepare($query);
-                    if (!is_object($result)) {
-                        $this->errMsg = "Error de conexion al preparar peticion - ".print_r($this->conn->errorInfo(), 1);
-                        return FALSE;
-                    }
-                    $this->_bindParameters($result, $param);
-                    $r = $result->execute();
-                    if (!$r) {
-                        $this->errMsg = "Error de conexion a la base de datos - " . print_r($result->errorInfo(), 1);
-                        return FALSE;
-                    }
-                } else {
-                    $result = $this->conn->query($query);
-                }
-                $arrResult = array();
-                //while($row = $result->fetchRow($arr_colnames ? DB_FETCHMODE_OBJECT : DB_FETCHMODE_DEFAULT)) {
-                if($result!=null){
-                    while($row = $result->fetch($arr_colnames ? PDO::FETCH_OBJ : PDO::FETCH_NUM)) {
-                        $arrResult[] = (array)$row;
-                    }
-                }else{
-                    $this->errMsg = "Query Error $query";
-                    //echo "Query Error $query";
+        if ($this->connStatus) return FALSE;
+        $this->errMsg = '';
+        try {
+            if (is_array($param)) {
+                $result = $this->conn->prepare($query);
+                if (!is_object($result)) {
+                    $this->errMsg = "DB error on query prepare - ".print_r($this->conn->errorInfo(), 1);
                     return FALSE;
                 }
-                return $arrResult;
-            }catch(PDOException $e){
-                $this->errMsg = "Query Error: " . $e->getMessage();
-                return FALSE;
+                $this->_bindParameters($result, $param);
+                $r = $result->execute();
+                if (!$r) {
+                    $this->errMsg = "DB error on query execute - " . print_r($result->errorInfo(), 1);
+                    return FALSE;
+                }
+            } else {
+                $result = $this->conn->query($query);
+                if (!is_object($result)) {
+                    $this->errMsg = "DB error on query - ".print_r($this->conn->errorInfo(), 1);
+                    return FALSE;
+                }
             }
+            return $result->fetchAll($arr_colnames ? PDO::FETCH_ASSOC : PDO::FETCH_NUM);
+        } catch(PDOException $e) {
+            $this->errMsg = "Query Error: " . $e->getMessage();
+            return FALSE;
         }
     }
 

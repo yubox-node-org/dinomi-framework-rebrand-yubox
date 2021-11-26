@@ -82,11 +82,48 @@ class Installer
     {
         $oACL->_DB->beginTransaction();
         $bExito = $oACL->createResource($arrTmp['menuid'], $arrTmp['tag']);
-        if ($bExito){
-            $oACL->_DB->commit();
-        }else
-            $oACL->_DB->rollBack();
+        if ($bExito) {
+            $resource_id = $oACL->getResourceId($arrTmp['menuid']);
+            $bExito = !is_null($resource_id);
+        }
+        if ($bExito && count($arrGroup) > 0) {
+            foreach ($arrGroup as $g) {
+                $id_group = $oACL->getIdGroup($g['name']);
+                if (!$id_group) {
+                    if (isset($g['id']) && !is_null($oACL->getGroupNameByid($g['id']))) {
+                        // TODO: verificar que el nombre del grupo es igual
+                        $id_group = $g['id'];
+                    } else {
+                        $bExito = $oACL->createGroup($g['name'], $g['desc']);
+                        if (!$bExito) break;
+                        $id_group = $oACL->_DB->getLastInsertId();
+                    }
+                }
+
+                // Verificar si la lista de permisos actuales incluye el recurso
+                $access_granted = FALSE;
+                if ($bExito) {
+                    $curr_perms = $oACL->loadGroupPermissions($id_group);
+                    foreach ($curr_perms as $curr_perm) {
+                        if ($curr_perm['action_name'] == 'access' && $curr_perm['resource_name'] == $arrTmp['menuid']) {
+                            // Este grupo tiene permiso para el recurso
+                            $access_granted = TRUE;
+                            break;
+                        }
+                    }
+                }
+                if ($bExito && !$access_granted) {
+                    $bExito = $oACL->saveGroupPermission($id_group, array($resource_id));
+                    if (!$bExito) break;
+                }
+            }
+        }
+
         $this->_errMsg = $oACL->errMsg;
+        if ($bExito)
+            $oACL->_DB->commit();
+        else
+            $oACL->_DB->rollBack();
         return $bExito;
     }
 
@@ -107,12 +144,18 @@ class Installer
         }
         if ($bExito) {
             if (!(is_array($arrGroup) && count($arrGroup) > 0)) {
-                $grouplist[] = 1;   // Esto asume que el grupo 1 es "admin"
+                $id_group = $oACL->getIdGroup('administrator');
+                if (!$id_group) {
+                    $bExito = FALSE;
+                    $oACL->errMsg = 'No groups assigned to resource, unable to locate group ID for group: administrator';
+                } else {
+                    $grouplist[] = $id_group;
+                }
             } else {
                 foreach ($arrGroup as $g) {
                     $id_group = $oACL->getIdGroup($g['name']);
                     if (!$id_group) {
-                        if (!is_null($oACL->getGroupNameByid($g['id']))) {
+                        if (isset($g['id']) && !is_null($oACL->getGroupNameByid($g['id']))) {
                             // TODO: verificar que el nombre del grupo es igual
                             $id_group = $g['id'];
                         } else {
