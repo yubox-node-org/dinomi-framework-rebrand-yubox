@@ -2,7 +2,7 @@ Summary: Elastix is a Web based software to administrate a PBX based in open sou
 Name: elastix-framework
 Vendor: Palosanto Solutions S.A.
 Version: 4.0.0
-Release: 19
+Release: 20
 License: GPL
 Group: Applications/System
 #Source: elastix-framework_%{version}-%{release}.tgz
@@ -445,6 +445,21 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/images/logo_elastix_new3.gif
 
 %changelog
+* Thu Feb 24 2022 Alex Villacís Lasso <a_villacis@palosanto.com> 4.0.0-20
+- Fix assumption of numeric array when generating report PDF
+- Optimize recordset fetching in paloDB::fetchTable()
+- Allow menu.xml with groups lacking group IDs
+- Fix use of string as array that aborts under PHP 7.
+- Replace elastix-dbprocess with version from DINOMI CallCenter
+- Degrade gracefully if HTTPS is not available for redirection.
+- Backport loading of additional configuration from config.d/*.conf.php .
+- Backport parsing of /etc/dinomi-dsn/*.conf to enable additional database
+  credentials.
+
+* Fri May 29 2020 Alex Villacís Lasso <a_villacis@palosanto.com>
+- Modernize paloDB class, including modern constructor, allow charset spec,
+  factor out DNS parsing by DB type.
+
 * Fri Sep 13 2019 Alex Villacís Lasso <a_villacis@palosanto.com> 4.0.0-19
 - FIXED: remove licensing hack that breaks DINOMI when installed with this
   version of elastix-framework.
