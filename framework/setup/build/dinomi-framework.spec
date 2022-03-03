@@ -396,6 +396,11 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/images/logo_elastix_new3.gif
 
 %changelog
+* Thu Feb 24 2022 Alex Villacís Lasso <a_villacis@palosanto.com>
+- Fix assumption of numeric array when generating report PDF
+- Optimize recordset fetching in paloDB::fetchTable()
+- Allow menu.xml with groups lacking group IDs
+
 * Wed May 26 2021 Alex Villacís Lasso <a_villacis@palosanto.com> 1.1.0-1
 - FIXED: more PHP7 fixes.
 - FIXED: allow absence of acl_user_profile table, since the table only exists
