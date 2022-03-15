@@ -27,7 +27,6 @@
   +----------------------------------------------------------------------+
   $Id: index.php,v 1.1 2007/01/09 23:49:36 alex Exp $
 */
-require_once "libs/paloSantoGraphImage.lib.php";
 
 class Applet_SystemResources
 {
@@ -255,6 +254,8 @@ class Applet_SystemResources
         $value = $_REQUEST['percent'];
         if (!is_numeric($value)) return;
 
+        require_once "libs/paloSantoGraphImage.lib.php";
+
         $size = '140,140';
 
         $result = array();
@@ -268,5 +269,3 @@ class Applet_SystemResources
         displayGraphResult($result);
     }
 }
-
-?>

@@ -27,8 +27,6 @@
   +----------------------------------------------------------------------+
   $Id: index.php,v 1.1 2007/01/09 23:49:36 alex Exp $
 */
-require_once "libs/paloSantoGraphImage.lib.php";
-
 class Applet_HardDrives
 {
     function handleJSON_getContent($smarty, $module_name, $appletlist)
@@ -189,7 +187,9 @@ class Applet_HardDrives
     {
         $value = $_REQUEST['percent'];
         if (!is_numeric($value)) return;
-        
+
+        require_once "libs/paloSantoGraphImage.lib.php";
+
         $result = array();
         $result['ATTRIBUTES'] = array(
             'TITLE'=>'',
@@ -232,4 +232,3 @@ class Applet_HardDrives
         return $uelastix;
     }
 }
-?>
