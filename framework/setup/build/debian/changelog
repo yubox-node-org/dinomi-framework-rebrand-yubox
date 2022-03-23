@@ -1,5 +1,147 @@
-dinomi-framework (1.0.0-11) UNRELEASED; urgency=low
+dinomi-framework (1.1.1-0) UNRELEASED; urgency=medium
 
-  * Initial release. (Closes: #XXXXXX)
+  [ Alex Villacís Lasso ]
+  * Package for release
+  * Fix assumption of numeric array when generating report PDF
+  * Optimize recordset fetching in paloDB::fetchTable()
+  * Allow menu.xml with groups lacking group IDs
 
- -- Alex Villacis Lasso <a_villacis@palosanto.com>  Mon, 04 Jan 2021 21:54:40 +0000
+ -- Alex Villacís Lasso <a_villacis@palosanto.com>  Sun, 13 Mar 2022 00:00:00 -0500
+
+dinomi-framework (1.1.0-1) UNRELEASED; urgency=medium
+
+  [ Alex Villacís Lasso ]
+  * FIXED: more PHP7 fixes.
+  * FIXED: allow absence of acl_user_profile table, since the table only exists
+    if elastix-system or dinomi-system is installed.
+  * CHANGED: allow serving from Apache webserver without SSL or rewrite support
+  * CHANGED: preliminary Debian support
+  * CHANGED: replace elastix-dbprocess implementation with the one developed
+    for DINOMI CallCenter, which is cleaner, more compact, and fixes some bugs.
+  * CHANGED: tweaks for visualization in cellphones
+  * CHANGED: update and modernize paloDB to add charset support, generalize
+    specific database driver support (PostgreSQL support added), add Unix
+    socket support for MySQL.
+  * FIXED: changed some absolute web paths to relative in order to not break
+    when relocating the framework.
+  * CHANGED: integrate DINOMI ISO images into branding.
+  * CHANGED: change RPM list for Installed check to include DINOMI ISO RPMs.
+  * FIXED: remove licensing hack that breaks DINOMI when installed with this
+    version of elastix-framework.
+  * CHANGED: split out elastix-branding to better organize rebranding projects.
+  * CHANGED: merge PHP 7.x compatibility patches from dinomi-framework.
+  * CHANGED: point RPM repository to new directory
+
+ -- Alex Villacís Lasso <a_villacis@palosanto.com>  Wed, 26 May 2021 00:00:00 -0500
+
+dinomi-framework (1.0.0-11) UNRELEASED; urgency=medium
+
+  [ Alex Villacís Lasso ]
+  * CHANGED: Framework: add logout link to empty menu error message that
+    appears if the just-logged-in user has not been authorized to any modules.
+  * CHANGED: Framework: backport DRAGLIST widget to paloForm.
+  * FIXED: Framework: fix incorrect Smarty version validation that caused a
+    fatal error. This only happens when installing dinomi-framework on CentOS 6
+    or older.
+  * FIXED: Framework: fixed some code patterns that raise errors or warnings
+    under PHP 7.x.
+
+ -- Alex Villacís Lasso <a_villacis@palosanto.com>  Wed, 28 Aug 2019 00:00:00 -0500
+
+dinomi-framework (1.0.0-10) UNRELEASED; urgency=medium
+
+  [ Alex Villacís Lasso ]
+  * CHANGED: Framework: paloForm <optgroup> support in SELECT dropdown lists
+  * FIXED: Framework: user icon in tenant theme is now relocatable
+  * CHANGED: Framework: allow action log directory to be relocated.
+  * CHANGED: Framework: implement a no-template mode for paloForm class to
+    speed up prototyping of forms.
+  * CHANGED: Framework: expand paloForm handling of SELECT in order to allow
+    attributes for dropdown lists.
+  * CHANGED: Framework: include vendor/autoload.php from web directory, if it
+    exists. Tweak Smarty autoloading to favor autoloading first.
+  * CHANGED: Framework: responsive mode experimentally enabled for tenant
+    theme.
+
+ -- Alex Villacís Lasso <a_villacis@palosanto.com>  Wed, 17 Apr 2019 00:00:00 -0500
+
+dinomi-framework (1.0.0-9) UNRELEASED; urgency=medium
+
+  [ Alex Villacís Lasso ]
+  * FIXED: Framework: restrict "asteriskuser" translation to remote FreePBX
+    system to just the cases where the "asterisk" database is requested. This
+    prevents failure to connect to the SuperCharged Contact database due to the
+    DSN being transformed into a remote request into FreePBX.
+
+ -- Alex Villacís Lasso <a_villacis@palosanto.com>  Fri, 10 Nov 2017 00:00:00 -0500
+
+dinomi-framework (1.0.0-8) UNRELEASED; urgency=medium
+
+  [ Alex Villacís Lasso ]
+  * CHANGED: Framework: tweak tenant theme and pagination.
+  * CHANGED: Framework: remove logrotate configuration that belongs to
+    email_admin.
+  * CHANGED: Framework: use /etc/sudoers.d/ instead of overwriting sudoers
+    file.
+  * CHANGED: Framework: Remove old unused PHPMailer dependency from specfile.
+  * CHANGED: Framework: Support loading of additional global configuration from
+    configs.d/*.conf.php. The loaded files can switch ACL source to a different
+    DSN, and other changes.
+  * CHANGED: Framework: Cleanup of old compatibility code that no longer
+    applies to dinomi-framework.
+  * CHANGED: Framework: Support reading additional DSN for database connections
+    from the configuration files dropped under /etc/dinomi-dsn/*.conf . These
+    files must be parseable using parse_ini_file().
+  * CHANGED: Framework: consolidate sql update scripts due to version
+    renumbering. This prevents changes from being repeatedly applied because
+    scripts have larger version numbers than the current dinomi-framework
+    package.
+
+ -- Alex Villacís Lasso <a_villacis@palosanto.com>  Mon, 11 Sep 2017 00:00:00 -0500
+
+dinomi-framework (1.0.0-7) UNRELEASED; urgency=medium
+
+  [ Alex Villacís Lasso ]
+  * CHANGED: framework - fix inefficient test for asterisk in sampler.php,
+    motd.sh and search_ami_admin_pwd .
+
+ -- Alex Villacís Lasso <a_villacis@palosanto.com>  Fri, 21 Jul 2017 00:00:00 -0500
+
+dinomi-framework (1.0.0-6) UNRELEASED; urgency=medium
+
+  [ Luis Abarca ]
+  * CHANGED: framework - Build/elastix-framework.spec: update specfile with
+    latest GIT history. Bump Release in specfile.
+
+ -- Luis Abarca <labarca@palosanto.com>  Tue, 06 Jun 2017 00:00:00 -0500
+
+dinomi-framework (1.0.0-5) UNRELEASED; urgency=medium
+
+  [ Luis Abarca ]
+  * CHANGED: framework - Build/elastix-framework.spec: update specfile with
+    latest GIT history. Bump Release in specfile.
+
+ -- Luis Abarca <labarca@palosanto.com>  Wed, 24 May 2017 00:00:00 -0500
+
+dinomi-framework (1.0.0-4) UNRELEASED; urgency=medium
+
+  [ Luis Abarca ]
+  * CHANGED: framework - Build/elastix-framework.spec: update specfile with
+    latest GIT history. Bump Release in specfile.
+
+ -- Luis Abarca <labarca@palosanto.com>  Wed, 10 May 2017 00:00:00 -0500
+
+dinomi-framework (1.0.0-3) UNRELEASED; urgency=medium
+
+  [ Luis Abarca ]
+  * CHANGED: framework - Build/elastix-framework.spec: update specfile with
+    latest GIT history. Bump Release in specfile.
+  * Framework: se intenta usar FreePBX remoto de DINOMI CallCenter Esto se
+    requiere para reusar la configuración de FreePBX remoto en el webphone.
+  * CHANGED: Added Russian translations to some framework modules that missed
+    them. SVN Rev[7780]
+  * CHANGED: Added Ukrainian translations to framework modules. SVN Rev[7779]
+  * CHANGED: Added new Ukrainian language option for language selection. Fix
+    some Russian strings on main language files. SVN Rev[7777]
+
+ -- Luis Abarca <labarca@palosanto.com>  Tue, 11 Apr 2017 00:00:00 -0500

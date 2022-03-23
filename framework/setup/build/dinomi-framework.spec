@@ -1,8 +1,8 @@
 Summary: Base Web framework for DINOMI CallCenter and other web modules
 Name: dinomi-framework
 Vendor: Palosanto Solutions S.A.
-Version: 1.1.0
-Release: 1
+Version: 1.1.1
+Release: 0
 License: GPL
 Group: Applications/System
 Source: dinomi-framework_%{version}-%{release}.tgz
@@ -396,6 +396,14 @@ rm -rf $RPM_BUILD_ROOT
 /var/www/html/images/logo_elastix_new3.gif
 
 %changelog
+* Sun Mar 13 2022 Alex Villacís Lasso <a_villacis@palosanto.com> 1.1.1-0
+- Package for release
+
+* Thu Feb 24 2022 Alex Villacís Lasso <a_villacis@palosanto.com>
+- Fix assumption of numeric array when generating report PDF
+- Optimize recordset fetching in paloDB::fetchTable()
+- Allow menu.xml with groups lacking group IDs
+
 * Wed May 26 2021 Alex Villacís Lasso <a_villacis@palosanto.com> 1.1.0-1
 - FIXED: more PHP7 fixes.
 - FIXED: allow absence of acl_user_profile table, since the table only exists
