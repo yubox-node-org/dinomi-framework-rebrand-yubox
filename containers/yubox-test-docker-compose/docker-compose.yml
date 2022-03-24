@@ -1,0 +1,33 @@
+version: "3"
+services:
+    dinomiframework:
+        image: dinomiframework:latest
+        container_name: dinomiframework
+        restart: always
+        ports:
+            - 8080:80
+            - 8443:443
+        networks:
+            - monitoring
+        volumes:
+            - dinomi-volume:/var/lib/dinomi-data
+        environment:
+            - DINOMI_MYSQL_HOSTNAME=mysql
+            - DINOMI_MYSQL_ROOT_PASSWORD=SOME_MYSQL_SECRET_PASSWORD
+            - DINOMI_MYSQL_WEB_USER=SOME_YUBOX_MYSQL_USER
+            - DINOMI_MYSQL_WEB_PASSWORD=SOME_YUBOX_SECRET_PASSWORD
+    mysql:
+        image: mariadb:latest
+        container_name: mysql
+        restart: always
+        networks:
+            - monitoring
+        volumes:
+            - mysql-volume:/var/lib/mysql
+        environment:
+            - MARIADB_ROOT_PASSWORD=SOME_MYSQL_SECRET_PASSWORD
+networks:
+    monitoring:
+volumes:
+    mysql-volume:
+    dinomi-volume:
