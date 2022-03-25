@@ -11,6 +11,5 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY docker-container-oneshot.sh /usr/local/bin/
 
-VOLUME /var/lib/dinomi-data
 EXPOSE 22 80 443
 CMD ["/usr/bin/supervisord"]
