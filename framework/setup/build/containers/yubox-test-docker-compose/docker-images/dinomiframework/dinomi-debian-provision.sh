@@ -75,7 +75,10 @@ mv /var/www/html/index.html /var/www/html/index-debian.html
 mv /tmp/dinomi-acls-mysql/etc/dinomi-dsn/elx4-mysql.conf /var/lib/dinomi-data/
 ln -s /var/lib/dinomi-data/elx4-mysql.conf /etc/dinomi-dsn/elx4-mysql.conf
 rmdir /tmp/dinomi-acls-mysql/etc/dinomi-dsn/
-mv /tmp/dinomi-acls-mysql/var/www/html/configs.d/elastix4-mysql.conf.php /var/lib/dinomi-data/
+# NOTA: el enlace simbólico está deliberadamente roto para que al heredar de
+# este container, todavía funcionen los ACL vía SQLITE por omisión. El enlace
+# simbólico se arregla en docker-container-oneshot.sh .
+mv /tmp/dinomi-acls-mysql/var/www/html/configs.d/elastix4-mysql.conf.php /var/lib/dinomi-data/elastix4-mysql.conf.php.DISABLED
 ln -s /var/lib/dinomi-data/elastix4-mysql.conf.php /var/www/html/configs.d/elastix4-mysql.conf.php
 rmdir /tmp/dinomi-acls-mysql/var/www/html/configs.d/ \
     /tmp/dinomi-acls-mysql/var/www/html/ \

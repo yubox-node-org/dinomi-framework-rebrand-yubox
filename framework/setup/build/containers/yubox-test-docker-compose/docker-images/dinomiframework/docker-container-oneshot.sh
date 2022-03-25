@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -e /var/lib/dinomi-data/elastix4-mysql.conf.php.DISABLED ] ; then
+    echo "HABILITANDO ACLs a través de MySQL..."
+    mv /var/lib/dinomi-data/elastix4-mysql.conf.php.DISABLED /var/lib/dinomi-data/elastix4-mysql.conf.php
+fi
+
 if [ ! -e /var/www/db/acl.db ] ; then
     echo "Migración de ACLs a MySQL ya realizada, no se hace nada."
     exit 0;
