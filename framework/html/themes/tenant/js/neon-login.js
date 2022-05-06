@@ -209,7 +209,7 @@ var neonLogin = neonLogin || {};
 				{
 					if( !focus_set)
 					{
-						neonLogin.$container.find('input:first').focus();
+						neonLogin.$container.find('input:first').trigger('focus');
 						focus_set = true;
 					}
 					
