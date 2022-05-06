@@ -257,7 +257,7 @@ $(document).ready(function(){
                 .appendTo(divdraglist.find('select[id$=_selected]'));
         });
     });
-    $('div.elxform-draglist button').click(function(ev) {
+    $('div.elxform-draglist button').on('click', function(ev) {
         ev.preventDefault();
 
         var btn = $(this);
