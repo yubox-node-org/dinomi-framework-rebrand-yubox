@@ -1474,7 +1474,7 @@ var public_vars = public_vars || {};
 	// Enable/Disable Resizable Event
 	var wid = 0;
 	
-	$(window).resize(function() {
+	$(window).on('resize', function() {
 		clearTimeout(wid);
 		wid = setTimeout(trigger_resizable, 200);
 	});
@@ -1607,7 +1607,7 @@ function setup_sidebar_menu()
 	var $search_input = public_vars.$mainMenu.find('#search input[type="text"]'),
 		$search_el = public_vars.$mainMenu.find('#search');
 		
-	public_vars.$mainMenu.find('#search form').submit(function(ev)
+	public_vars.$mainMenu.find('#search form').on('submit', function(ev)
 	{
 		var is_collapsed = public_vars.$pageContainer.hasClass('sidebar-collapsed');
 		
