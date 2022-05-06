@@ -180,8 +180,8 @@ $(document).ready(function(){
     if (document.getElementById("filter_value") ||
         document.getElementById("pageup") ||
         document.getElementById("neo-sticky-note-textarea")) {
-        $('#pageup').keypress(keyPressed);
-        $('#pagedown').keypress(keyPressed);
+        $('#pageup').on('keypress', keyPressed);
+        $('#pagedown').on('keypress', keyPressed);
     }
 
     $('#viewDetailsRPMs').click(function() {
