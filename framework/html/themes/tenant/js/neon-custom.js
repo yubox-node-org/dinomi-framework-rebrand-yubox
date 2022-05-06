@@ -130,7 +130,7 @@ var public_vars = public_vars || {};
 	
 	
 		// NiceScroll
-		if($.isFunction($.fn.niceScroll))
+		if(typeof ($.fn.niceScroll) === 'function')
 		{
 			var nicescroll_defaults = {
 				cursorcolor: '#d4d4d4',
@@ -182,7 +182,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Scrollable
-		if($.isFunction($.fn.slimScroll))
+		if(typeof ($.fn.slimScroll) === 'function')
 		{
 			$(".scrollable").each(function(i, el)
 			{
@@ -393,7 +393,7 @@ var public_vars = public_vars || {};
 		
 		
 		// jQuery Knob
-		if($.isFunction($.fn.knob))
+		if(typeof ($.fn.knob) === 'function')
 		{		
 			$(".knob").knob({
 				change: function (value) {
@@ -451,7 +451,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Slider
-		if($.isFunction($.fn.slider))
+		if(typeof ($.fn.slider) === 'function')
 		{
 			$(".slider").each(function(i, el)
 			{
@@ -588,7 +588,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Radio Toggle
-		if($.isFunction($.fn.bootstrapSwitch))
+		if('function' === typeof ($.fn.bootstrapSwitch))
 		{
 		
 			$('.make-switch.is-radio').on('switch-change', function () {
@@ -600,7 +600,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Select2 Dropdown replacement
-		if($.isFunction($.fn.select2))
+		if('function' === typeof ($.fn.select2))
 		{
 			$(".select2").each(function(i, el)
 			{
@@ -616,7 +616,7 @@ var public_vars = public_vars || {};
 			});
 			
 			
-			if($.isFunction($.fn.niceScroll))
+			if('function' === typeof ($.fn.niceScroll))
 			{
 				$(".select2-results").niceScroll({
 					cursorcolor: '#d4d4d4',
@@ -630,7 +630,7 @@ var public_vars = public_vars || {};
 		
 		
 		// SelectBoxIt Dropdown replacement
-		if($.isFunction($.fn.selectBoxIt))
+		if('function' === typeof ($.fn.selectBoxIt))
 		{
 			$("select.selectboxit").each(function(i, el)
 			{
@@ -650,7 +650,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Auto Size for Textarea
-		if($.isFunction($.fn.autosize))
+		if('function' === typeof ($.fn.autosize))
 		{
 			$("textarea.autogrow, textarea.autosize").autosize();
 		}
@@ -659,7 +659,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Tagsinput
-		if($.isFunction($.fn.tagsinput))
+		if('function' === typeof ($.fn.tagsinput))
 		{
 			$(".tagsinput").tagsinput();
 		}
@@ -668,7 +668,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Typeahead
-		if($.isFunction($.fn.typeahead))
+		if('function' === typeof ($.fn.typeahead))
 		{
 			$(".typeahead").each(function(i, el)
 			{
@@ -719,7 +719,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Datepicker
-		if($.isFunction($.fn.datepicker))
+		if('function' === typeof ($.fn.datepicker))
 		{
 			$(".datepicker").each(function(i, el)
 			{
@@ -763,7 +763,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Timepicker
-		if($.isFunction($.fn.timepicker))
+		if('function' === typeof ($.fn.timepicker))
 		{
 			$(".timepicker").each(function(i, el)
 			{
@@ -807,7 +807,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Colorpicker
-		if($.isFunction($.fn.colorpicker))
+		if('function' === typeof ($.fn.colorpicker))
 		{
 			$(".colorpicker").each(function(i, el)
 			{
@@ -861,7 +861,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Date Range Picker
-		if($.isFunction($.fn.daterangepicker))
+		if('function' === typeof ($.fn.daterangepicker))
 		{
 			$(".daterange").each(function(i, el)
 			{
@@ -935,7 +935,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Input Mask
-		if($.isFunction($.fn.inputmask))
+		if('function' === typeof ($.fn.inputmask))
 		{
 			$("[data-mask]").each(function(i, el)
 			{
@@ -1011,7 +1011,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Form Validation
-		if($.isFunction($.fn.validate))
+		if('function' === typeof ($.fn.validate))
 		{
 			$("form.validate").each(function(i, el)
 			{
@@ -1118,7 +1118,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Jasny Bootstrap | Fileinput
-		if($.isFunction($.fn.fileinput))
+		if('function' === typeof ($.fn.fileinput))
 		{
 			$(".fileinput").fileinput()
 		}
@@ -1127,7 +1127,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Multi-select
-		if($.isFunction($.fn.multiSelect))
+		if('function' === typeof ($.fn.multiSelect))
 		{
 			$(".multi-select").multiSelect();
 		}
@@ -1136,7 +1136,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Form Wizard
-		if($.isFunction($.fn.bootstrapWizard))
+		if('function' === typeof ($.fn.bootstrapWizard))
 		{
 			$(".form-wizard").each(function(i, el)
 			{
@@ -1186,7 +1186,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Wysiwyg Editor
-		if($.isFunction($.fn.wysihtml5))
+		if('function' === typeof ($.fn.wysihtml5))
 		{
 			$(".wysihtml5").each(function(i, el)
 			{
@@ -1203,7 +1203,7 @@ var public_vars = public_vars || {};
 		
 		
 		// CKeditor WYSIWYG
-		if($.isFunction($.fn.ckeditor))
+		if('function' === typeof ($.fn.ckeditor))
 		{
 			$(".ckeditor").ckeditor({
 				contentsLangDirection: rtl() ? 'rtl' : 'ltr'
@@ -1299,7 +1299,7 @@ var public_vars = public_vars || {};
 		
 		
 		// Tocify Table
-		if($.isFunction($.fn.tocify) && $("#toc").length)
+		if('function' === typeof ($.fn.tocify) && $("#toc").length)
 		{
 			$("#toc").tocify({ 
 				context: '.tocify-content', 
