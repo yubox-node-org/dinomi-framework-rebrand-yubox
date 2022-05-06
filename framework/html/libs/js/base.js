@@ -156,7 +156,7 @@ function ShowModalPopUP(title, width, height, html)
         'box-sizing': 'content-box' // para tema tenant
         });
     $('.neo-modal-elastix-popup-box').fadeIn(2000);
-    $('.neo-modal-elastix-popup-close').click(function() {
+    $('.neo-modal-elastix-popup-close').on('click', function() {
         hideModalPopUP();
     });
 }
@@ -184,7 +184,7 @@ $(document).ready(function(){
         $('#pagedown').on('keypress', keyPressed);
     }
 
-    $('#viewDetailsRPMs').click(function() {
+    $('#viewDetailsRPMs').on('click', function() {
         $.get('index.php', {
             menu:       '_elastixutils',
             action:     'dialogRPM',
@@ -199,7 +199,7 @@ $(document).ready(function(){
             // La plantilla tiene una referencia a script que llama a versionRPM
         });
     });
-    $('a.setadminpassword').click(function () {
+    $('a.setadminpassword').on('click', function () {
         $.get('index.php', {
             menu:       '_elastixutils',
             action:     'dialogPasswordElastix',
