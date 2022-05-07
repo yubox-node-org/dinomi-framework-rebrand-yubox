@@ -241,7 +241,12 @@ $(document).ready(function(){
     // En la clase paloSantoForm.class.php, a los input radio se definio
     // que tengan un estilo defaulf de jquery, para ello se declara una
     // clase global para que hereden todos los input radio el nuevo estilo.
-    $( ".radio_buttonset_elx" ).buttonset();
+    if (typeof $.fn.controlgroup === 'function') {
+        $( ".radio_buttonset_elx" ).controlgroup();
+        $( ".radio_buttonset_elx > label.ui-button > span.ui-checkboxradio-icon" ).hide();
+    } else {
+        $( ".radio_buttonset_elx" ).buttonset();
+    }
 
     // Preparar listas de arrastre de elementos
     $('div.elxform-draglist.elxform-raw').each(function() {

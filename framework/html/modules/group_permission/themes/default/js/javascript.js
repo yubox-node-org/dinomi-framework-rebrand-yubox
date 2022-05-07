@@ -1,3 +1,42 @@
+function initDecorateCheckbox(chk)
+{
+    if (typeof $.fn.checkboxradio === 'function') {
+        // jquery-ui con checkboxradio
+        chk.checkboxradio({
+            icon: false,
+            label: '<span class="ui-button-icon ui-icon">'
+        });
+
+        // Actualizar decoración según estado del botón
+        updateDecorateCheckbox(chk);
+    } else {
+        // jquery-ui 1.11.x original
+        chk.button({
+            icons: {
+                primary: chk.is(':checked') ? 'ui-icon-check' : 'ui-icon-blank'
+            },
+            text: false
+        });
+    }
+}
+
+function updateDecorateCheckbox(chk)
+{
+    if (typeof $.fn.checkboxradio === 'function') {
+        // jquery-ui con checkboxradio
+        chk.checkboxradio('option', 'label',
+            '<span class="ui-button-icon ui-icon '+(chk.is(':checked') ? 'ui-icon-check' : 'ui-icon-blank')+'">');
+    } else {
+        // jquery-ui 1.11.x original
+        chk.button({
+            icons: {
+                primary: chk.is(':checked') ? 'ui-icon-check' : 'ui-icon-blank'
+            },
+            text: false
+        });
+    }
+}
+
 $(document).ready(function() {
     // Acción para el botón de expandir y colapsar
     $('button.resource-branch-manip').button({
@@ -17,31 +56,16 @@ $(document).ready(function() {
 
     $('input[type=checkbox][name="resource_access[]"], input[type=checkbox][name="privileges[]"]').each(function(index, element) {
         // Decorar los checkbox según cómo estén seteados
-        $(this).button({
-            icons: {
-                primary: $(this).is(':checked') ? 'ui-icon-check' : 'ui-icon-blank'
-            },
-            text: false
-        });
+        initDecorateCheckbox($(this));
     });
     $('input[type=checkbox][name="privileges[]"]').click(function(event) {
         // Actualizar el icono según el nuevo estado
-        $(this).button({
-            icons: {
-                primary: $(this).is(':checked') ? 'ui-icon-check' : 'ui-icon-blank'
-            },
-            text: false
-        });
+        updateDecorateCheckbox($(this));
     });
 
     $('input[type=checkbox][name="resource_access[]"]').click(function(event) {
         // Actualizar el icono según el nuevo estado
-        $(this).button({
-            icons: {
-                primary: $(this).is(':checked') ? 'ui-icon-check' : 'ui-icon-blank'
-            },
-            text: false
-        });
+        updateDecorateCheckbox($(this));
 
         // Actualizar la cuenta de módulos activos
         var curmodule_id = $(this).parent('td').parent('tr').find('input[name=id]').val();
