@@ -2,7 +2,7 @@
 <script type='text/javascript'>
 var themeName='elastixneo'; //nombre del tema
 $(document).ready(function(){
-    $("#togglebookmark").click(function() {
+    $("#togglebookmark").on('click', function() {
         var imgBookmark = $("#togglebookmark").attr('src');
         if(/bookmarkon.png/.test(imgBookmark)) {
             $("#togglebookmark").attr('src',"web/themes/"+themeName+"/images/bookmark.png");
@@ -24,7 +24,7 @@ $(document).ready(function(){
       }
     );
 
-    $("#neo-table-button-download-right").click(
+    $("#neo-table-button-download-right").on('click',
       function () {
           if($(this).attr("aria-expanded") == "false"){
           var exportPosition = $('#export_button').position();
@@ -61,7 +61,7 @@ $(document).ready(function(){
       }
     );
 
-   $('#header_open_sidebar, a.chat-close').click(function (e) {
+   $('#header_open_sidebar, a.chat-close').on('click', function (e) {
       $('div.page-container').toggleClass('chat-visible');
       toggle_sidebar_menu(true);
       e.stopPropagation();
