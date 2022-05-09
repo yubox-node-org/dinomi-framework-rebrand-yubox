@@ -13,10 +13,11 @@ $(document).ready(function(){
 
 
 
-    $("#export_button").hover(
+    $("#export_button").on('mouseenter',
       function () {
           $(this).addClass("exportBorder");
-      },
+      })
+    .on('mouseleave',
       function () {
           $(this).removeClass("exportBorder");
           $(this).attr("aria-expanded","false");
@@ -48,13 +49,14 @@ $(document).ready(function(){
       }
     );
 
-    $("#subMenuExport").hover(
+    $("#subMenuExport").on('mouseenter',
       function () {
         $(this).removeClass("neo-display-none");
         $(".letranodec").css("color","#FFFFFF");
         $("#export_button").attr("aria-expanded","true");
         $("#export_button").addClass("exportBackground");
-      },
+      })
+    .on('mouseleave',
       function () {
         $(this).addClass("neo-display-none");
         $(".letranodec").css("color","#444444");
