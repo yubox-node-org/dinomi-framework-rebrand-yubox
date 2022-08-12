@@ -40,9 +40,72 @@ function loadKeys(path)
     });
 }
 
+function maintainECCPConn(eccpcred)
+{
+    var connectNow = (eccpcred) => {
+        // Conexión a ECCP con las claves leídas de la base de datos
+        var eccplocal = new ECCP();
+        eccplocal.on('error', (err) => {
+            console.log('Error in ECCP connection: ');
+            console.log(err);
+            eccpconn = null;
+        });
+
+        console.log('Connecting to eccp://'+eccpcred.eccpuser+'@'+eccpcred.host+' ...');
+        eccplocal.connect(eccpcred.eccpuser, eccpcred.eccppass, eccpcred.host)
+        .done(
+            (r) => {
+                console.log('Connection established to ECCP');
+                eccpconn = eccplocal;
+
+                // Manejar 'close' de socket interior a ECCP, hay que anular y reconectar
+                eccpconn.on('close', () => {
+                    console.log('ECCP connection closed!');
+                    eccpconn = null;
+                    console.log('Waiting 5 seconds for retry...');
+                    setTimeout(() => { setupECCP(); }, 5000);
+                });
+
+                // Contar número de agentes activos en este momento
+                eccpconn.send_request(
+                    'getmultipleagentstatus', {
+                        'agents' : {
+                            'agent_number' : 'all'
+                        },
+                        'loadpauseinfo' : 0
+                }).done(
+                    (r) => {
+                        numAgentesActivos = (r.agents[0].agent == undefined)
+                            ? 0
+                            : r.agents[0].agent.filter((a) => { return (a.status != 'offline'); }).length;
+                    },
+                    (err) => {
+                        console.log('getmultipleagentstatus failed: ');
+                        console.log(err);
+
+                        eccpconn.disconnect();
+                    }
+                );
+
+                // Incrementar o decrementar contador de agentes activos
+                eccpconn.on('agentloggedin', () => { numAgentesActivos++; });
+                eccpconn.on('agentloggedout', () => { numAgentesActivos--; });
+            },
+            (err) => {
+                console.log('ECCP connect failed: ');
+                console.log(err);
+
+                console.log('Waiting 5 seconds for retry...');
+                setTimeout(() => { setupECCP() }, 5000);
+            }
+        );
+    };
+
+    setTimeout(() => { connectNow(eccpcred) }, 0);
+}
+
 function setupECCP()
 {
-    var eccplocal = null;
     if (eccpconn != null) return;
 
     // Se intenta leer claves de configuración remota
@@ -103,54 +166,7 @@ function setupECCP()
             throw e;
         });
     })
-    .then((eccpcred) => {
-        // Conexión a ECCP con las claves leídas de la base de datos
-        eccplocal = new ECCP();
-        eccplocal.on('error', (err) => {
-            console.log('Error in ECCP connection: ');
-            console.log(err);
-            eccpconn = null;
-        });
-        console.log('Connecting to eccp://'+eccpcred.eccpuser+'@'+eccpcred.host+' ...');
-        return eccplocal.connect(eccpcred.eccpuser, eccpcred.eccppass, eccpcred.host);
-    })
-    .done(
-        (r) => {
-            console.log('Connection established to ECCP');
-            eccpconn = eccplocal;
-
-            // Contar número de agentes activos en este momento
-            eccpconn.send_request(
-                'getmultipleagentstatus', {
-                    'agents' : {
-                        'agent_number' : 'all'
-                    },
-                    'loadpauseinfo' : 0
-            }).done(
-                (r) => {
-                    numAgentesActivos = (r.agents[0].agent == undefined)
-                        ? 0
-                        : r.agents[0].agent.filter((a) => { return (a.status != 'offline'); }).length;
-                },
-                (err) => {
-                    console.log('getmultipleagentstatus failed: ');
-                    console.log(err);
-                    eccpconn = null;
-                    setTimeout(() => {
-                        setupECCP();
-                    }, 5000);
-                }
-            );
-
-            // Incrementar o decrementar contador de agentes activos
-            eccpconn.on('agentloggedin', () => { numAgentesActivos++; });
-            eccpconn.on('agentloggedout', () => { numAgentesActivos--; });
-        },
-        (err) => {
-            console.log('ECCP connect failed: ');
-            console.log(err);
-        }
-    );
+    .done((eccpcred) => { maintainECCPConn(eccpcred); });
 }
 
 function processCount()
