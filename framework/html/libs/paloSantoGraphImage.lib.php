@@ -32,7 +32,7 @@ $jpgraph_libs = array(
     'jpgraph.php',
     'jpgraph_line.php',
     'jpgraph_pie.php',
-    'jpgraph_pie3d.php',
+    //'jpgraph_pie3d.php',  // <-- Biblioteca rota en jpgraph en Debian, no se usa
     'jpgraph_bar.php',
     'jpgraph_canvas.php',
     'jpgraph_canvtools.php',

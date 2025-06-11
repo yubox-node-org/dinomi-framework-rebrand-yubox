@@ -40,7 +40,7 @@ class paloTree {
 
     var $arrNodos;
 
-    function paloTree($arrNodos)
+    function __construct($arrNodos)
     {
         $this->errMsg = "";
         $this->nivel = 0;

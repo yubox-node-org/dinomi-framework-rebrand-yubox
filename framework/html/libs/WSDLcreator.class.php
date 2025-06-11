@@ -171,7 +171,7 @@ class WSDLcreator
      * @param  string   $targetNamespace   URN of namespace target WSDL.
      * @param  string   $soapAddress       Address location WSDL functions implementation.
      */
-    public function WSDLcreator($nameWSDL, $targetNamespace="http://www.elastix.org/webservices", $soapAddress)
+    public function __construct($nameWSDL, $targetNamespace="http://www.elastix.org/webservices", $soapAddress)
     {
         /*
             PRIMITIVE DATA TYPES
