@@ -79,6 +79,7 @@ function themeSetup(&$smarty, $selectedMenu, $pdbACL, $pACL, $idUser)
 
     $smarty->assign('arrMainMenu', $arrMainMenu);
     $smarty->assign("LANG", $lang);
+    $breadcrumb = setBreadcrumb($arrMainMenu,$selectedMenu);
     $smarty->assign(array(
         "ABOUT_ELASTIX2"            =>  _br(_tr('About Elastix2')),
         "HELP"                      =>  _tr('HELP'),
@@ -99,7 +100,8 @@ function themeSetup(&$smarty, $selectedMenu, $pdbACL, $pACL, $idUser)
         'MENU_COLOR'                =>  getMenuColorByMenu($pdbACL, $idUser),
         'IMG_BOOKMARKS'             =>  menuIsBookmark($pdbACL, $idUser, $selectedMenu) ? 'bookmarkon.png' : 'bookmark.png',
         'SHORTCUT'                  =>  loadShortcut($pdbACL, $idUser, $smarty),
-        'BREADCRUMB'                =>  setBreadcrumb($arrMainMenu,$selectedMenu),
+        'BREADCRUMB'                =>  $breadcrumb,
+        'BREADCRUMB_LAST'           =>  end($breadcrumb),
         'NOTIFICATIONS'             =>  loadSystemNotifications($pdbACL, $idUser),
     ));
 }

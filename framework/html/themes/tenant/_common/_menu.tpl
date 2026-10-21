@@ -193,7 +193,7 @@ function removeNeoDisplayOnMouseOver(ref){
 <!-- inicio del head principal-->
 <div class="main-content">
 <div style="height:80px;background-color:#efefef;padding:15px;">
-    <span style="float:left; white-space: nowrap; padding:14px 5px 0px 8px; width:220px; font-family:Verdana,arial,helvetica,sans-serif; font-size: 18px; "><strong>{$BREADCRUMB}</strong></span>
+    <span style="float:left; white-space: nowrap; padding:14px 5px 0px 8px; width:220px; font-family:Verdana,arial,helvetica,sans-serif; font-size: 18px; "><strong>{$BREADCRUMB_LAST}</strong></span>
     <!-- Profile Info and Notifications -->
     <span style='float:right; text-align:right; padding:0px 5px 0px 0px; width:175px;' class="col-md-6 col-sm-8 clearfix">
         <ul style='float:right;' class="user-info pull-none-xsm">
