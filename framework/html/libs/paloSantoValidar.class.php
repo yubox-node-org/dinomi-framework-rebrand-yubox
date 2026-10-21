@@ -39,7 +39,7 @@ class PaloValidar
     var $arrErrores;
     var $hacerTrim;
 
-	function PaloValidar()
+	function __construct()
 	{
         $this->hacerTrim=1;
         $this->clear();

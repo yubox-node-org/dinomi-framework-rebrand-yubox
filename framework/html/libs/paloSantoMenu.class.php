@@ -38,7 +38,7 @@ class paloMenu {
     var $_DB; // instancia de la clase paloDB
     var $errMsg;
 
-    function paloMenu(&$pDB)
+    function __construct($pDB)
     {
         // Se recibe como parámetro una referencia a una conexión paloDB
         if (is_object($pDB)) {
@@ -106,14 +106,14 @@ class paloMenu {
         $sPeticionSQL = <<<INFO_AUTH_MODULO
 SELECT id, IdParent, Link, Name, Type, order_no
 FROM menu, (
-    SELECT acl_resource.name AS acl_resource_name, acl_group.name AS acl_name
+    SELECT acl_resource.name AS acl_resource_name, acl_group.name AS acl_name, acl_resource.description
     FROM acl_membership, acl_group, acl_group_permission, acl_resource
     WHERE acl_membership.id_user = ?
         AND acl_membership.id_group = acl_group.id
         AND acl_group.id = acl_group_permission.id_group
         AND acl_group_permission.id_resource = acl_resource.id
     UNION
-    SELECT acl_resource.name AS acl_resource_name, acl_user.name AS acl_name
+    SELECT acl_resource.name AS acl_resource_name, acl_user.name AS acl_name, acl_resource.description
     FROM acl_user, acl_user_permission, acl_resource
     WHERE acl_user_permission.id_user = ?
         AND acl_user_permission.id_resource = acl_resource.id

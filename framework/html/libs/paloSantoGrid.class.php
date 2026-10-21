@@ -235,7 +235,7 @@ class paloSantoGrid {
         "up-thin",
     );
 
-    public function paloSantoGrid($smarty)
+    public function __construct($smarty)
     {
         $this->title  = "";
         $this->icon   = "images/list.png";
