@@ -32,7 +32,7 @@
         <script type='text/javascript' src="libs/js/iframe.js"></script>
 
         {$HEADER}
-    {$HEADER_MODULES}
+    {if isset($HEADER_MODULES)}{$HEADER_MODULES}{/if}
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body" {$BODYPARAMS}>
     <div class="page-container toggle-click">
