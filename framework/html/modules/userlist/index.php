@@ -163,7 +163,7 @@ function listUsers($pACL, $smarty, $module_name, $local_templates_dir, $plugins)
             ($bEditAnyUser || $user[1] == $_SESSION['elastix_user'])
                 ? "<a href='?menu={$module_name}&action=edit&id_user=".$user[0]."'>".htmlentities($user[1], ENT_COMPAT, 'UTF-8')."</a>"
                 : htmlentities($user[1], ENT_COMPAT, 'UTF-8'),
-            htmlentities((count($user) >= 3) ? $user[2] : '', ENT_COMPAT, 'UTF-8'),
+            htmlentities((!is_null($user[2])) ? $user[2] : '', ENT_COMPAT, 'UTF-8'),
             htmlentities($grouplist, ENT_COMPAT, 'UTF-8'),
         );
 
