@@ -29,6 +29,7 @@
 
 class paloSantoGrid {
 
+    private $smarty;
     private $title;
     private $icon;
     private $width;
@@ -45,7 +46,7 @@ class paloSantoGrid {
     private $arrData;
     private $url;
     private $arrActions;
-    private $arrControlFilters;
+    private $arrFiltersControl;
 
     private static $_whitelist_fontclass_font_awesome = array(
         "glass", "music", "search", "envelope-o", "heart", "star", "star-o",
