@@ -35,7 +35,9 @@ function themeSetup(&$smarty, $selectedMenu, $pdbACL, $pACL, $idUser)
      * un menú de primer nivel que esté entre los 7 primeros, reordenando los
      * items si es necesario. */
     $lang = get_language();
-    $arrMainMenu = $smarty->get_template_vars('arrMainMenu');
+    $arrMainMenu = (method_exists($smarty, 'getTemplateVars'))
+        ? $smarty->getTemplateVars('arrMainMenu')
+        : $smarty->get_template_vars('arrMainMenu');
     //var_dump($arrMainMenu['system']);
 
     foreach($arrMainMenu as $idMenu=>$arrMenuItem) {
@@ -52,7 +54,9 @@ function themeSetup(&$smarty, $selectedMenu, $pdbACL, $pACL, $idUser)
     }
     //var_dump($arrMainMenu['addons']['children']);
 
-    $idMainMenuSelected = $smarty->get_template_vars('idMainMenuSelected');
+    $idMainMenuSelected = (method_exists($smarty, 'getTemplateVars'))
+        ? $smarty->getTemplateVars('idMainMenuSelected')
+        : $smarty->get_template_vars('idMainMenuSelected');
     $MAX_ITEMS_VISIBLES = 7;
 
     if (count($arrMainMenu) > $MAX_ITEMS_VISIBLES) {
