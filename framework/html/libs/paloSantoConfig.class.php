@@ -45,7 +45,7 @@ class paloConfig
     var $usuario_sistema = "root";
     var $grupo_sistema ="root";
 
-    function paloConfig($directorio, $archivo, $separador="", $separador_regexp="", $usuario_proceso=NULL)
+    function __construct($directorio, $archivo, $separador="", $separador_regexp="", $usuario_proceso=NULL)
     {
         $this->directorio=$directorio;
         $this->archivo=$archivo;

@@ -13,7 +13,7 @@
 
         if ( typeof handlerIn === "object" ) {
             cfg = $.extend(cfg, handlerIn );
-        } else if ($.isFunction(handlerOut)) {
+        } else if (typeof handlerOut === 'function') {
             cfg = $.extend(cfg, { over: handlerIn, out: handlerOut, selector: selector } );
         } else {
             cfg = $.extend(cfg, { over: handlerIn, out: handlerIn, selector: handlerOut } );
@@ -125,7 +125,7 @@ n();return d?d.promise(g):g}})(jQuery);
 		var msie = /MSIE/.test(navigator.userAgent);
 		var ie6  = /MSIE 6.0/.test(navigator.userAgent) && ! /MSIE 8.0/.test(navigator.userAgent);
 		var mode = document.documentMode || 0;
-		var setExpr = $.isFunction( document.createElement('div').style.setExpression );
+		var setExpr = (typeof ( document.createElement('div').style.setExpression ) === 'function');
 
 		// global $ methods for blocking/unblocking the entire page
 		$.blockUI   = function(opts) { install(window, opts); };

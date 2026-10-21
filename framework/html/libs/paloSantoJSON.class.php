@@ -35,7 +35,7 @@ class PaloSantoJSON {
     var $_statusResponse;
     var $_message;
 
-    function PaloSantoJSON()
+    function __construct()
     {
         $this->_error="";
         $this->_statusResponse="OK";

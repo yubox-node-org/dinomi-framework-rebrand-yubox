@@ -102,6 +102,11 @@ $smarty->assign(array(
     'ELXFRAMEWORK_NAME'     =>  ELXFRAMEWORK_NAME,
     'ELXFRAMEWORK_WEBSITE'  =>  ELXFRAMEWORK_WEBSITE,
     'THEMENAME'             =>  $arrConf['mainTheme'],
+    'WEBPATH'               =>  '',
+    'WEBCOMMON'             =>  '',
+    'HEADER'                =>  '',
+    'BODYPARAMS'            =>  '',
+    'description'           =>  '',
     'ELXFOOTER_BYPALOSANTO' =>  ELXFOOTER_BYPALOSANTO,
 ));
 
@@ -127,7 +132,6 @@ if(isset($_POST['submit_login']) and !empty($_POST['input_user'])) {
         // Debo hacer algo aquí?
     }
 }
-
 // 2) Autentico usuario
 if (isset($_SESSION['elastix_user']) &&
     isset($_SESSION['elastix_pass']) &&

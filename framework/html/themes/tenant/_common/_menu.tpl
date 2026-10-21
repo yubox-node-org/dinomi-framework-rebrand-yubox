@@ -2,7 +2,7 @@
 <script type='text/javascript'>
 var themeName='elastixneo'; //nombre del tema
 $(document).ready(function(){
-    $("#togglebookmark").click(function() {
+    $("#togglebookmark").on('click', function() {
         var imgBookmark = $("#togglebookmark").attr('src');
         if(/bookmarkon.png/.test(imgBookmark)) {
             $("#togglebookmark").attr('src',"web/themes/"+themeName+"/images/bookmark.png");
@@ -11,10 +11,11 @@ $(document).ready(function(){
         }
     });
 
-    $("#export_button").hover(
+    $("#export_button").on('mouseenter',
       function () {
           $(this).addClass("exportBorder");
-      },
+      })
+    .on('mouseleave',
       function () {
           $(this).removeClass("exportBorder");
           $(this).attr("aria-expanded","false");
@@ -24,7 +25,7 @@ $(document).ready(function(){
       }
     );
 
-    $("#neo-table-button-download-right").click(
+    $("#neo-table-button-download-right").on('click',
       function () {
           if($(this).attr("aria-expanded") == "false"){
           var exportPosition = $('#export_button').position();
@@ -46,13 +47,14 @@ $(document).ready(function(){
       }
     );
 
-    $("#subMenuExport").hover(
+    $("#subMenuExport").on('mouseenter',
       function () {
         $(this).removeClass("neo-display-none");
         $(".letranodec").css("color","#FFFFFF");
         $("#export_button").attr("aria-expanded","true");
         $("#export_button").addClass("exportBackground");
-      },
+      })
+    .on('mouseleave',
       function () {
         $(this).addClass("neo-display-none");
         $(".letranodec").css("color","#444444");
@@ -61,7 +63,7 @@ $(document).ready(function(){
       }
     );
 
-   $('#header_open_sidebar, a.chat-close').click(function (e) {
+   $('#header_open_sidebar, a.chat-close').on('click', function (e) {
       $('div.page-container').toggleClass('chat-visible');
       toggle_sidebar_menu(true);
       e.stopPropagation();

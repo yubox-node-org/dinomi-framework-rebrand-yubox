@@ -54,7 +54,7 @@ class paloSampler {
     var $errMsg;
     var $_db;
 
-    function paloSampler()
+    function __construct()
     {
         global $arrConf;
         $this->rutaDB = $arrConf['elastix_dsn']['samples'];

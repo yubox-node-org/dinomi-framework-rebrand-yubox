@@ -35,7 +35,7 @@ class paloSantoAjax {
     var $printJavascript;
     var $smarty;
 
-    function paloSantoAjax($smarty)
+    function __construct($smarty)
     {
         $this->smarty = $smarty;
     }

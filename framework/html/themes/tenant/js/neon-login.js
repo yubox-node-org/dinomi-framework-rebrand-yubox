@@ -209,7 +209,7 @@ var neonLogin = neonLogin || {};
 				{
 					if( !focus_set)
 					{
-						neonLogin.$container.find('input:first').focus();
+						neonLogin.$container.find('input:first').trigger('focus');
 						focus_set = true;
 					}
 					
@@ -219,7 +219,7 @@ var neonLogin = neonLogin || {};
 		}
 		else
 		{
-			neonLogin.$container.find('input:first').focus();
+			neonLogin.$container.find('input:first').trigger('focus');
 		}
 		
 		// Focus Class
@@ -230,7 +230,7 @@ var neonLogin = neonLogin || {};
 			
 			$this.prev('.input-group-addon').click(function()
 			{
-				$this.focus();
+				$this.trigger('focus');
 			});
 			
 			$this.on({

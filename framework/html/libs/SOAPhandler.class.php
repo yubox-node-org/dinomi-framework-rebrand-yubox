@@ -84,7 +84,7 @@ class SOAPhandler
      * @param  string   $className         Name of the class that contains the functional points for SOAP
      * @param  string   $soapAddress       SOAP Address
      */
-    public function SOAPhandler($className, $soapAddress=null)
+    public function __construct($className, $soapAddress=null)
     {
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
             $urlSOAP = 'https://'.$_SERVER['SERVER_NAME'];

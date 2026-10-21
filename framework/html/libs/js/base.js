@@ -156,7 +156,7 @@ function ShowModalPopUP(title, width, height, html)
         'box-sizing': 'content-box' // para tema tenant
         });
     $('.neo-modal-elastix-popup-box').fadeIn(2000);
-    $('.neo-modal-elastix-popup-close').click(function() {
+    $('.neo-modal-elastix-popup-close').on('click', function() {
         hideModalPopUP();
     });
 }
@@ -180,11 +180,11 @@ $(document).ready(function(){
     if (document.getElementById("filter_value") ||
         document.getElementById("pageup") ||
         document.getElementById("neo-sticky-note-textarea")) {
-        $('#pageup').keypress(keyPressed);
-        $('#pagedown').keypress(keyPressed);
+        $('#pageup').on('keypress', keyPressed);
+        $('#pagedown').on('keypress', keyPressed);
     }
 
-    $('#viewDetailsRPMs').click(function() {
+    $('#viewDetailsRPMs').on('click', function() {
         $.get('index.php', {
             menu:       '_elastixutils',
             action:     'dialogRPM',
@@ -199,7 +199,7 @@ $(document).ready(function(){
             // La plantilla tiene una referencia a script que llama a versionRPM
         });
     });
-    $('a.setadminpassword').click(function () {
+    $('a.setadminpassword').on('click', function () {
         $.get('index.php', {
             menu:       '_elastixutils',
             action:     'dialogPasswordElastix',
@@ -241,7 +241,12 @@ $(document).ready(function(){
     // En la clase paloSantoForm.class.php, a los input radio se definio
     // que tengan un estilo defaulf de jquery, para ello se declara una
     // clase global para que hereden todos los input radio el nuevo estilo.
-    $( ".radio_buttonset_elx" ).buttonset();
+    if (typeof $.fn.controlgroup === 'function') {
+        $( ".radio_buttonset_elx" ).controlgroup();
+        $( ".radio_buttonset_elx > label.ui-button > span.ui-checkboxradio-icon" ).hide();
+    } else {
+        $( ".radio_buttonset_elx" ).buttonset();
+    }
 
     // Preparar listas de arrastre de elementos
     $('div.elxform-draglist.elxform-raw').each(function() {
@@ -257,7 +262,7 @@ $(document).ready(function(){
                 .appendTo(divdraglist.find('select[id$=_selected]'));
         });
     });
-    $('div.elxform-draglist button').click(function(ev) {
+    $('div.elxform-draglist button').on('click', function(ev) {
         ev.preventDefault();
 
         var btn = $(this);

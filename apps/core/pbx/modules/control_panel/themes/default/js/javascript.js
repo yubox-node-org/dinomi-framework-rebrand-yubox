@@ -833,7 +833,7 @@ $(document).ready(function() {
 			}
 			
 			// Apagar el SSE al cerrar la ventana
-			$(window).unload(this.pbxStatus_shutdown.bind(this));
+			$(window).on('unload', this.pbxStatus_shutdown.bind(this));
 		},
 		
 		pbxStatus_shutdown: function () {

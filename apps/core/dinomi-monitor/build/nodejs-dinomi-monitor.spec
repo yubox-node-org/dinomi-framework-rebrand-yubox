@@ -1,8 +1,8 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:       nodejs-dinomi-monitor
-Version: 1.0.0
-Release: 6
+Version: 1.0.1
+Release: 0
 Summary:    DINOMI dashboard monitor for Node.js
 License:    ISC
 Group:      System Environment/Libraries
@@ -11,7 +11,7 @@ Source0:    dinomi-monitor_%{version}-%{release}.tgz
 Requires:   nodejs
 Requires:   nodejs-promise
 Requires:   nodejs-mysql
-Requires:   nodejs-dinomi-eccp >= 1.0.0-1
+Requires:   nodejs-dinomi-eccp >= 1.0.1-0
 Requires:   httpd >= 2.4.6-32
 Requires:   dinomi-system >= 1.0.0-2
 Requires(post): patch, grep
@@ -78,6 +78,11 @@ fi
 /var/lib/dinomi-monitor/
 
 %changelog
+* Wed Aug  3 2022 Alex Villacís Lasso <a_villacis@palosanto.com> - 1.0.1-0
+- Fix several bugs in ECCP connection error handling. Now the dashmon service
+  will retry the ECCP connection if it manages to start before the dialer, or
+  when the dialer is restarted while the dashmon service is active.
+
 * Fri May 10 2019 Alex Villacís Lasso <a_villacis@palosanto.com> - 1.0.0-6
 - Switch to proper ECCP event handling instead of polling with ECCP requests
   every 3 seconds. This reduces load on the dialer process.

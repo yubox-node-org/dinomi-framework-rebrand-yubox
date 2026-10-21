@@ -559,9 +559,31 @@ function obtenerClaveAMIAdmin($ruta_base='')
 }
 
 /**
+ * Parsea /etc/freepbx.conf (archivo PHP con $amp_conf) sin ejecutarlo.
+ * Retorna array con AMPDBUSER, AMPDBPASS, AMPDBHOST, AMPDBPORT, AMPDBNAME, AMPDBENGINE
+ * o NULL si no se puede leer/parsear.
+ */
+function _parsearFreepbxConf()
+{
+    $path = '/etc/freepbx.conf';
+    if (!is_readable($path)) return NULL;
+    $content = @file_get_contents($path);
+    if ($content === FALSE) return NULL;
+    $keys = array('AMPDBUSER', 'AMPDBPASS', 'AMPDBHOST', 'AMPDBPORT', 'AMPDBNAME', 'AMPDBENGINE');
+    $result = array();
+    foreach ($keys as $k) {
+        if (preg_match('/\$amp_conf\s*\[\s*[\'"]' . preg_quote($k, '/') . '[\'"]\s*\]\s*=\s*[\'"]([^\'"]*)[\'"]/', $content, $m)) {
+            $result[$k] = $m[1];
+        }
+    }
+    return (isset($result['AMPDBUSER']) && isset($result['AMPDBPASS']) && isset($result['AMPDBHOST']))
+        ? $result : NULL;
+}
+
+/**
  * Función para construir un DSN para conectarse a varias bases de datos
  * frecuentemente utilizadas en Elastix. Para cada base de datos reconocida, se
- * busca la clave en /etc/elastix.conf o en /etc/amportal.conf según corresponda.
+ * busca la clave en /etc/freepbx.conf, /etc/elastix.conf o /etc/amportal.conf según corresponda.
  *
  * @param   string  $sNombreUsuario     Nombre de usuario para interrogar
  * @param   string  $sNombreDB          Nombre de base de datos para DNS
@@ -578,6 +600,15 @@ function generarDSNSistema($sNombreUsuario, $sNombreDB, $ruta_base='')
         if (is_null($sClave)) return NULL;
         return 'mysql://root:'.$sClave.'@localhost/'.$sNombreDB;
     case 'asteriskuser':
+        $ampConf = _parsearFreepbxConf();
+        if ($ampConf !== NULL) {
+            $engine = isset($ampConf['AMPDBENGINE']) ? $ampConf['AMPDBENGINE'] : 'mysql';
+            $host = $ampConf['AMPDBHOST'];
+            if (isset($ampConf['AMPDBPORT']) && $ampConf['AMPDBPORT'] !== '' && $ampConf['AMPDBPORT'] !== '3306') {
+                $host .= ':' . $ampConf['AMPDBPORT'];
+            }
+            return $engine . '://' . $ampConf['AMPDBUSER'] . ':' . $ampConf['AMPDBPASS'] . '@' . $host . '/' . $sNombreDB;
+        }
         if (is_readable('/etc/amportal.conf')) {
             $pConfig = new paloConfig("/etc", "amportal.conf", "=", "[[:space:]]*=[[:space:]]*");
             $listaParam = $pConfig->leer_configuracion(FALSE);

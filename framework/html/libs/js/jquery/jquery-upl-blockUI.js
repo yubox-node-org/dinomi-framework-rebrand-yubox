@@ -1,6 +1,6 @@
 /*!
  * jQuery blockUI plugin
- * Version 2.66.0-2013.10.09
+ * Version 2.70.0-2014.11.23
  * Requires jQuery v1.7 or later
  *
  * Examples at: http://malsup.com/jquery/block/
@@ -26,7 +26,8 @@
 		var msie = /MSIE/.test(navigator.userAgent);
 		var ie6  = /MSIE 6.0/.test(navigator.userAgent) && ! /MSIE 8.0/.test(navigator.userAgent);
 		var mode = document.documentMode || 0;
-		var setExpr = $.isFunction( document.createElement('div').style.setExpression );
+		//var setExpr = $.isFunction( document.createElement('div').style.setExpression );
+		var setExpr = (typeof ( document.createElement('div').style.setExpression ) === 'function');
 
 		// global $ methods for blocking/unblocking the entire page
 		$.blockUI   = function(opts) { install(window, opts); };
@@ -107,7 +108,7 @@
 			});
 		};
 
-		$.blockUI.version = 2.66; // 2nd generation blocking at no extra cost!
+		$.blockUI.version = 2.70; // 2nd generation blocking at no extra cost!
 
 		// override these in your code to change the default behavior and style
 		$.blockUI.defaults = {
@@ -426,7 +427,7 @@
 				if (msg)
 					lyr3.show();
 				if (opts.onBlock)
-					opts.onBlock();
+					opts.onBlock.bind(lyr3)();
 			}
 
 			// bind key and mouse events
@@ -515,6 +516,7 @@
 			if (data && data.el) {
 				data.el.style.display = data.display;
 				data.el.style.position = data.position;
+				data.el.style.cursor = 'default'; // #59
 				if (data.parent)
 					data.parent.appendChild(data.el);
 				$el.removeData('blockUI.history');

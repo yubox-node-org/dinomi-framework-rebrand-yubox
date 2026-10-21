@@ -1,35 +1,35 @@
 $(document).ready(function() {
 	// Click fuera de stickynote oculta el stickynote
-	$(document).click(sticky_note_hide);
-	$('#neo-sticky-note').click(function(e) {
+	$(document).on('click', sticky_note_hide);
+	$('#neo-sticky-note').on('click', function(e) {
 		e.stopPropagation(); // Para evitar q el click se propague hasta el "document"
 	});
 	
 	// Click en el control de stickynote abre stickynote
-	$('#togglestickynote1').click(function(e) {
+	$('#togglestickynote1').on('click', function(e) {
 		e.stopPropagation(); // Para evitar q el click se propague hasta el "document"
 		sticky_note_load();
 	});
 	
 	// Cierre del sticky note lo oculta luego de cambiar a vista sólo lectura
-	$('#neo-sticky-note-text-edit-delete').click(function() {
+	$('#neo-sticky-note-text-edit-delete').on('click', function() {
 		$("#neo-sticky-note-text-edit").hide();
 		$("#neo-sticky-note-text").show();
 		sticky_note_hide();
 	});
 
 	// Click en el texto de sólo lectura cambia a modificación
-	$('#neo-sticky-note-text').click(function() {
+	$('#neo-sticky-note-text').on('click', function() {
 		$("#neo-sticky-note-text").hide();
 		$("#neo-sticky-note-text-edit").show();
 		sticky_note_count_chars();
 	});
 	
 	// Escritura en el textarea cuenta los caracteres
-	$('#neo-sticky-note-textarea').keyup(sticky_note_count_chars);
+	$('#neo-sticky-note-textarea').on('keyup', sticky_note_count_chars);
 	
 	// Botón de guardar mensaje stickynote
-	$('#neo-submit-button').click(sticky_note_send);
+	$('#neo-submit-button').on('click', sticky_note_send);
 });
 
 function sticky_note_hide() { $("#neo-sticky-note").hide(); }

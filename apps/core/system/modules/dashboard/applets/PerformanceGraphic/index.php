@@ -29,7 +29,6 @@
 */
 global $arrConf;
 require_once "{$arrConf['basePath']}/libs/paloSantoSampler.class.php";
-require_once "libs/paloSantoGraphImage.lib.php";
 
 class Applet_PerformanceGraphic
 {
@@ -175,5 +174,3 @@ $this->_sampler_CallsMemoryCPU().
         return $json->encode($arrValues);
     }
 }
-
-?>

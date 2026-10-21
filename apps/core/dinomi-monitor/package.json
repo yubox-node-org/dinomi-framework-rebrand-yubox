@@ -14,7 +14,7 @@
   "dependencies": {
     "mysql": "^2.3.2",
     "promise": ">=4.0.0",
-    "dinomi-eccp": ">=1.0.0",
+    "dinomi-eccp": ">=1.0.1",
     "socket.io": ">=1.0.0",
     "node-json-db": ">=0.7.3"
   },
