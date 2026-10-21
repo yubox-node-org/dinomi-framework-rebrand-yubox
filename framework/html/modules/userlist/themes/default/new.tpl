@@ -9,7 +9,7 @@ window.close();
 {/literal}
 {else}
 
-{if isset($editUserExtension)}
+{if !isset($editUserExtension)}
 {assign var="editUserExtension" value=""}
 {/if}
 
