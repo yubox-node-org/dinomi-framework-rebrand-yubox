@@ -303,6 +303,7 @@ class paloSantoGrid {
         $defaultFiler = "yes";
         if((is_array($arrFilter) && count($arrFilter)>0)){
             $name_delete_filters = getParameter('name_delete_filters');
+            if (is_null($name_delete_filters)) $name_delete_filters = '';
             $keys = array_keys($arrFilter);
             $first = $keys[0];
 
