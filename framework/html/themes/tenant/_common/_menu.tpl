@@ -81,23 +81,23 @@ function removeNeoDisplayOnMouseOver(ref){
 </script>
 {/literal}
 
-<input type="hidden" id="lblRegisterCm"   value="{$lblRegisterCm}" />
-<input type="hidden" id="lblRegisteredCm" value="{$lblRegisteredCm}" />
-<input type="hidden" id="userMenuColor" value="{$MENU_COLOR}" />
-<input type="hidden" id="lblSending_request" value="{$SEND_REQUEST}" />
-<input type="hidden" id="toolTip_addBookmark" value="{$ADD_BOOKMARK}" />
-<input type="hidden" id="toolTip_removeBookmark" value="{$REMOVE_BOOKMARK}" />
-<input type="hidden" id="toolTip_addingBookmark" value="{$ADDING_BOOKMARK}" />
-<input type="hidden" id="toolTip_removingBookmark" value="{$REMOVING_BOOKMARK}" />
-<input type="hidden" id="toolTip_hideTab" value="{$HIDE_IZQTAB}" />
-<input type="hidden" id="toolTip_showTab" value="{$SHOW_IZQTAB}" />
-<input type="hidden" id="toolTip_hidingTab" value="{$HIDING_IZQTAB}" />
-<input type="hidden" id="toolTip_showingTab" value="{$SHOWING_IZQTAB}" />
-<input type="hidden" id="amount_char_label" value="{$AMOUNT_CHARACTERS}" />
-<input type="hidden" id="save_note_label" value="{$MSG_SAVE_NOTE}" />
-<input type="hidden" id="get_note_label" value="{$MSG_GET_NOTE}" />
-<input type="hidden" id="elastix_theme_name" value="{$THEMENAME}" />
-<input type="hidden" id="lbl_no_description" value="{$LBL_NO_STICKY}" />
+<input type="hidden" id="lblRegisterCm"   value="{if isset($lblRegisterCm)}{$lblRegisterCm}{/if}" />
+<input type="hidden" id="lblRegisteredCm" value="{if isset($lblRegisteredCm)}{$lblRegisteredCm}{/if}" />
+<input type="hidden" id="userMenuColor" value="{if isset($MENU_COLOR)}{$MENU_COLOR}{/if}" />
+<input type="hidden" id="lblSending_request" value="{if isset($SEND_REQUEST)}{$SEND_REQUEST}{/if}" />
+<input type="hidden" id="toolTip_addBookmark" value="{if isset($ADD_BOOKMARK)}{$ADD_BOOKMARK}{/if}" />
+<input type="hidden" id="toolTip_removeBookmark" value="{if isset($REMOVE_BOOKMARK)}{$REMOVE_BOOKMARK}{/if}" />
+<input type="hidden" id="toolTip_addingBookmark" value="{if isset($ADDING_BOOKMARK)}{$ADDING_BOOKMARK}{/if}" />
+<input type="hidden" id="toolTip_removingBookmark" value="{if isset($REMOVING_BOOKMARK)}{$REMOVING_BOOKMARK}{/if}" />
+<input type="hidden" id="toolTip_hideTab" value="{if isset($HIDE_IZQTAB)}{$HIDE_IZQTAB}{/if}" />
+<input type="hidden" id="toolTip_showTab" value="{if isset($SHOW_IZQTAB)}{$SHOW_IZQTAB}{/if}" />
+<input type="hidden" id="toolTip_hidingTab" value="{if isset($HIDING_IZQTAB)}{$HIDING_IZQTAB}{/if}" />
+<input type="hidden" id="toolTip_showingTab" value="{if isset($SHOWING_IZQTAB)}{$SHOWING_IZQTAB}{/if}" />
+<input type="hidden" id="amount_char_label" value="{if isset($AMOUNT_CHARACTERS)}{$AMOUNT_CHARACTERS}{/if}" />
+<input type="hidden" id="save_note_label" value="{if isset($MSG_SAVE_NOTE)}{$MSG_SAVE_NOTE}{/if}" />
+<input type="hidden" id="get_note_label" value="{if isset($MSG_GET_NOTE)}{$MSG_GET_NOTE}{/if}" />
+<input type="hidden" id="elastix_theme_name" value="{if isset($THEMENAME)}{$THEMENAME}{/if}" />
+<input type="hidden" id="lbl_no_description" value="{if isset($LBL_NO_STICKY)}{$LBL_NO_STICKY}{/if}" />
 
 <!-- inicio del menú tipo acordeon-->
 <div class="sidebar-menu">
@@ -159,7 +159,7 @@ function removeNeoDisplayOnMouseOver(ref){
                                 <li>
                             {/if}
                                     <a href="index.php?menu={$idSubMenu}">
-					<i class="{$subMenu.icon}"></i>
+                                        <i {if isset($subMenu.icon)}class="{$subMenu.icon}{/if}"></i>
 					<!--<span>{$idSubMenu}</span>-->
                                         <!--<span>{$subMenu.description}</span>-->
 					<span>{$subMenu.Name}</span>

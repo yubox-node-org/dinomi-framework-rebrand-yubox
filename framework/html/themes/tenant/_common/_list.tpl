@@ -144,7 +144,7 @@
         <tbody>
             {if $numData > 0}
                 {foreach from=$arrData key=k item=data name=filas}
-                {if $data.ctrl eq 'separator_line'}
+                {if isset($data.ctrl) && $data.ctrl eq 'separator_line'}
                     <tr>
                         {if $data.start > 0}
                             <td colspan="{$data.start}"></td>
@@ -173,7 +173,7 @@
             {/if}
         </tbody>
             {if $numData > 3}
-                {if $hideBottomTitles==false }
+                {if !isset($hideBottomTitles) || $hideBottomTitles==false }
         <tfoot>
                 <tr>
                     {section name=columnNum loop=$numColumns start=0 step=1}
