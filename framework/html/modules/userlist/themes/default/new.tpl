@@ -8,6 +8,11 @@ window.close();
 </script>
 {/literal}
 {else}
+
+{if isset($editUserExtension)}
+{assign var="editUserExtension" value=""}
+{/if}
+
 <form method="POST">
 <table width="99%" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr>

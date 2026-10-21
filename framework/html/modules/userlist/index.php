@@ -210,7 +210,7 @@ function editUser($pACL, $smarty, $module_name, $local_templates_dir, $plugins)
             'mb_title'      =>  _tr('ERROR'),
             'mb_message'    =>  _tr('userNoAllowed'),
         ));
-        return listUsers($pACL, $smarty, $module_name, $local_templates_dir);
+        return listUsers($pACL, $smarty, $module_name, $local_templates_dir, $plugins);
     }
     return createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_user, $privileged, $plugins);
 }
@@ -245,6 +245,7 @@ function createEditUser($pACL, $smarty, $module_name, $local_templates_dir, $id_
         'LBL_CORE_FIELDS'   =>  _tr('Main Fields'),
         "icon"              =>  "images/user.png",
         'module_name'       =>  $module_name,
+        'userExtension_success' => '',
     ));
 
     // Instanciar los objetos de plugines
