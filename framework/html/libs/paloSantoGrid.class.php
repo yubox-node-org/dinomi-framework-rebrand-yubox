@@ -684,6 +684,10 @@ class paloSantoGrid {
 
         $this->smarty->assign("enableExport", $this->enableExport);
 
+        // AS_OPTION solo se asigna en showFilter(), pero la plantilla lo lee siempre
+        if (is_null($this->smarty->getTemplateVars("AS_OPTION")))
+            $this->smarty->assign("AS_OPTION", 0);
+
         //dar el valor a las etiquetas segun el idioma
         $etiquetas = array('Export','Start','Previous','Next','End','Page','of','records');
         foreach ($etiquetas as $etiqueta)
