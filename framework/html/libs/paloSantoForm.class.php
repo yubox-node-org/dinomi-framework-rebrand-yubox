@@ -293,7 +293,7 @@ HTML_DRAGLIST;
                                 htmlentities($s_optParam['LABEL'], ENT_COMPAT, 'UTF-8'));
                         }
                         $listaOpts[] = sprintf(
-                            '<optgroup %s>%s</option>',
+                            '<optgroup %s>%s</optgroup>',
                             $this->_inputExtraParam_a_atributos($optParam),
                             implode("\n", $subListaOpts));
                     } else {
