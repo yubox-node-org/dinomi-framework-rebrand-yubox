@@ -61,7 +61,7 @@ function obtenerDetallesRPMS()
         if (!isset($result[$sTag])) $result[$sTag] = array();
         if ($sTag == 'Kernel') {
             // Caso especial
-            $result[$sTag][] = explode(' ', trim(`uname -s -r -i`));
+            $result[$sTag][] = explode(' ', trim(shell_exec('uname -s -r -i')));
         } else {
             foreach ($packageLists as $packageName)
                 $result[$sTag][] = isset($packageVersions[$packageName])
