@@ -24,9 +24,9 @@
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/rightbar.css" />
 
     {$HEADER_LIBS_JQUERY}
-        <!--<script type='text/javascript' src="{$WEBCOMMON}js/base.js"></script>-->
-        <!--<script type='text/javascript' src="{$WEBCOMMON}js/sticky_note.js"></script>-->
-        <!--<script type='text/javascript' src="{$WEBCOMMON}js/iframe.js"></script>-->
+        {*<script type='text/javascript' src="{$WEBCOMMON}js/base.js"></script>*}
+        {*<script type='text/javascript' src="{$WEBCOMMON}js/sticky_note.js"></script>*}
+        {*<script type='text/javascript' src="{$WEBCOMMON}js/iframe.js"></script>*}
 	<script type='text/javascript' src="libs/js/base.js"></script>
         <script type='text/javascript' src="libs/js/sticky_note/sticky_note.js"></script>
         <script type='text/javascript' src="libs/js/iframe.js"></script>

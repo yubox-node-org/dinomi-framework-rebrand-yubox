@@ -146,8 +146,8 @@ function removeNeoDisplayOnMouseOver(ref){
             {/if}
                     <a href="index.php?menu={$idMenu}">
                          <i class="{$menu.icon}"></i>
-			<!--<span>{$idMenu}</span>-->
-                        <!--<span>{$menu.description}</span>-->
+			{*<span>{$idMenu}</span>*}
+                        {*<span>{$menu.description}</span>*}
 			<span>{$menu.Name}</span>
                     </a>
                     <ul>
@@ -160,8 +160,8 @@ function removeNeoDisplayOnMouseOver(ref){
                             {/if}
                                     <a href="index.php?menu={$idSubMenu}">
                                         <i {if isset($subMenu.icon)}class="{$subMenu.icon}{/if}"></i>
-					<!--<span>{$idSubMenu}</span>-->
-                                        <!--<span>{$subMenu.description}</span>-->
+					{*<span>{$idSubMenu}</span>*}
+                                        {*<span>{$subMenu.description}</span>*}
 					<span>{$subMenu.Name}</span>
                                     </a>
                                     {if $subMenu.children}
@@ -170,8 +170,8 @@ function removeNeoDisplayOnMouseOver(ref){
                                             {foreach from=$subMenu.children key=idSubMenu2 item=subMenu2}
                                                 <li>
                                                     <a href="index.php?menu={$idSubMenu2}">
-							<!--<span>{$idSubMenu2}</span>-->
-                                                        <!--<span>{$subMenu2.description}</span>-->
+							{*<span>{$idSubMenu2}</span>*}
+                                                        {*<span>{$subMenu2.description}</span>*}
 							<span>{$subMenu2.Name}</span>
                                                     </a>
                                                 </li>
@@ -200,7 +200,7 @@ function removeNeoDisplayOnMouseOver(ref){
             <!-- Profile Info -->
             <li class="profile-info dropdown pull-right"><!-- add class "pull-right" if you want to place this from right -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <!--<img  style="border:0px" src="index.php?menu=_elastixutils&action=getImage&ID={$USER_ID}&rawmode=yes" alt="" class="img-circle" width="44" />-->
+                    {*<img  style="border:0px" src="index.php?menu=_elastixutils&action=getImage&ID={$USER_ID}&rawmode=yes" alt="" class="img-circle" width="44" />*}
             <img  style="border:0px" src="{$WEBPATH}themes/{$THEMENAME}/images/Icon-user.png" alt="" class="img-circle" width="44" />
                     {$USER_LOGIN}
                 </a>
@@ -249,11 +249,11 @@ function removeNeoDisplayOnMouseOver(ref){
             </ul>
         </li>
 
-        <!--li id="header_notification_bar" class="dropdown">
-            <a {*data-toggle="dropdown"*} class="" href="index.php?menu=addons">
+        {*li id="header_notification_bar" class="dropdown">
+            <a class="" href="index.php?menu=addons">
                 <i class="fa fa-cubes"></i>
             </a>
-        </li-->
+        </li*}
 
         <!-- notification dropdown start-->
         <!--li id="header_notification_bar" class="dropdown">
