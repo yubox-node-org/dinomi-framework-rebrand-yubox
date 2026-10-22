@@ -159,7 +159,7 @@ function removeNeoDisplayOnMouseOver(ref){
                                 <li>
                             {/if}
                                     <a href="index.php?menu={$idSubMenu}">
-                                        <i {if isset($subMenu.icon)}class="{$subMenu.icon}{/if}"></i>
+                                        <i {if isset($subMenu.icon)}class="{$subMenu.icon}"{/if}></i>
 					{*<span>{$idSubMenu}</span>*}
                                         {*<span>{$subMenu.description}</span>*}
 					<span>{$subMenu.Name}</span>
