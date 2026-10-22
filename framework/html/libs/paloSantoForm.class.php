@@ -237,12 +237,12 @@ HTML_DRAGLIST;
     protected function _form_widget_SELECT($bIngresoActivo, $varName, $varValue,
             $arrVars, $varName_escaped, $varValue_escaped)
     {
-        $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
-
         if (isset($arrVars['INPUT_EXTRA_PARAM']['options']) &&
             is_array($arrVars['INPUT_EXTRA_PARAM']['options'])) {
+            $attrstring = $this->_inputExtraParam_a_atributos($arrVars);
             $arrOptions = $arrVars['INPUT_EXTRA_PARAM']['options'];
         } else {
+            // INPUT_EXTRA_PARAM es la lista de opciones, no atributos
             $arrOptions = $arrVars['INPUT_EXTRA_PARAM'];
             $attrstring = '';
         }
