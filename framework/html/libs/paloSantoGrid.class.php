@@ -421,7 +421,7 @@ class paloSantoGrid {
             "images/plus2.png" => "fa fa-plus",
         );
         $iconclass = NULL;
-        if (isset($iconmap[$icon])) {
+        if (!is_null($icon) && isset($iconmap[$icon])) {
             $iconclass = $iconmap[$icon];
         } elseif (in_array($icon, self::$_whitelist_fontclass_font_awesome)) {
             $iconclass = "fa fa-{$icon}";
